@@ -76,7 +76,7 @@ def separate_partitions(comp_list):
 def simplest_comb(
     comp, app_size
 ):  ## comp- list of lists of the groups (shared/non-shared), which includes groups' components
-    """Simplest_comb function."""
+    """Simplest_comb function. not very simple"""
     partitions = list(
         map(lambda i: separate_partitions(i), comp)
     )  ## list of all components in each combination

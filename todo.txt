@@ -1,0 +1,2 @@
+in fleet_offers.py:
+	implement get_best_price

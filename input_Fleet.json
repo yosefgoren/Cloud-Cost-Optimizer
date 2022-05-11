@@ -59,12 +59,17 @@
         },
         {
             "app": "App3",
-            "share": true,
+            "share": false,
             "components": [
                 {
                     "memory": 2,
                     "vCPUs": 2,
                     "name": "Comp4"
+                },
+                {
+                    "memory": 2,
+                    "vCPUs": 2,
+                    "name": "com6"
                 }
             ]
         }
