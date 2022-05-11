@@ -1,3 +1,6 @@
+from importlib_metadata import Pair
+from fleet_classes import Offer
+
 class CombOptim:
 	def __init__(self, k: int, price_calc):
 		"""'price_calc' is a function: (Offer)-->float"""
@@ -18,21 +21,40 @@ class CombOptim:
 		pass
 
 class Node:
-	def __init__(self, parent):
+	node_cache = {}
+
+	def __init__(self, offer):
+		self.offer = offer
 		self.price = None
-		self.offer = None
 		self.sons = None
+
 		
-	def getAllSons():
+	def getAllSons(self):
+		if self.sons == None:
+			self.sons = []
+			modules = self.offer
+			num_modules = len(modules)
+			for first_module_idx in range(num_modules):
+				for second_module_idx in range(num_modules):
+					if first_module_idx != second_module_idx:
+						#TODO: create new module set from 'modules' and 'second_module_idx', 'first_module_idx'. put it in son_comb:
+						son_comb = None
+						hash = self.hashCode(son_comb)
+						if not hash in self.node_cache:
+							#TODO: create new node from son_comb, put it in son_node:
+							son_node = None
+							self.node_cache[hash] = son_node
+						else:
+							#take existing node from cache:
+							son_node = self.node_cache[hash]
+						self.sons.append(son_node)
+		return self.sons
+
+
+	def getPrice(self):
 		#TODO
 		pass
-	def getPrice():
-		#TODO
-		pass
-	def asOffer():
-		#TODO
-		pass
-	def hashCode():
+	def hashCode(comb: list):
 		#TODO
 		pass
 
