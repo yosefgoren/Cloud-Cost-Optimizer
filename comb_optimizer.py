@@ -5,7 +5,7 @@ class CombOptim:
 	def __init__(self, k: int, price_calc):
 		"""'price_calc' is a function: (Offer)-->float"""
 		self.optim_set = OptimumSet()
-		self.reset_sel = ResetSelector()
+		self.reset_sel = ResetSelector(k)
 		self.search_algo = SearchAlgorithm(price_calc)
 	
 	def run(self):
@@ -28,7 +28,6 @@ class Node:
 		self.price = None
 		self.sons = None
 
-		
 	def getAllSons(self):
 		if self.sons == None:
 			self.sons = []
@@ -50,7 +49,6 @@ class Node:
 						self.sons.append(son_node)
 		return self.sons
 
-
 	def getPrice(self):
 		#TODO
 		pass
@@ -63,7 +61,7 @@ class OptimumSet:
 		"""the table holds the best k seen so far in terms of price."""
 		self.table = [None]*k
 	
-	def update(self, node: list):
+	def update(self, visited_nodes: list):
 		"""if parameter 'node' has better price than anyone in the table, insert 'node' to the table
 			, possibly removing the worst node currently in the table."""
 		#TODO
@@ -71,7 +69,6 @@ class OptimumSet:
 
 	def returnBest(self):
 		return self.table
-
 
 class SearchAlgorithm:
 	def __init__(self, price_calc):
@@ -85,7 +82,7 @@ class SearchAlgorithm:
 		pass
 
 class ResetSelector:
-	def __init__(self):
+	def __init__(self, k: int):
 		#add root to DS...
 		#TODO
 		pass
@@ -95,5 +92,25 @@ class ResetSelector:
 		pass
 
 	def update(self, path: list):
+		#TODO
+		pass
+
+	def getExpoitationBias(self)->float:
+		#TODO
+		pass
+
+	def calcTotalScore(self, comb: Node)->float:
+		#TODO
+		pass
+
+	def totalScoreAux(self, exporation_score: float, exploitation_score: float)->float:
+		#TODO
+		pass
+
+	def calcExporationScore(comb: Node)->float:
+		#TODO
+		pass
+
+	def calcExpoitationScore(comb: Node)->float:
 		#TODO
 		pass
