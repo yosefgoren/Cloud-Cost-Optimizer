@@ -188,9 +188,12 @@ class FleetCalculator:
 		
 		best_group = None
 		for partition in partition2(instances):
-			group.total_price = sum(map(lambda i: i.total_price, partition))
-			if best_group == None or group.total_price < best_group.total_price:
-				best_group = group
+			new_group = group.copy_group()
+			new_group.total_price = sum(map(lambda i: i.total_price, partition))
+			new_group.instance_groups = partition
+			new_group.region = region
+			if best_group is None or new_group.total_price < best_group.total_price:
+				best_group = new_group.copy_group()
 		return best_group
 
 
@@ -226,26 +229,26 @@ def get_fleet_offers(
 			best=None
 
 		## Brute-Force Algorithm- optimal results / more complex
-		# groups = create_groups(
-		# 	updated_params, app_size
-		# )  ## creates all the possible combinations
-		# for (
-		# 	combination
-		# ) in (
-		# 	groups
-		# ):  ## for each combination (group) find N (=3) best offers ##Algorithm for optimal results
-		# 	res += calculator.get_offers(
-		# 		combination, region_to_check, pricing, architecture, type_major
-		# 	)
+		groups = create_groups(
+			updated_params, app_size
+		)  ## creates all the possible combinations
+		for (
+			combination
+		) in (
+			groups
+		):  ## for each combination (group) find N (=3) best offers ##Algorithm for optimal results
+			res += calculator.get_offers(
+				combination, region_to_check, pricing, architecture, type_major
+			)
 
 		#our code
 		# optim = CombOptim(3, lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major))
 		# return optim.run()
 
 		## First Step- match an instance for every component
-		firstBranch = simplest_comb(updated_params, app_size)
-		for combination in firstBranch:
-			res += calculator.get_offers(combination, region_to_check, pricing, architecture, type_major)
+		# firstBranch = simplest_comb(updated_params, app_size)
+		# for combination in firstBranch:
+		# 	res += calculator.get_offers(combination, region_to_check, pricing, architecture, type_major)
 
 		# ## one_pair Algorithm
 		# pairs = one_pair(updated_params, app_size)

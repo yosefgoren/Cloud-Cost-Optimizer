@@ -1,12 +1,22 @@
+import copy
+
 from importlib_metadata import Pair
 from fleet_classes import Offer
 
 class CombOptim:
+	price_calc_func = None
+
 	def __init__(self, k: int, price_calc):
 		"""'price_calc' is a function: (Offer)-->float"""
 		self.optim_set = OptimumSet()
 		self.reset_sel = ResetSelector(k)
 		self.search_algo = SearchAlgorithm(price_calc)
+		CombOptim.price_calc_func = price_calc
+
+
+	@staticmethod
+	def price_calc(offer):
+		return CombOptim.price_calc_func(offer)
 	
 	def run(self):
 		while not self.isDone():
@@ -23,9 +33,10 @@ class CombOptim:
 class Node:
 	node_cache = {}
 
-	def __init__(self, offer):
-		self.offer = offer
-		self.price = None
+	def __init__(self, partitions):
+		self.partitions = copy.deepcopy(partitions)
+		self.offer = [Offer(p, None) for p in partition2(self.partitions)]
+		self.price = CombOptim.price_calc(self.offer)
 		self.sons = None
 
 	def getAllSons(self):
@@ -50,8 +61,8 @@ class Node:
 		return self.sons
 
 	def getPrice(self):
-		#TODO
-		pass
+		return self.price
+
 	def hashCode(comb: list):
 		#TODO
 		pass
