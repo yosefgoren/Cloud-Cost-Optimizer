@@ -1,5 +1,14 @@
 from importlib_metadata import Pair
+import numpy as np
+from numpy import ndarray
+from urllib3 import Retry
 from fleet_classes import Offer
+
+
+def sampleFromWeighted(weight_arr: ndarray)->int:
+	"""gets an array of weights, and samples an index within the array, with probabilities based on the weights."""
+	#TODO
+	pass
 
 class CombOptim:
 	def __init__(self, k: int, price_calc):
@@ -24,6 +33,8 @@ class Node:
 	node_cache = {}
 
 	def __init__(self, offer):
+		"""self.price is just a cache for the node price, it should not be accessed directly.
+			instead use self.getPrice()."""
 		self.offer = offer
 		self.price = None
 		self.sons = None
@@ -50,9 +61,15 @@ class Node:
 		return self.sons
 
 	def getPrice(self):
+		"""lazy calculation for the node price: first time accessed calculation the price of the node,
+			after that - any just return the cached price at 'self.price'."""
 		#TODO
 		pass
 	def hashCode(comb: list):
+		#TODO
+		pass
+
+	def getDepth(self):
 		#TODO
 		pass
 
@@ -82,35 +99,131 @@ class SearchAlgorithm:
 		pass
 
 class ResetSelector:
-	def __init__(self, k: int):
-		#add root to DS...
-		#TODO
-		pass
+	class Candidate():
+		def __init__(self, node: Node):
+			"""The 'self.reachable_bonus' is a variable used in calculating the exploitation score for
+				this candidate.
+				 * Each node that can be reached from this candidate has a 'reachable_bonus' associated
+				with it and the candidate.
+				 * At any givem time, the candidate will save the maximum 'reachable_bonus' that it gets from 
+				any nodes that have been reached in runs starting from itself."""
+			self.node = node
+			self.total_score = None
+			self.reachable_bonus = 0
+			self.hash = None
 
-	def getStartNode(self):
-		#TODO
-		pass
+	def __init__(self, k: int, num_componants: int):
+		""" The reset-selector remembers a list of the best candidates (candidate nodes) seen so far,
+			list is saved at: self.top_candidates.
+			The parameter 'k' is the maximum allowed size for the candidate list."""
+		self.top_candidates = []#TODO: add root to list here...
+		self.k = k
+		self.num_componants = num_componants
+
+		#reachable_bonus_formula_base is calculated here so we only have to calculate it once.
+		self.reachable_bonus_base = 0.1**(1.0/num_componants)
+		
+		#hyperparameters:
+		self.exploitation_score_price_bias = 0.5
+		self.exploration_score_depth_bias = 0.5
+
+	def getStartNode(self)->Node:
+		"""this method represents the main functionality of the reset-selector: based on all data seen so far
+			- the reset-selector will return the the node it thinks the next run should start from."""
+		scores = np.array([candidate.total_score for candidate in self.top_candidates])
+		selected_node_idx = sampleFromWeighted(scores)
+		return self.top_candidates[selected_node_idx].node
 
 	def update(self, path: list):
+		"""'path' is a list of nodes seen in the last run the serach algorithm.
+			this method will update in state of the reset selector - to consider the nodes seen in last search run.
+
+			The order of nodes in 'path' is exprected to be the same order as the nodes were seen in the search.
+			
+			Calling this method will also cause the reset-selector to re-calculate the total scores for each 
+			of the candidates saved within it."""
+		#consider all nodes seen in last path as candidates:
+		candidate_dict = {candidate.hashCode():candidate for candidate in self.top_candidates}
+		best_reachable_bonus = 0
+		for node in reversed(path):
+			#add the new node to set of candidates if it's not already there:
+			node_hash = node.hashCode()
+			if not node_hash in candidate_dict:
+				candidate_dict[node_hash] = ResetSelector.Candidate(node)
+			node_candidate = candidate_dict[node_hash]
+			
+			#update the best reachable bonus for the rest of the path:
+			best_reachable_bonus = max(node.getPrice(), best_reachable_bonus, node_candidate.reachable_bonus)
+			#update the candidate's reachable_bonus to be the best bonus seen for it:
+			node_candidate.reachable_bonus = best_reachable_bonus
+			#apply diminishing effect to 'best_reachable_bonus':
+			best_reachable_bonus *= self.reachable_bonus_base
+		
+		#update the list of top candidates and re-calculate total scores for all candidates currently saved:
+		self.top_candidates = best_reachable_bonus.values()
+		self.updateTotalScores()
+		
+		#sort the list of top candidates and throw away the candidates that are not in the top k:
+		self.top_candidates.sort(key=lambda candidate: candidate.total_score)
+		self.top_candidates = self.top_candidates[:self.k]
+		
+	def updateTotalScores(self)->list:
+		"""updates the total scores (floats) of all candidates in 'self.top_candidates'."""
+		ration_scores = self.calcRationScores()
+		tation_scores = self.calcTationScores()
+		tation_bias = self.getCurrentTationBias()
+
+		total_scores = tation_bias*tation_scores + (1-tation_bias)*ration_scores
+		for idx in range(self.top_candidates):
+			self.top_candidates[idx].total_score = total_scores[idx]
+
+	def getCurrentTationBias(self)->float:
+		"""get the current exploitation bias, this represents the current preference of the algorithm for exploitation
+			over exploration."""
+		return 0.5
+		#TODO: we probably want an implementation based on how much time the algorithm has to run,
+		#	 s.t. when there is little time left the exploitation bias is close to 1.
+
+	def normalizeArray(arr: ndarray)->ndarray:
+		#TODO:
+		pass
+
+	def calcRationScores(self)->list:
+		"""calculates the exploration scores of all candidates in 'self.top_candidates' and returns scores
+			in list of floats in same order."""
+		uniqueness_scores = self.calcUniquenessScores()
+		depth_scores = self.calcDepthScores()
+		exploration_scores = self.normalizeArray(self.exploration_score_depth_bias*depth_scores
+			+(1-self.exploration_score_depth_bias)*uniqueness_scores)
+
+		return exploration_scores
+
+	def calcDepthScores(self)->ndarray:
+		"""Calculate the 'depth score' for each candidate in 'self.top_candidates'.
+			The deeper the candidate's node - the higher the depth score."""
+		depths = np.array([c.node.getDepth() for c in self.top_candidates])
+		return self.normalizeArray((depths-self.num_componants)*(depths-self.num_componants))
+
+	def calcUniquenessScores(self)->ndarray:
+		"""Calculate the 'uniqueness score' for each candidate in 'self.top_candidates'.
+			This score will be highest for nodes that are very different from the other nodes in 'top_candidates'."""
+		return self.normalizeArray(self.combinationDistancesFormula([c.node for c in self.top_candidates]))
+
+	def combinationDistancesFormula(node_list: list)->ndarray:
+		"""Implementation of formula for calculating 'distance' for all nodes to all other nodes.
+			The input is a list of combinations, and the output is an array of floats where the i'th float
+			represents the average 'distance' of i'th node from the rest of the nodes in the input list.
+			
+			Input is in the form of list<Node>."""
 		#TODO
 		pass
 
-	def getExpoitationBias(self)->float:
-		#TODO
-		pass
-
-	def calcTotalScore(self, comb: Node)->float:
-		#TODO
-		pass
-
-	def totalScoreAux(self, exporation_score: float, exploitation_score: float)->float:
-		#TODO
-		pass
-
-	def calcExporationScore(comb: Node)->float:
-		#TODO
-		pass
-
-	def calcExpoitationScore(comb: Node)->float:
-		#TODO
-		pass
+	def calcTationScores(self)->ndarray:
+		"""calculates the explotation scores of all candidates in 'self.top_candidates' and returns scores
+			in an array of floats with a corresponding order."""
+		reachable_bonus_scores = self.normalizeArray(np.array([c.reachable_bonus for c in self.top_candidates]))
+		price_scores = self.normalizeArray(np.array([c.node.price for c in self.top_candidates]))
+		exploitation_scores = self.normalizeArray(self.exploitation_score_price_bias*price_scores
+			+(1-self.exploitation_score_price_bias)*reachable_bonus_scores)
+	
+		return exploitation_scores
