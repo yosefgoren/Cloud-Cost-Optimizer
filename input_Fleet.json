@@ -43,7 +43,7 @@
         },
         {
             "app": "App2",
-            "share": true,
+            "share": false,
             "components": [
                 {
                     "memory": 10,

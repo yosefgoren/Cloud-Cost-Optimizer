@@ -1,15 +1,29 @@
-from importlib_metadata import Pair
-
-
+import copy
 from fleet_classes import Offer
 import numpy as np
 
 class CombOptim:
-	def __init__(self, k: int, price_calc):
+	price_calc_func = None
+
+	def __init__(self, k: int, price_calc, initial_seperated):
 		"""'price_calc' is a function: (Offer)-->float"""
-		self.optim_set = OptimumSet()
+		CombOptim.price_calc_func = price_calc
+		self.optim_set = OptimumSet(10)
 		self.reset_sel = ResetSelector(k)
-		self.search_algo = SearchAlgorithm(price_calc)
+		self.search_algo = SearchAlgorithm()
+		self.root = CombOptim.calc_root(initial_seperated)
+
+	@staticmethod
+	def calc_root(initial_seperated):
+		partitions = list(map(lambda i: separate_partitions(i), initial_seperated))
+		return Node(partitions)
+
+	def get_root(self):
+		return self.root
+
+	@staticmethod
+	def price_calc(offer):
+		return CombOptim.price_calc_func(offer)
 	
 	def run(self):
 		while not self.isDone():
@@ -26,35 +40,49 @@ class CombOptim:
 class Node:
 	node_cache = {}
 
-	def __init__(self, offer):
-		self.offer = offer
-		self.price = None
+	def __init__(self, partitions):
+		self.partitions = copy.deepcopy(partitions)
+		self.offers = []
+		self.price = 0
 		self.sons = None
+
+		offers_init = [Offer(p, None) for p in partition2(self.partitions)]
+		for offer in offers_init:
+			self.offers.append(CombOptim.price_calc(offer))
+
+		for offer in self.offers:
+			self.price += offer.total_price
+		print(self.price)
 
 	def getAllSons(self):
 		if self.sons is None:
 			self.sons = []
-			modules = self.offer
-			num_modules = len(modules)
-			for first_module_idx in range(num_modules):
-				for second_module_idx in range(num_modules):
-					if first_module_idx != second_module_idx:
-						#TODO: create new module set from 'modules' and 'second_module_idx', 'first_module_idx'. put it in son_comb:
-						son_comb = None
-						hash = self.hashCode(son_comb)
-						if not hash in self.node_cache:
-							#TODO: create new node from son_comb, put it in son_node:
-							son_node = None
-							self.node_cache[hash] = son_node
-						else:
-							#take existing node from cache:
-							son_node = self.node_cache[hash]
-						self.sons.append(son_node)
-		return self.sons
+			for partition in self.partitions:
+				partition = partition[0]  # we assume this layer has no meaning
+			pass
+
+
+
+		# 	#num_modules = len(modules)
+		# 	for first_module_idx in range(num_modules):
+		# 		for second_module_idx in range(num_modules):
+		# 			if first_module_idx != second_module_idx:
+		# 				#TODO: create new module set from 'modules' and 'second_module_idx', 'first_module_idx'. put it in son_comb:
+		# 				son_comb = None
+		# 				hash = self.hashCode(son_comb)
+		# 				if not hash in self.node_cache:
+		# 					#TODO: create new node from son_comb, put it in son_node:
+		# 					son_node = None
+		# 					self.node_cache[hash] = son_node
+		# 				else:
+		# 					#take existing node from cache:
+		# 					son_node = self.node_cache[hash]
+		# 				self.sons.append(son_node)
+		# return self.sons
 
 	def getPrice(self):
-		#TODO
-		pass
+		return self.price
+
 	def hashCode(comb: list):
 		#TODO
 		pass
