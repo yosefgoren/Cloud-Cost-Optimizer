@@ -1,6 +1,6 @@
 import copy
-
 from fleet_classes import Offer
+import numpy as np
 
 class CombOptim:
 	price_calc_func = None
@@ -55,7 +55,7 @@ class Node:
 		print(self.price)
 
 	def getAllSons(self):
-		if self.sons == None:
+		if self.sons is None:
 			self.sons = []
 			for partition in self.partitions:
 				partition = partition[0]  # we assume this layer has no meaning
@@ -103,14 +103,64 @@ class OptimumSet:
 
 class SearchAlgorithm:
 	def __init__(self):
-		pass
+		self.temperature = 0
+		self.temperature_increment_pace = 1
 
 	def run(self, start_node: Node)->list:
 		"""returns the list of nodes visited in the run"""
-		#to get price of Node:
-		# price = self.price_calc(node.getOffer())
-		#TODO
-		pass
+		path = []
+		next_node = start_node
+
+		while True:
+			path.append(next_node)
+			next_node = SearchAlgorithm.get_next(next_node)
+			self.update_temperature()
+			if next_node is None:
+				return path
+
+	def get_next(self, node: Node) -> Node:
+		"""get the chosen son to continue to in the next iteration"""
+		all_sons = node.getAllSons()
+		improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(all_sons, node.getPrice())
+		if (downgrades.shape[0] != 0) and self.is_choosing_downgrades():
+			return SearchAlgorithm.get_son_by_weights(downgrades)
+		else:
+			return SearchAlgorithm.get_son_by_weights(improves)
+
+
+	@staticmethod
+	def get_son_by_weights(sons):
+		"""get the choosen son by the weights of the price diffs"""
+		if sons.shape[0] == 0:
+			return None
+
+		index = sampleFromWeighted(sons[:, 1])
+		return sons[index, 0]
+
+	@staticmethod
+	def split_sons_to_improves_and_downgrades(all_sons, cur_node_price):
+		"""split the sons to 2 ndarray of improves and downgrades. first column is sons, second column is the son
+		corrsponding pricr diff"""
+		improves = []
+		downgrades = []
+
+		for son in all_sons:
+			price_diff = son.getPrice() - cur_node_price
+			if price_diff > 0:
+				improves.append([son, price_diff])
+			else:
+				downgrades.append([son, price_diff])
+
+		return np.array(improves), np.array(downgrades)
+
+	def is_choosing_downgrades(self):
+		"""return if we will choose a downgrade son"""
+		prob_for_downgrade = 0.1 - 1.0/(10*np.exp(1/(np.power(self.temperature, 0.9))))
+		return (np.random.choice([0, 1], p=[1-prob_for_downgrade,prob_for_downgrade])) == 1
+
+	def update_temperature(self):
+		"""change the temperature according to the self.temperature_increment_pace"""
+		self.temperature += self.temperature_increment_pace
 
 class ResetSelector:
 	def __init__(self, k: int):
@@ -145,3 +195,9 @@ class ResetSelector:
 	def calcExpoitationScore(comb: Node)->float:
 		#TODO
 		pass
+
+def sampleFromWeighted(weight_arr: np.ndarray)->int:
+	sum_array = weight_arr.sum()
+	weight_arr = weight_arr/sum_array
+	index = np.random.choice(weight_arr.shape[0], p=norm)
+	return index
