@@ -1,21 +1,15 @@
-from msilib.schema import Component
-from importlib_metadata import Pair
+# from msilib.schema import Component
+# from importlib_metadata import Pair
 import numpy as np
 from numpy import ndarray
-from urllib3 import Retry
+# from urllib3 import Retry
 from fleet_classes import Offer
 from math import inf
 import copy
 from BBAlgorithm import separate_partitions
 
-
-def sampleFromWeighted(weight_arr: ndarray)->int:
-    """gets an array of weights, and samples an index within the array, with probabilities based on the weights."""
-    #TODO
-    pass
-
 class KeyMannager:
-    def __init__(self, unique_identifier_func: function):
+    def __init__(self, unique_identifier_func):
         """an instance of this class will be able to take elements and assign each element a unique int key,
             the 'unique_identifier_func' function is used to determined how an element differs from other elements."""
         self.id_func = unique_identifier_func
@@ -33,15 +27,15 @@ class KeyMannager:
         
         
 class CombOptim:
-    def __init__(self, k: int, price_calc):
+    def __init__(self, k: int, price_calc, initial_seperated):
         """'price_calc' is a function: (Offer)-->float"""
-        self.optim_set = OptimumSet()
-        self.reset_sel = ResetSelector(k)
-        self.search_algo = SearchAlgorithm(price_calc)
         CombOptim.price_calc_func = price_calc
         self.root = CombOptim.calc_root(initial_seperated)
-    
-        CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.name)
+        self.optim_set = OptimumSet(10)
+        self.reset_sel = ResetSelector(k,self.get_num_components(),self.root)
+        self.search_algo = SearchAlgorithm()
+
+        CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
         """given a component, return a unique key associated with it, based on it's name."""
     
         CombOptim.getModuleKey = KeyMannager(lambda module: tuple([self.getComponentKey(component) for component in module].sort()))
@@ -87,7 +81,6 @@ class Node:
         self.partitions = copy.deepcopy(partitions)
         self.offer = self.__calc_offer()
         self.price = self.offer.total_price
-        print(self.price)
         self.sons = None
 
     def __calc_offer(self):
@@ -133,23 +126,20 @@ class OptimumSet:
         """the table holds the best k seen so far in terms of price.
             requires that the elements inserted will have the method 'getPrice' which should
             return a float."""
-        node_placeholder = object()
-        node_placeholder.getPrice = lambda : -inf
-        
         self.k = k
-        self.table = [node_placeholder]*k
+        self.table = []
     
     def update(self, visited_nodes: list):
         """considers the list of new nodes, such that the resulting set of nodes will be the 'k' best nodes
             seen at any update. The ordering the nodes is given by their 'getPrice()' method."""
-        self.candidates = self.table + visited_nodes
-        self.candidates.sort(lambda node: node.getPrice())
-        self.table = self.candidates[:self.k]
+        candidates = self.table + visited_nodes
+        candidates.sort(key=lambda node: node.getPrice())
+        self.table = candidates[:self.k]
 
     def returnBest(self):
         """returns the 'k' nodes with the best price seen so far.
         If not seen 'k' nodes yet, returns a list shorter than 'k'."""
-        return [node for node in self.table if node.getPrice() != -inf]
+        return self.table
 
 
 class ResetSelector:

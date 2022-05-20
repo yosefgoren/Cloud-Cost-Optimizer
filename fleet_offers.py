@@ -228,18 +228,18 @@ def get_fleet_offers(
 		if one_item:
 			best=None
 
-		# Brute-Force Algorithm- optimal results / more complex
-		groups = create_groups(
-			updated_params, app_size
-		)  ## creates all the possible combinations
-		for (
-			combination
-		) in (
-			groups
-		):  ## for each combination (group) find N (=3) best offers ##Algorithm for optimal results
-			res += calculator.get_offers(
-				combination, region_to_check, pricing, architecture, type_major
-			)
+		# # Brute-Force Algorithm- optimal results / more complex
+		# groups = create_groups(
+		# 	updated_params, app_size
+		# )  ## creates all the possible combinations
+		# for (
+		# 	combination
+		# ) in (
+		# 	groups
+		# ):  ## for each combination (group) find N (=3) best offers ##Algorithm for optimal results
+		# 	res += calculator.get_offers(
+		# 		combination, region_to_check, pricing, architecture, type_major
+		# 	)
 
 		#our code
 		optim = CombOptim(3, lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major), updated_params)
