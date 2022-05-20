@@ -1,8 +1,10 @@
+from msilib.schema import Component
 from importlib_metadata import Pair
 import numpy as np
 from numpy import ndarray
 from urllib3 import Retry
 from fleet_classes import Offer
+from math import inf
 
 
 def sampleFromWeighted(weight_arr: ndarray)->int:
@@ -10,6 +12,23 @@ def sampleFromWeighted(weight_arr: ndarray)->int:
 	#TODO
 	pass
 
+class KeyMannager:
+	def __init__(self, unique_identifier_func: function):
+		"""an instance of this class will be able to take elements and assign each element a unique int key,
+			the 'unique_identifier_func' function is used to determined how an element differs from other elements."""
+		self.id_func = unique_identifier_func
+		self.counter = 0
+		self.key_mappings = {}
+	
+	def __call__(self, element)->int:
+		element_id = self.id_func(element)
+		
+		if not element_id in self.key_mappings:
+			self.key_mappings[element_id] = self.counter
+			self.counter += 1
+
+		return self.key_mappings[element_id]
+		
 class CombOptim:
 	def __init__(self, k: int, price_calc):
 		"""'price_calc' is a function: (Offer)-->float"""
@@ -17,6 +36,21 @@ class CombOptim:
 		self.reset_sel = ResetSelector(k)
 		self.search_algo = SearchAlgorithm(price_calc)
 	
+	getComponentKey = KeyMannager(lambda componenet: componenet.name)
+	"""given a component, return a unique key associated with it, based on it's name."""
+	
+	getModuleKey = KeyMannager(lambda module: tuple([self.getComponentKey(component) for component in module].sort()))
+	"""give a unique key to a module - a module is a set of components and is distinct from another
+		module if they do not have the same sets of components."""
+	
+	getCombinationAsKey = KeyMannager(lambda combination: tuple([self.getModuleKey(module) for module in combination].sort()))
+	"""given a comination - meaning a set (unordered) of modules, return a unique key associated with it."""
+
+	getGroupSetAsKey = KeyMannager(lambda group_set: tuple([self.getModuleKey(group[0]) for group in group_set].sort()))
+	"""given a set of groups (the parameter is of type list, but the order is not considered
+		to be a diffirentiating factor) return a unique key associated with the group set.
+		Note how 'group[0]' is the one (and only) combination within the group."""
+
 	def run(self):
 		while not self.isDone():
 			start_node = self.reset_sel.getStartNode()
@@ -28,6 +62,7 @@ class CombOptim:
 	def isDone(self)->bool:
 		#TODO
 		pass
+
 
 class Node:
 	node_cache = {}
@@ -65,27 +100,36 @@ class Node:
 			after that - any just return the cached price at 'self.price'."""
 		#TODO
 		pass
-	def hashCode(comb: list):
-		#TODO
-		pass
 
 	def getDepth(self):
 		#TODO
 		pass
 
+	def hashCode(self)->int:
+		return CombOptim.getGroupSetAsKey(self.partitions)
+
 class OptimumSet:
 	def __init__(self, k: int):
-		"""the table holds the best k seen so far in terms of price."""
-		self.table = [None]*k
+		"""the table holds the best k seen so far in terms of price.
+			requires that the elements inserted will have the method 'getPrice' which should
+			return a float."""
+		node_placeholder = object()
+		node_placeholder.getPrice = lambda : -inf
+		
+		self.k = k
+		self.table = [node_placeholder]*k
 	
 	def update(self, visited_nodes: list):
-		"""if parameter 'node' has better price than anyone in the table, insert 'node' to the table
-			, possibly removing the worst node currently in the table."""
-		#TODO
-		pass
+		"""considers the list of new nodes, such that the resulting set of nodes will be the 'k' best nodes
+			seen at any update. The ordering the nodes is given by their 'getPrice()' method."""
+		self.candidates = self.table + visited_nodes
+		self.candidates.sort(lambda node: node.getPrice())
+		self.table = self.candidates[:self.k]
 
 	def returnBest(self):
-		return self.table
+		"""returns the 'k' nodes with the best price seen so far.
+		If not seen 'k' nodes yet, returns a list shorter than 'k'."""
+		return [node for node in self.table if node.getPrice() != -inf]
 
 class SearchAlgorithm:
 	def __init__(self, price_calc):
@@ -143,7 +187,7 @@ class ResetSelector:
 			Calling this method will also cause the reset-selector to re-calculate the total scores for each 
 			of the candidates saved within it."""
 		#consider all nodes seen in last path as candidates:
-		candidate_dict = {candidate.hashCode():candidate for candidate in self.top_candidates}
+		candidate_dict = {candidate.node.hashCode():candidate for candidate in self.top_candidates}
 		best_reachable_bonus = 0
 		for node in reversed(path):
 			#add the new node to set of candidates if it's not already there:
@@ -185,8 +229,9 @@ class ResetSelector:
 		#	 s.t. when there is little time left the exploitation bias is close to 1.
 
 	def normalizeArray(arr: ndarray)->ndarray:
-		#TODO:
-		pass
+		return (arr-arr.min())/(arr.max()-arr.min()) #minmax normalization
+		# return arr/np.sum(arr) #normalise according to L1
+		#return arr/np.linalg.norm(arr)#normalize according to L2
 
 	def calcRationScores(self)->list:
 		"""calculates the exploration scores of all candidates in 'self.top_candidates' and returns scores
@@ -208,6 +253,8 @@ class ResetSelector:
 		"""Calculate the 'uniqueness score' for each candidate in 'self.top_candidates'.
 			This score will be highest for nodes that are very different from the other nodes in 'top_candidates'."""
 		return self.normalizeArray(self.combinationDistancesFormula([c.node for c in self.top_candidates]))
+
+	# def getModuleDemandVector
 
 	def combinationDistancesFormula(node_list: list)->ndarray:
 		"""Implementation of formula for calculating 'distance' for all nodes to all other nodes.
