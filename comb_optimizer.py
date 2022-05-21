@@ -45,7 +45,7 @@ class CombOptim:
         CombOptim.getCombinationAsKey = KeyMannager(lambda combination: tuple([self.getModuleKey(module) for module in combination].sort()))
         """given a comination - meaning a set (unordered) of modules, return a unique key associated with it."""
 
-        CombOptim.getGroupSetAsKey = KeyMannager(lambda group_set: tuple([self.getModuleKey(group[0]) for group in group_set].sort()))
+        CombOptim.getGroupSetAsKey = KeyMannager(lambda group_set: tuple([self.getCombinationAsKey(group[0]) for group in group_set].sort()))
         """given a set of groups (the parameter is of type list, but the order is not considered
         to be a diffirentiating factor) return a unique key associated with the group set.
         Note how 'group[0]' is the one (and only) combination within the group."""
@@ -54,6 +54,14 @@ class CombOptim:
     def calc_root(initial_seperated):
         partitions = list(map(lambda i: separate_partitions(i), initial_seperated))
         return Node(partitions)
+
+    def get_num_components(self):
+        num_of_comp = 0
+        for group in self.root.partitions:
+            combination = group[0]  # each group has 1 combination
+            num_of_comp += len(combination)
+
+        return num_of_comp
 
     def get_root(self):
         return self.root
@@ -152,15 +160,15 @@ class ResetSelector:
                  * At any givem time, the candidate will save the maximum 'reachable_bonus' that it gets from 
                 any nodes that have been reached in runs starting from itself."""
             self.node = node
-            self.total_score = None
+            self.total_score = node.getPrice()
             self.reachable_bonus = 0
             self.hash = None
 
-    def __init__(self, k: int, num_componants: int):
+    def __init__(self, k: int, num_componants: int, root: Node):
         """ The reset-selector remembers a list of the best candidates (candidate nodes) seen so far,
             list is saved at: self.top_candidates.
             The parameter 'k' is the maximum allowed size for the candidate list."""
-        self.top_candidates = []#TODO: add root to list here...
+        self.top_candidates = [ResetSelector.Candidate(root)]
         self.k = k
         self.num_componants = num_componants
 
