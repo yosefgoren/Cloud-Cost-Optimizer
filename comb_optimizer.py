@@ -28,6 +28,8 @@ class KeyMannager:
     
 class CombOptim:
     def __init__(self, k: int, price_calc, initial_seperated):
+        Node.node_cache = {}
+
         CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
         """given a component, return a unique key associated with it, based on it's name."""
 
@@ -78,8 +80,8 @@ class CombOptim:
 
     def run(self):
         while not self.isDone():
-            # start_node = self.reset_sel.getStartNode()
-            start_node = self.root
+            start_node = self.reset_sel.getStartNode()
+            # start_node = self.root #for debugging without reset sel...
             path = self.search_algo.run(start_node)
             self.optim_set.update(path)
             self.reset_sel.update(path)
@@ -158,8 +160,11 @@ class OptimumSet:
     def update(self, visited_nodes: list):
         """considers the list of new nodes, such that the resulting set of nodes will be the 'k' best nodes
             seen at any update. The ordering the nodes is given by their 'getPrice()' method."""
-        candidates = self.table + [node.hashCode() for node in visited_nodes if node.hashCode() not in self.table]
-        candidates.sort(key=lambda hashcode: Node.node_cache[hashcode].getPrice())
+        try:
+            candidates = self.table + [node.hashCode() for node in visited_nodes if (not (node.hashCode() in self.table))]
+            candidates.sort(key=lambda hashcode: Node.node_cache[hashcode].getPrice())
+        except:
+            print(candidates)
         self.table = candidates[:self.k]
 
     def returnBest(self):
