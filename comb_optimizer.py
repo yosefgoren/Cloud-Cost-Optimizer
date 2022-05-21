@@ -3,6 +3,7 @@
 import numpy as np
 from numpy import ndarray
 # from urllib3 import Retry
+import time
 from fleet_classes import Offer
 from math import inf
 import copy
@@ -34,18 +35,19 @@ class CombOptim:
         self.optim_set = OptimumSet(10)
         self.reset_sel = ResetSelector(k,self.get_num_components(),self.root)
         self.search_algo = SearchAlgorithm()
+        self.start_time = time.time()
 
         CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
         """given a component, return a unique key associated with it, based on it's name."""
     
-        CombOptim.getModuleKey = KeyMannager(lambda module: tuple([self.getComponentKey(component) for component in module].sort()))
+        CombOptim.getModuleKey = KeyMannager(lambda module: tuple(sorted([self.getComponentKey(component for component in module)])))
         """give a unique key to a module - a module is a set of components and is distinct from another
         module if they do not have the same sets of components."""
     
-        CombOptim.getCombinationAsKey = KeyMannager(lambda combination: tuple([self.getModuleKey(module) for module in combination].sort()))
+        CombOptim.getCombinationAsKey = KeyMannager(lambda combination: tuple(sorted([self.getModuleKey(module) for module in combination])))
         """given a comination - meaning a set (unordered) of modules, return a unique key associated with it."""
 
-        CombOptim.getGroupSetAsKey = KeyMannager(lambda group_set: tuple([self.getCombinationAsKey(group[0]) for group in group_set].sort()))
+        CombOptim.getGroupSetAsKey = KeyMannager(lambda group_set: tuple(sorted([self.getCombinationAsKey(group[0]) for group in group_set])))
         """given a set of groups (the parameter is of type list, but the order is not considered
         to be a diffirentiating factor) return a unique key associated with the group set.
         Note how 'group[0]' is the one (and only) combination within the group."""
@@ -72,15 +74,14 @@ class CombOptim:
 
     def run(self):
         while not self.isDone():
-            start_node = self.reset_sel.getStartNode()
+            start_node = self.root
             path = self.search_algo.run(start_node)
             self.optim_set.update(path)
-            self.reset_sel.update(path)
-        return [node.offer for node in self.optim_set.returnBest()]
+            # self.reset_sel.update(path)
+        return [node.getOffer() for node in self.optim_set.returnBest()]
 
     def isDone(self)->bool:
-        #TODO
-        pass
+        return time.time()-self.start_time > 1
 
 class Node:
     node_cache = {}
@@ -90,6 +91,7 @@ class Node:
         self.offer = self.__calc_offer()
         self.price = self.offer.total_price
         self.sons = None
+        Node.node_cache[self.hashCode()] = self
 
     def __calc_offer(self):
         modules = []
@@ -126,8 +128,10 @@ class Node:
 
                             new_partition = copy.deepcopy(self.partitions)
                             new_partition[i][0] = new_combination
-
-                            self.sons.append(Node(new_partition))
+                            if new_combination in Node.node_cache:
+                                self.sons.append(Node.node_cache[self.hashCode()])
+                            else:
+                                self.sons.append(Node(new_partition))
 
 class OptimumSet:
     def __init__(self, k: int):
@@ -135,19 +139,19 @@ class OptimumSet:
             requires that the elements inserted will have the method 'getPrice' which should
             return a float."""
         self.k = k
-        self.table = []
+        self.table = [] # contain hashcode
     
     def update(self, visited_nodes: list):
         """considers the list of new nodes, such that the resulting set of nodes will be the 'k' best nodes
             seen at any update. The ordering the nodes is given by their 'getPrice()' method."""
-        candidates = self.table + visited_nodes
-        candidates.sort(key=lambda node: node.getPrice())
+        candidates = self.table + [node.hashCode() for node in visited_nodes if node.hashCode() not in self.table]
+        candidates.sort(key=lambda hashcode: Node.node_cache[hashcode].getPrice())
         self.table = candidates[:self.k]
 
     def returnBest(self):
         """returns the 'k' nodes with the best price seen so far.
         If not seen 'k' nodes yet, returns a list shorter than 'k'."""
-        return self.table
+        return [Node.node_cache[hashcode] for hashcode in self.table]
 
 
 class ResetSelector:
@@ -328,7 +332,7 @@ class SearchAlgorithm:
         downgrades = []
 
         for son in all_sons:
-            price_diff = son.getPrice() - cur_node_price
+            price_diff = cur_node_price - son.getPrice()
             if price_diff > 0:
                 improves.append([son, price_diff])
             else:
@@ -338,7 +342,7 @@ class SearchAlgorithm:
 
     def is_choosing_downgrades(self):
         """return if we will choose a downgrade son"""
-        prob_for_downgrade = 0.1 - 1.0 / (10 * np.exp(1 / (np.power(self.temperature, 0.9))))
+        prob_for_downgrade = 0.1 - 1.0 / (10 * np.exp(1.0 / (np.power(self.temperature, 0.9))))
         return (np.random.choice([0, 1], p=[1 - prob_for_downgrade, prob_for_downgrade])) == 1
 
     def update_temperature(self):
