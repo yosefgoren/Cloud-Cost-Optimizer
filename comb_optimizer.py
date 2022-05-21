@@ -28,6 +28,24 @@ class KeyMannager:
     
 class CombOptim:
     def __init__(self, k: int, price_calc, initial_seperated):
+        CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
+        """given a component, return a unique key associated with it, based on it's name."""
+
+        CombOptim.getModuleKey = KeyMannager(
+            lambda module: tuple(sorted([self.getComponentKey(component) for component in module])))
+        """give a unique key to a module - a module is a set of components and is distinct from another
+        module if they do not have the same sets of components."""
+
+        CombOptim.getCombinationAsKey = KeyMannager(
+            lambda combination: tuple(sorted([self.getModuleKey(module) for module in combination])))
+        """given a comination - meaning a set (unordered) of modules, return a unique key associated with it."""
+
+        CombOptim.getGroupSetAsKey = KeyMannager(
+            lambda group_set: tuple(sorted([self.getCombinationAsKey(group[0]) for group in group_set])))
+        """given a set of groups (the parameter is of type list, but the order is not considered
+        to be a diffirentiating factor) return a unique key associated with the group set.
+        Note how 'group[0]' is the one (and only) combination within the group."""
+
         """'price_calc' is a function: (Offer)-->float"""
         CombOptim.price_calc_func = price_calc
         self.root = CombOptim.calc_root(initial_seperated)
@@ -36,20 +54,7 @@ class CombOptim:
         self.search_algo = SearchAlgorithm()
         self.start_time = time.time()
 
-        CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
-        """given a component, return a unique key associated with it, based on it's name."""
-    
-        CombOptim.getModuleKey = KeyMannager(lambda module: tuple(sorted([self.getComponentKey(component) for component in module])))
-        """give a unique key to a module - a module is a set of components and is distinct from another
-        module if they do not have the same sets of components."""
-    
-        CombOptim.getCombinationAsKey = KeyMannager(lambda combination: tuple(sorted([self.getModuleKey(module) for module in combination])))
-        """given a comination - meaning a set (unordered) of modules, return a unique key associated with it."""
 
-        CombOptim.getGroupSetAsKey = KeyMannager(lambda group_set: tuple(sorted([self.getCombinationAsKey(group[0]) for group in group_set])))
-        """given a set of groups (the parameter is of type list, but the order is not considered
-        to be a diffirentiating factor) return a unique key associated with the group set.
-        Note how 'group[0]' is the one (and only) combination within the group."""
 
     @staticmethod
     def calc_root(initial_seperated):
@@ -73,10 +78,11 @@ class CombOptim:
 
     def run(self):
         while not self.isDone():
+            # start_node = self.reset_sel.getStartNode()
             start_node = self.root
             path = self.search_algo.run(start_node)
             self.optim_set.update(path)
-            # self.reset_sel.update(path)
+            self.reset_sel.update(path)
         return [node.getOffer() for node in self.optim_set.returnBest()]
 
     def isDone(self)->bool:
@@ -113,6 +119,10 @@ class Node:
 
     def hashCode(self)->int:
         return CombOptim.getGroupSetAsKey(self.partitions)
+
+    @staticmethod
+    def hashCodeOfPartition(partition)->int:
+        return CombOptim.getGroupSetAsKey(partition)
       
       
     def calcAllSons(self):
@@ -132,10 +142,10 @@ class Node:
                             new_partition = copy.deepcopy(self.partitions)
                             new_partition[i][0] = new_combination
 
-                            if new_combination in Node.node_cache:
-                                self.sons.append(Node.node_cache[self.hashCode()])
+                            if Node.hashCodeOfPartition(new_partition) in Node.node_cache:
+                                self.sons.append(Node.node_cache[Node.hashCodeOfPartition(new_partition)])
                             else:
-                                self.sons.append(Node(new_partition, self.getDepth()))
+                                self.sons.append(Node(new_partition, self.getDepth() + 1))
 
 class OptimumSet:
     def __init__(self, k: int):
