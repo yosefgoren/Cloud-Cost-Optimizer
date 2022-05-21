@@ -72,15 +72,18 @@ class CombOptim:
 
     def run(self):
         while not self.isDone():
-            start_node = self.reset_sel.getStartNode()
+            start_node = self.root
             path = self.search_algo.run(start_node)
-            self.optim_set.update(path)
-            self.reset_sel.update(path)
-        return [node.offer for node in self.optim_set.returnBest()]
+            print("------------------")
+            for node in path:
+                print(node.getPrice())
+            print("------------------")
+            # self.optim_set.update(path)
+            # self.reset_sel.update(path)
+        # return [node.offer for node in self.optim_set.returnBest()]
 
     def isDone(self)->bool:
-        #TODO
-        pass
+        return False
 
 class Node:
     node_cache = {}

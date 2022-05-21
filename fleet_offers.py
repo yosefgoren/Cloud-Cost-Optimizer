@@ -228,7 +228,7 @@ def get_fleet_offers(
 		if one_item:
 			best=None
 
-		# # Brute-Force Algorithm- optimal results / more complex
+		# Brute-Force Algorithm- optimal results / more complex
 		# groups = create_groups(
 		# 	updated_params, app_size
 		# )  ## creates all the possible combinations
@@ -246,9 +246,9 @@ def get_fleet_offers(
 		return optim.run()
 
 		# First Step- match an instance for every component
-		firstBranch = simplest_comb(updated_params, app_size)
-		for combination in firstBranch:
-			res += calculator.get_offers(combination, region_to_check, pricing, architecture, type_major)
+		# firstBranch = simplest_comb(updated_params, app_size)
+		# for combination in firstBranch:
+		# 	res += calculator.get_offers(combination, region_to_check, pricing, architecture, type_major)
 
 		# ## one_pair Algorithm
 		# pairs = one_pair(updated_params, app_size)
