@@ -56,8 +56,6 @@ class CombOptim:
         self.search_algo = SearchAlgorithm()
         self.start_time = time.time()
 
-
-
     @staticmethod
     def calc_root(initial_seperated):
         partitions = list(map(lambda i: separate_partitions(i), initial_seperated))
@@ -79,16 +77,21 @@ class CombOptim:
         return CombOptim.price_calc_func(offer)
 
     def run(self):
+        if self.root.getPrice() == np.inf:
+            print("CombOptim.run: infinite price for root, returning empty result.")
+            return []
+        print("comb optimizer starting run.")
         while not self.isDone():
             start_node = self.reset_sel.getStartNode()
             # start_node = self.root #for debugging without reset sel...
             path = self.search_algo.run(start_node)
-            self.optim_set.update(path)
-            self.reset_sel.update(path)
+            if len(path) != 0:
+                self.optim_set.update(path)
+                self.reset_sel.update(path)
         return [node.getOffer() for node in self.optim_set.returnBest()]
 
     def isDone(self)->bool:
-        return time.time()-self.start_time > 1
+        return time.time()-self.start_time > 4
 
 class Node:
     node_cache = {}
@@ -97,7 +100,16 @@ class Node:
         self.node_depth = node_depth
         self.partitions = copy.deepcopy(partitions)
         self.offer = self.__calc_offer()
-        self.price = self.offer.total_price
+        if self.offer is not None:
+            self.price = self.offer.total_price
+        else:
+            self.price = np.inf
+
+        # try:
+        #     self.price = self.offer.total_price
+        # except:
+        #     print("Node.init: error: partitions=", self.partitions)
+        #     exit(1)
         self.sons = None
         Node.node_cache[self.hashCode()] = self
 
@@ -160,11 +172,8 @@ class OptimumSet:
     def update(self, visited_nodes: list):
         """considers the list of new nodes, such that the resulting set of nodes will be the 'k' best nodes
             seen at any update. The ordering the nodes is given by their 'getPrice()' method."""
-        try:
-            candidates = self.table + [node.hashCode() for node in visited_nodes if (not (node.hashCode() in self.table))]
-            candidates.sort(key=lambda hashcode: Node.node_cache[hashcode].getPrice())
-        except:
-            print(candidates)
+        candidates = self.table + [node.hashCode() for node in visited_nodes if (not (node.hashCode() in self.table))]
+        candidates.sort(key=lambda hashcode: Node.node_cache[hashcode].getPrice())
         self.table = candidates[:self.k]
 
     def returnBest(self):
@@ -184,7 +193,7 @@ class ResetSelector:
                 any nodes that have been reached in runs starting from itself."""
             self.node = node
             self.total_score = None
-            self.reachable_bonus = self.node.getPrice()
+            self.subtree_price_penalty = -self.node.getPrice()
             self.hash = None
 
     def __init__(self, k: int, num_componants: int, root: Node):
@@ -196,11 +205,11 @@ class ResetSelector:
         self.num_componants = num_componants
 
         #reachable_bonus_formula_base is calculated here so we only have to calculate it once.
-        self.reachable_bonus_base = 0.1**(1.0/num_componants)
+        self.penalty_base = 10**(1.0/num_componants)
         
         #hyperparameters:
         self.exploitation_score_price_bias = 0.5
-        self.exploration_score_depth_bias = 0.5
+        self.exploration_score_depth_bias = 1
 
         self.updateTotalScores()
 
@@ -209,8 +218,17 @@ class ResetSelector:
             - the reset-selector will return the the node it thinks the next run should start from."""
         scores_list = [candidate.total_score for candidate in self.top_candidates]
         scores_arr = np.array(scores_list)
-        selected_node_idx = sampleFromWeighted(scores_arr)
-        return self.top_candidates[selected_node_idx].node
+        try:
+            selected_node_idx = sampleFromWeighted(scores_arr)
+        except:
+            print("sample from weighted raised err, scores list: ", scores_list)
+            exit(1)
+        selected_candidate = self.top_candidates[selected_node_idx]
+        print(f"ResetSelector.getStartNode;\
+    hash: {selected_candidate.node.hashCode()}\
+    , depth: {selected_candidate.node.getDepth()}\
+    , total_score: {selected_candidate.total_score}")
+        return selected_candidate.node
 
     def update(self, path: list):
         """'path' is a list of nodes seen in the last run the serach algorithm.
@@ -222,24 +240,25 @@ class ResetSelector:
             of the candidates saved within it."""
         #consider all nodes seen in last path as candidates:
         candidate_dict = {candidate.node.hashCode():candidate for candidate in self.top_candidates}
-        best_reachable_bonus = 0
+        last_candidate = None
         for node in reversed(path):
             #add the new node to set of candidates if it's not already there:
             node_hash = node.hashCode()
             if not node_hash in candidate_dict:
                 candidate_dict[node_hash] = ResetSelector.Candidate(node)
-            node_candidate = candidate_dict[node_hash]
+            candidate = candidate_dict[node_hash]
             
-            #update the best reachable bonus for the rest of the path:
-            best_reachable_bonus = max(best_reachable_bonus, node_candidate.reachable_bonus)
-            #update the candidate's reachable_bonus to be the best bonus seen for it:
-            node_candidate.reachable_bonus = best_reachable_bonus
-            #apply diminishing effect to 'best_reachable_bonus':
-            best_reachable_bonus *= self.reachable_bonus_base
+            #update the subtree penalty of the candidate base on path:
+            if last_candidate != None:
+                candidate.subtree_price_penalty = \
+                    max(candidate.subtree_price_penalty, last_candidate.subtree_price_penalty*self.penalty_base)
+            last_candidate = candidate
         
         #update the list of top candidates and re-calculate total scores for all candidates currently saved:
         self.top_candidates = [item for item in candidate_dict.values()]
         self.updateTotalScores()
+        if 0 in [c.total_score for c in self.top_candidates]:
+            raise Exception("ResetSelector.update: error: a candidates has a total score of 0.")
         
         #sort the list of top candidates and throw away the candidates that are not in the top k:
         self.top_candidates.sort(key=lambda candidate: candidate.total_score)
@@ -258,7 +277,7 @@ class ResetSelector:
     def getCurrentTationBias(self)->float:
         """get the current exploitation bias, this represents the current preference of the algorithm for exploitation
             over exploration."""
-        return 0.5
+        return 0.9
         #TODO: we probably want an implementation based on how much time the algorithm has to run,
         #	 s.t. when there is little time left the exploitation bias is close to 1.
 
@@ -310,8 +329,10 @@ class ResetSelector:
     def calcTationScores(self)->ndarray:
         """calculates the explotation scores of all candidates in 'self.top_candidates' and returns scores
             in an array of floats with a corresponding order."""
-        reachable_bonus_scores = ResetSelector.normalizeArray(np.array([c.reachable_bonus for c in self.top_candidates]))
-        price_scores = ResetSelector.normalizeArray(np.array([c.node.price for c in self.top_candidates]))
+        reachable_bonus_scores = ResetSelector.normalizeArray(
+            np.array([c.subtree_price_penalty for c in self.top_candidates])
+        )
+        price_scores = ResetSelector.normalizeArray(np.array([-c.node.price for c in self.top_candidates]))
         exploitation_scores = ResetSelector.normalizeArray(self.exploitation_score_price_bias*price_scores
             +(1-self.exploitation_score_price_bias)*reachable_bonus_scores)
     
@@ -330,6 +351,8 @@ class SearchAlgorithm:
         next_node = start_node
 
         while True:
+            if next_node.getPrice() == np.inf:
+                return path
             path.append(next_node)
             next_node = self.get_next(next_node)
             self.update_temperature()
@@ -381,7 +404,11 @@ class SearchAlgorithm:
 
 
 def sampleFromWeighted(weight_arr: np.ndarray) -> int:
+    if np.NaN in weight_arr:
+        raise Exception("sampleFromWeighted: error: weight_arr contains NaN")
     sum_array = weight_arr.sum()
+    if sum_array == 0:
+        raise Exception("sampleFromWeighter: error: some of weights is 0")
     weight_arr = weight_arr / sum_array
     index = np.random.choice(weight_arr.shape[0], p=weight_arr)
     return index

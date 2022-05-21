@@ -224,28 +224,25 @@ def get_fleet_offers(
 					)
 				p.storage_offer = storage_offer
 
-		one_item = False
-		if one_item:
-			best=None
+		BRUTE = False
+		if BRUTE:# Brute-Force Algorithm- optimal results / more complex
+			start_time = time.time()
+			groups = create_groups(
+				updated_params, app_size
+			)  ## creates all the possible combinations
+			for (
+				combination
+			) in (
+				groups
+			):  ## for each combination (group) find N (=3) best offers ##Algorithm for optimal results
+				res += calculator.get_offers(
+					combination, region_to_check, pricing, architecture, type_major
+				)
+			print(time.time() - start_time)
 
-		# Brute-Force Algorithm- optimal results / more complex
-		# start_time = time.time()
-		# groups = create_groups(
-		# 	updated_params, app_size
-		# )  ## creates all the possible combinations
-		# for (
-		# 	combination
-		# ) in (
-		# 	groups
-		# ):  ## for each combination (group) find N (=3) best offers ##Algorithm for optimal results
-		# 	res += calculator.get_offers(
-		# 		combination, region_to_check, pricing, architecture, type_major
-		# 	)
-		# print(time.time() - start_time)
-
-		#our code
-		optim = CombOptim(3, lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major), updated_params)
-		res += optim.run()
+		else:#our code
+			optim = CombOptim(30, lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major), updated_params)
+			res += optim.run()
 
 		# First Step- match an instance for every component
 		# firstBranch = simplest_comb(updated_params, app_size)

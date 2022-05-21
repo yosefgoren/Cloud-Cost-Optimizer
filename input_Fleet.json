@@ -11,9 +11,9 @@
             "share": true,
             "components": [
                 {
-                    "memory": 8,
-                    "vCPUs": 2,
-                    "network": 5,
+                    "memory": 4,
+                    "vCPUs": 1,
+                    "network": 3,
                     "behavior": "terminate",
                     "frequency": "2",
                     "storageType": null,
@@ -27,7 +27,7 @@
                     "frequency": "3",
                     "storageType": null,
                     "burstable": true,
-                    "name": "comp2"
+                    "name": "Comp2"
                 },
                                 {
                     "memory": 8,
@@ -37,13 +37,13 @@
                     "frequency": "3",
                     "storageType": null,
                     "burstable": true,
-                    "name": "comp5"
+                    "name": "Comp3"
                 }
             ]
         },
         {
             "app": "App2",
-            "share": false,
+            "share": true,
             "components": [
                 {
                     "memory": 10,
@@ -53,23 +53,63 @@
                     "frequency": "4",
                     "storageType": null,
                     "burstable": true,
-                    "name": "Comp3"
+                    "name": "Comp4"
                 }
             ]
         },
         {
-            "app": "App3",
-            "share": false,
+            "app": "App4",
+            "share": true,
             "components": [
                 {
                     "memory": 2,
                     "vCPUs": 2,
-                    "name": "Comp4"
+                    "name": "Comp5"
+                },
+                {
+                    "memory": 8,
+                    "vCPUs": 4,
+                    "name": "Comp6"
+                },
+                {
+                    "memory": 32,
+                    "vCPUs": 8,
+                    "name": "Comp7"
+                },
+                                {
+                    "memory": 3,
+                    "vCPUs": 5,
+                    "name": "Comp8"
                 },
                 {
                     "memory": 2,
                     "vCPUs": 2,
-                    "name": "com6"
+                    "name": "Comp9"
+                },
+                {
+                    "memory": 8,
+                    "vCPUs": 4,
+                    "name": "Comp10"
+                },
+                {
+                    "memory": 32,
+                    "vCPUs": 8,
+                    "name": "Comp11"
+                },
+                                {
+                    "memory": 3,
+                    "vCPUs": 5,
+                    "name": "Comp12"
+                },
+                {
+                    "memory": 32,
+                    "vCPUs": 8,
+                    "name": "Comp13"
+                },
+                                {
+                    "memory": 3,
+                    "vCPUs": 5,
+                    "name": "Comp14"
                 }
             ]
         }
