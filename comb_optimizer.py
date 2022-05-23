@@ -51,7 +51,7 @@ class CombOptim:
         """'price_calc' is a function: (Offer)-->float"""
         CombOptim.price_calc_func = price_calc
         self.root = CombOptim.calc_root(initial_seperated)
-        self.optim_set = OptimumSet(10)
+        self.optim_set = OptimumSet(2)
         self.reset_sel = ResetSelector(k,self.get_num_components(),self.root)
         self.search_algo = SearchAlgorithm()
         self.start_time = time.time()
@@ -80,7 +80,7 @@ class CombOptim:
         if self.root.getPrice() == np.inf:
             print("CombOptim.run: infinite price for root, returning empty result.")
             return []
-        print("comb optimizer starting run.")
+        # print("comb optimizer starting run.")
         while not self.isDone():
             start_node = self.reset_sel.getStartNode()
             # start_node = self.root #for debugging without reset sel...
@@ -91,7 +91,7 @@ class CombOptim:
         return [node.getOffer() for node in self.optim_set.returnBest()]
 
     def isDone(self)->bool:
-        return time.time()-self.start_time > 4
+        return time.time()-self.start_time > 2
 
 class Node:
     node_cache = {}
@@ -105,11 +105,6 @@ class Node:
         else:
             self.price = np.inf
 
-        # try:
-        #     self.price = self.offer.total_price
-        # except:
-        #     print("Node.init: error: partitions=", self.partitions)
-        #     exit(1)
         self.sons = None
         Node.node_cache[self.hashCode()] = self
 
@@ -224,10 +219,10 @@ class ResetSelector:
             print("sample from weighted raised err, scores list: ", scores_list)
             exit(1)
         selected_candidate = self.top_candidates[selected_node_idx]
-        print(f"ResetSelector.getStartNode;\
-    hash: {selected_candidate.node.hashCode()}\
-    , depth: {selected_candidate.node.getDepth()}\
-    , total_score: {selected_candidate.total_score}")
+    #     print(f"ResetSelector.getStartNode;\
+    # hash: {selected_candidate.node.hashCode()}\
+    # , depth: {selected_candidate.node.getDepth()}\
+    # , total_score: {selected_candidate.total_score}")
         return selected_candidate.node
 
     def update(self, path: list):
@@ -362,11 +357,15 @@ class SearchAlgorithm:
     def get_next(self, node: Node) -> Node:
         """get the chosen son to continue to in the next iteration"""
         node.calcAllSons()
+        flag = self.is_choosing_downgrades()
         improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(node.sons, node.getPrice())
-        if (downgrades.shape[0] != 0) and self.is_choosing_downgrades():
+        if (downgrades.shape[0] != 0) and flag:
             return SearchAlgorithm.get_son_by_weights(downgrades)
-        else:
+        elif improves.shape[0] != 0:
             return SearchAlgorithm.get_son_by_weights(improves)
+        else:
+            return None
+
 
     @staticmethod
     def get_son_by_weights(sons):
@@ -405,10 +404,13 @@ class SearchAlgorithm:
 
 def sampleFromWeighted(weight_arr: np.ndarray) -> int:
     if np.NaN in weight_arr:
+        print(weight_arr)
         raise Exception("sampleFromWeighted: error: weight_arr contains NaN")
+
     sum_array = weight_arr.sum()
     if sum_array == 0:
-        raise Exception("sampleFromWeighter: error: some of weights is 0")
-    weight_arr = weight_arr / sum_array
-    index = np.random.choice(weight_arr.shape[0], p=weight_arr)
+        raise Exception("sampleFromWeighter: error: sum of weights is 0")
+    weight_arr1 = weight_arr / sum_array
+    index = np.random.choice(weight_arr1.shape[0], p=weight_arr1)
+
     return index

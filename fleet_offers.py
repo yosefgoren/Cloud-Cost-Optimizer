@@ -181,11 +181,14 @@ class FleetCalculator:
 		
 		instances = []
 		for i in group.remaining_partitions:
-			instances.append(
-				self.match_group(i, region, pricing, architecture, type_major)
-			) 
-		instances = list(filter(None, instances))
-		
+			new_instance = self.match_group(i, region, pricing, architecture, type_major)
+			if new_instance is None:
+				print("get_best_price return None")
+				return None
+			else:
+				instances.append(new_instance)
+
+
 		best_group = None
 		for partition in partition2(instances):
 			new_group = group.copy_group()
@@ -241,8 +244,11 @@ def get_fleet_offers(
 			print(time.time() - start_time)
 
 		else:#our code
+			print(region_to_check)
 			optim = CombOptim(30, lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major), updated_params)
 			res += optim.run()
+			print()
+
 
 		# First Step- match an instance for every component
 		# firstBranch = simplest_comb(updated_params, app_size)
