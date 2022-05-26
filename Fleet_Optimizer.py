@@ -77,9 +77,18 @@ def serialize_component(component: ComponentOffer):
     return result
 
 
-def run_optimizer(candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path):
+def run_optimizer(
+    candidate_list_size,
+    time_per_region,
+    exploitation_score_price_bias,
+    exploration_score_depth_bias,
+    exploitation_bias,
+    input_file_name = "input_Fleet.json",
+    output_file_name="FleetResults.json",
+    stats_file_name="Run_Statistic.sqlite3"
+):
     """Run Optimizer- Fleet calculator."""
-    file = open("input_Fleet.json")
+    file = open(input_file_name)
     filter = json.load(file)
     pricing = filter["spot/onDemand"]
     filter_instances = (
@@ -128,7 +137,7 @@ def run_optimizer(candidate_list_size,time_per_region,exploitation_score_price_b
         print("Couldnt find any match")
     else:
         print("Optimizer has found you the optimal configuration. check it out")
-    with open("FleetResults.json", "w", encoding="utf-8") as f:
+    with open(output_file_name, "w", encoding="utf-8") as f:
         json.dump(res, f, ensure_ascii=False, indent=4)
 
 
@@ -138,5 +147,17 @@ if __name__ == "__main__":
     exploitation_score_price_bias = 0.5
     exploration_score_depth_bias = 1
     exploitation_bias = 0.5
-    output_path = "file.sqlite3"
-    run_optimizer(candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path)
+    input_file_name = "input_Fleet.json"
+    output_file_name = "FleetResults.json"
+    stats_file_name = "Run_Statistic.sqlite"
+
+    run_optimizer(
+        candidate_list_size,
+        time_per_region,
+        exploitation_score_price_bias,
+        exploration_score_depth_bias,
+        exploitation_bias,
+        input_file_name,
+        output_file_name,
+        stats_file_name
+    )
