@@ -27,8 +27,12 @@ class KeyMannager:
         return self.key_mappings[element_id]
     
 class CombOptim:
-    def __init__(self, k: int, price_calc, initial_seperated):
+    def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
+                 region, exploitation_score_price_bias, exploration_score_depth_bias,
+                 exploitation_bias, output_path):
         Node.node_cache = {}
+        if(region == "ap-northeast-2"):
+            print("aaa")
 
         CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
         """given a component, return a unique key associated with it, based on it's name."""
@@ -51,10 +55,17 @@ class CombOptim:
         """'price_calc' is a function: (Offer)-->float"""
         CombOptim.price_calc_func = price_calc
         self.root = CombOptim.calc_root(initial_seperated)
-        self.optim_set = OptimumSet(2)
-        self.reset_sel = ResetSelector(k,self.get_num_components(),self.root)
+        self.optim_set = OptimumSet(1)
+        self.reset_sel = ResetSelector(candidate_list_size,self.get_num_components(),self.root,exploitation_score_price_bias,  exploration_score_depth_bias,exploitation_bias)
         self.search_algo = SearchAlgorithm()
         self.start_time = time.time()
+        self.time_per_region = time_per_region
+        self.region = region
+        self.exploitation_score_price_bias = exploitation_score_price_bias
+        self.exploration_score_depth_bias = exploration_score_depth_bias
+        self.exploitation_bias=exploitation_bias
+        self.output_path=output_path
+
 
     @staticmethod
     def calc_root(initial_seperated):
@@ -91,7 +102,7 @@ class CombOptim:
         return [node.getOffer() for node in self.optim_set.returnBest()]
 
     def isDone(self)->bool:
-        return time.time()-self.start_time > 2
+        return time.time()-self.start_time > self.time_per_region
 
 class Node:
     node_cache = {}
@@ -107,6 +118,10 @@ class Node:
 
         self.sons = None
         Node.node_cache[self.hashCode()] = self
+        print(f"Node.__init__;\
+        hash: {self.hashCode()}\
+        , depth: {self.getDepth()}\
+        , total_score: {self.price}")
 
     def __calc_offer(self):
         modules = []
@@ -191,20 +206,21 @@ class ResetSelector:
             self.subtree_price_penalty = -self.node.getPrice()
             self.hash = None
 
-    def __init__(self, k: int, num_componants: int, root: Node):
+    def __init__(self, candidate_list_size: int, num_componants: int, root: Node , exploitation_score_price_bias , exploration_score_depth_bias,exploitation_bias):
         """ The reset-selector remembers a list of the best candidates (candidate nodes) seen so far,
             list is saved at: self.top_candidates.
             The parameter 'k' is the maximum allowed size for the candidate list."""
         self.top_candidates = [ResetSelector.Candidate(root)]
-        self.k = k
+        self.candidate_list_size = candidate_list_size
         self.num_componants = num_componants
 
         #reachable_bonus_formula_base is calculated here so we only have to calculate it once.
         self.penalty_base = 10**(1.0/num_componants)
         
         #hyperparameters:
-        self.exploitation_score_price_bias = 0.5
-        self.exploration_score_depth_bias = 1
+        self.exploitation_score_price_bias = exploitation_score_price_bias
+        self.exploration_score_depth_bias = exploration_score_depth_bias
+        self.exploitation_bias=exploitation_bias
 
         self.updateTotalScores()
 
@@ -219,10 +235,10 @@ class ResetSelector:
             print("sample from weighted raised err, scores list: ", scores_list)
             exit(1)
         selected_candidate = self.top_candidates[selected_node_idx]
-    #     print(f"ResetSelector.getStartNode;\
-    # hash: {selected_candidate.node.hashCode()}\
-    # , depth: {selected_candidate.node.getDepth()}\
-    # , total_score: {selected_candidate.total_score}")
+        print(f"ResetSelector.getStartNode;\
+    hash: {selected_candidate.node.hashCode()}\
+    , depth: {selected_candidate.node.getDepth()}\
+    , total_score: {selected_candidate.total_score}")
         return selected_candidate.node
 
     def update(self, path: list):
@@ -257,7 +273,7 @@ class ResetSelector:
         
         #sort the list of top candidates and throw away the candidates that are not in the top k:
         self.top_candidates.sort(key=lambda candidate: candidate.total_score)
-        self.top_candidates = self.top_candidates[:self.k]
+        self.top_candidates = self.top_candidates[:self.candidate_list_size]
         
     def updateTotalScores(self)->list:
         """updates the total scores (floats) of all candidates in 'self.top_candidates'."""
@@ -272,7 +288,7 @@ class ResetSelector:
     def getCurrentTationBias(self)->float:
         """get the current exploitation bias, this represents the current preference of the algorithm for exploitation
             over exploration."""
-        return 0.9
+        return self.exploitation_bias
         #TODO: we probably want an implementation based on how much time the algorithm has to run,
         #	 s.t. when there is little time left the exploitation bias is close to 1.
 

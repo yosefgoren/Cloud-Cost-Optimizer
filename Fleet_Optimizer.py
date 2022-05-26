@@ -77,7 +77,7 @@ def serialize_component(component: ComponentOffer):
     return result
 
 
-def run_optimizer():
+def run_optimizer(candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path):
     """Run Optimizer- Fleet calculator."""
     file = open("input_Fleet.json")
     filter = json.load(file)
@@ -117,6 +117,8 @@ def run_optimizer():
         architecture,
         type_major,
         filter_instances,
+        candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path
+
     )
     # print('Connecting to boto3')
     res = list(
@@ -131,4 +133,10 @@ def run_optimizer():
 
 
 if __name__ == "__main__":
-    run_optimizer()
+    candidate_list_size = 30
+    time_per_region = 1
+    exploitation_score_price_bias = 0.5
+    exploration_score_depth_bias = 1
+    exploitation_bias = 0.5
+    output_path = "file.sqlite3"
+    run_optimizer(candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path)

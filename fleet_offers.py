@@ -201,7 +201,8 @@ class FleetCalculator:
 
 
 def get_fleet_offers(
-	params, region, os, app_size, ec2, pricing, architecture, type_major
+	params, region, os, app_size, ec2, pricing, architecture, type_major,
+	candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path
 ):
 	"""Get fleet offers function."""
 	res = []
@@ -245,8 +246,9 @@ def get_fleet_offers(
 
 		else:#our code
 			print(region_to_check)
-			optim = CombOptim(30, lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major), updated_params)
-			res += optim.run()
+			price_calc = lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major)
+			res += CombOptim(candidate_list_size,price_calc , updated_params , time_per_region , region_to_check ,exploitation_score_price_bias ,
+							  exploration_score_depth_bias, exploitation_bias,output_path ).run()
 			print()
 
 

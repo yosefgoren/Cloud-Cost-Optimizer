@@ -1,257 +1,363 @@
 [
     {
-        "price": 0.024,
+        "price": 1.897,
         "EC2 Type": "onDemand",
-        "region": "eu-south-1",
+        "region": "ap-south-1",
         "instances": [
             {
-                "onDemandPrice": 0.024,
-                "region": "eu-south-1",
-                "cpu": "2",
+                "onDemandPrice": 0.188,
+                "region": "ap-south-1",
+                "cpu": "8",
                 "ebsOnly": true,
-                "family": "General purpose",
-                "memory": "2",
-                "network": "Up to 5 Gigabit",
+                "family": "Compute optimized",
+                "memory": "16",
+                "network": "Up to 10 Gigabit",
                 "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "small",
+                "typeMajor": "c5a",
+                "typeMinor": "2xlarge",
                 "storage": "EBS only",
-                "typeName": "t3.small",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
-                "processorArchitecture": "64-bit",
+                "typeName": "c5a.2xlarge",
+                "physicalProcessor": "AMD EPYC 7R32",
+                "processorArchitecture": "32-bit or 64-bit",
                 "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0072,
-                "Price_per_CPU": 0.0036,
-                "Price_per_memory": 0.0036,
+                "discount": 44,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.1056,
+                "Price_per_CPU": 0.0132,
+                "Price_per_memory": 0.0066,
+                "components": [
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.188,
+                "region": "ap-south-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "16",
+                "network": "Up to 10 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c5a",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "c5a.2xlarge",
+                "physicalProcessor": "AMD EPYC 7R32",
+                "processorArchitecture": "32-bit or 64-bit",
+                "Architecture": "x86_64",
+                "discount": 44,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.1056,
+                "Price_per_CPU": 0.0132,
+                "Price_per_memory": 0.0066,
                 "components": [
                     {
                         "appName": "App4",
                         "componentName": "Comp5"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "price": 0.0251,
-        "EC2 Type": "onDemand",
-        "region": "me-south-1",
-        "instances": [
+            },
             {
-                "onDemandPrice": 0.0251,
-                "region": "me-south-1",
-                "cpu": "2",
+                "onDemandPrice": 0.188,
+                "region": "ap-south-1",
+                "cpu": "8",
                 "ebsOnly": true,
-                "family": "General purpose",
-                "memory": "2",
-                "network": "Up to 5 Gigabit",
+                "family": "Compute optimized",
+                "memory": "16",
+                "network": "Up to 10 Gigabit",
                 "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "small",
+                "typeMajor": "c5a",
+                "typeMinor": "2xlarge",
                 "storage": "EBS only",
-                "typeName": "t3.small",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
-                "processorArchitecture": "64-bit",
+                "typeName": "c5a.2xlarge",
+                "physicalProcessor": "AMD EPYC 7R32",
+                "processorArchitecture": "32-bit or 64-bit",
                 "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0075,
-                "Price_per_CPU": 0.00375,
-                "Price_per_memory": 0.00375,
+                "discount": 44,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.1056,
+                "Price_per_CPU": 0.0132,
+                "Price_per_memory": 0.0066,
                 "components": [
                     {
                         "appName": "App4",
-                        "componentName": "Comp5"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "price": 0.0251,
-        "EC2 Type": "onDemand",
-        "region": "me-south-1",
-        "instances": [
-            {
-                "onDemandPrice": 0.0251,
-                "region": "me-south-1",
-                "cpu": "2",
-                "ebsOnly": true,
-                "family": "General purpose",
-                "memory": "2",
-                "network": "Up to 5 Gigabit",
-                "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "small",
-                "storage": "EBS only",
-                "typeName": "t3.small",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
-                "processorArchitecture": "64-bit",
-                "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0075,
-                "Price_per_CPU": 0.00375,
-                "Price_per_memory": 0.00375,
-                "components": [
+                        "componentName": "Comp8"
+                    },
                     {
                         "appName": "App4",
                         "componentName": "Comp9"
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "price": 0.1917,
-        "EC2 Type": "onDemand",
-        "region": "eu-south-1",
-        "instances": [
+            },
             {
-                "onDemandPrice": 0.1917,
-                "region": "eu-south-1",
-                "cpu": "4",
+                "onDemandPrice": 1.333,
+                "region": "ap-south-1",
+                "cpu": "48",
                 "ebsOnly": true,
                 "family": "General purpose",
-                "memory": "16",
-                "network": "Up to 5 Gigabit",
+                "memory": "192",
+                "network": "10 Gigabit",
                 "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "xlarge",
+                "typeMajor": "m5a",
+                "typeMinor": "12xlarge",
                 "storage": "EBS only",
-                "typeName": "t3.xlarge",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "typeName": "m5a.12xlarge",
+                "physicalProcessor": "AMD EPYC 7571",
                 "processorArchitecture": "64-bit",
                 "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0575,
-                "Price_per_CPU": 0.014375,
-                "Price_per_memory": 0.00359375,
+                "discount": 50,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.6653,
+                "Price_per_CPU": 0.013860416666666667,
+                "Price_per_memory": 0.0034651041666666667,
                 "components": [
                     {
                         "appName": "App4",
+                        "componentName": "Comp11"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    },
+                    {
+                        "appName": "App4",
                         "componentName": "Comp10"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
                     }
                 ]
             }
         ]
     },
     {
-        "price": 0.2006,
+        "price": 1.9898,
         "EC2 Type": "onDemand",
-        "region": "me-south-1",
+        "region": "ap-south-1",
         "instances": [
             {
-                "onDemandPrice": 0.2006,
-                "region": "me-south-1",
-                "cpu": "4",
+                "onDemandPrice": 0.188,
+                "region": "ap-south-1",
+                "cpu": "8",
                 "ebsOnly": true,
-                "family": "General purpose",
+                "family": "Compute optimized",
                 "memory": "16",
-                "network": "Up to 5 Gigabit",
+                "network": "Up to 10 Gigabit",
                 "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "xlarge",
+                "typeMajor": "c5a",
+                "typeMinor": "2xlarge",
                 "storage": "EBS only",
-                "typeName": "t3.xlarge",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
-                "processorArchitecture": "64-bit",
+                "typeName": "c5a.2xlarge",
+                "physicalProcessor": "AMD EPYC 7R32",
+                "processorArchitecture": "32-bit or 64-bit",
                 "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0602,
-                "Price_per_CPU": 0.01505,
-                "Price_per_memory": 0.0037625,
+                "discount": 44,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.1056,
+                "Price_per_CPU": 0.0132,
+                "Price_per_memory": 0.0066,
                 "components": [
                     {
-                        "appName": "App4",
-                        "componentName": "Comp10"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "price": 0.2157,
-        "EC2 Type": "onDemand",
-        "region": "eu-south-1",
-        "instances": [
-            {
-                "onDemandPrice": 0.024,
-                "region": "eu-south-1",
-                "cpu": "2",
-                "ebsOnly": true,
-                "family": "General purpose",
-                "memory": "2",
-                "network": "Up to 5 Gigabit",
-                "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "small",
-                "storage": "EBS only",
-                "typeName": "t3.small",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
-                "processorArchitecture": "64-bit",
-                "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0072,
-                "Price_per_CPU": 0.0036,
-                "Price_per_memory": 0.0036,
-                "components": [
-                    {
-                        "appName": "App4",
-                        "componentName": "Comp5"
+                        "appName": "App2",
+                        "componentName": "Comp4"
                     }
                 ]
             },
             {
-                "onDemandPrice": 0.1917,
-                "region": "eu-south-1",
-                "cpu": "4",
+                "onDemandPrice": 0.8888,
+                "region": "ap-south-1",
+                "cpu": "32",
                 "ebsOnly": true,
                 "family": "General purpose",
-                "memory": "16",
-                "network": "Up to 5 Gigabit",
+                "memory": "128",
+                "network": "12500 Megabit",
                 "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "xlarge",
+                "typeMajor": "m6a",
+                "typeMinor": "8xlarge",
                 "storage": "EBS only",
-                "typeName": "t3.xlarge",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "typeName": "m6a.8xlarge",
+                "physicalProcessor": "AMD EPYC 7R13 Processor",
                 "processorArchitecture": "64-bit",
                 "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0575,
-                "Price_per_CPU": 0.014375,
-                "Price_per_memory": 0.00359375,
+                "discount": 48,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.4657,
+                "Price_per_CPU": 0.014553125,
+                "Price_per_memory": 0.00363828125,
                 "components": [
                     {
                         "appName": "App4",
+                        "componentName": "Comp11"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    },
+                    {
+                        "appName": "App4",
                         "componentName": "Comp10"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.188,
+                "region": "ap-south-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "16",
+                "network": "Up to 10 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c5a",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "c5a.2xlarge",
+                "physicalProcessor": "AMD EPYC 7R32",
+                "processorArchitecture": "32-bit or 64-bit",
+                "Architecture": "x86_64",
+                "discount": 44,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.1056,
+                "Price_per_CPU": 0.0132,
+                "Price_per_memory": 0.0066,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.188,
+                "region": "ap-south-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "16",
+                "network": "Up to 10 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c5a",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "c5a.2xlarge",
+                "physicalProcessor": "AMD EPYC 7R32",
+                "processorArchitecture": "32-bit or 64-bit",
+                "Architecture": "x86_64",
+                "discount": 44,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.1056,
+                "Price_per_CPU": 0.0132,
+                "Price_per_memory": 0.0066,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.537,
+                "region": "ap-south-1",
+                "cpu": "16",
+                "ebsOnly": false,
+                "family": "General purpose",
+                "memory": "64",
+                "network": "Up to 10 Gigabit",
+                "os": "Linux",
+                "typeMajor": "m5ad",
+                "typeMinor": "4xlarge",
+                "storage": "2 x 300 NVMe SSD",
+                "typeName": "m5ad.4xlarge",
+                "physicalProcessor": "AMD EPYC 7571",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 59,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.2218,
+                "Price_per_CPU": 0.0138625,
+                "Price_per_memory": 0.003465625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
                     }
                 ]
             }
         ]
     },
     {
-        "price": 0.2257,
+        "price": 2.8392,
         "EC2 Type": "onDemand",
-        "region": "me-south-1",
+        "region": "eu-north-1",
         "instances": [
             {
-                "onDemandPrice": 0.2006,
-                "region": "me-south-1",
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
                 "cpu": "4",
                 "ebsOnly": true,
                 "family": "General purpose",
@@ -268,9 +374,9 @@
                 "discount": 70,
                 "interruption_frequency": "<5%",
                 "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0602,
-                "Price_per_CPU": 0.01505,
-                "Price_per_memory": 0.0037625,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
                 "components": [
                     {
                         "appName": "App1",
@@ -279,8 +385,37 @@
                 ]
             },
             {
-                "onDemandPrice": 0.0251,
-                "region": "me-south-1",
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.0216,
+                "region": "eu-north-1",
                 "cpu": "2",
                 "ebsOnly": true,
                 "family": "General purpose",
@@ -297,55 +432,19 @@
                 "discount": 70,
                 "interruption_frequency": "<5%",
                 "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0075,
-                "Price_per_CPU": 0.00375,
-                "Price_per_memory": 0.00375,
+                "spot_price": 0.0065,
+                "Price_per_CPU": 0.00325,
+                "Price_per_memory": 0.00325,
                 "components": [
                     {
                         "appName": "App4",
-                        "componentName": "Comp9"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "price": 0.3834,
-        "EC2 Type": "onDemand",
-        "region": "eu-south-1",
-        "instances": [
-            {
-                "onDemandPrice": 0.1917,
-                "region": "eu-south-1",
-                "cpu": "4",
-                "ebsOnly": true,
-                "family": "General purpose",
-                "memory": "16",
-                "network": "Up to 5 Gigabit",
-                "os": "Linux",
-                "typeMajor": "t3",
-                "typeMinor": "xlarge",
-                "storage": "EBS only",
-                "typeName": "t3.xlarge",
-                "physicalProcessor": "Intel Skylake E5 2686 v5",
-                "processorArchitecture": "64-bit",
-                "Architecture": "x86_64",
-                "discount": 70,
-                "interruption_frequency": "<5%",
-                "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0575,
-                "Price_per_CPU": 0.014375,
-                "Price_per_memory": 0.00359375,
-                "components": [
-                    {
-                        "appName": "App1",
-                        "componentName": "Comp3"
+                        "componentName": "Comp5"
                     }
                 ]
             },
             {
-                "onDemandPrice": 0.1917,
-                "region": "eu-south-1",
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
                 "cpu": "4",
                 "ebsOnly": true,
                 "family": "General purpose",
@@ -362,26 +461,19 @@
                 "discount": 70,
                 "interruption_frequency": "<5%",
                 "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0575,
-                "Price_per_CPU": 0.014375,
-                "Price_per_memory": 0.00359375,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
                 "components": [
                     {
                         "appName": "App4",
-                        "componentName": "Comp10"
+                        "componentName": "Comp6"
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "price": 0.4013,
-        "EC2 Type": "onDemand",
-        "region": "me-south-1",
-        "instances": [
+            },
             {
-                "onDemandPrice": 0.4013,
-                "region": "me-south-1",
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
                 "cpu": "8",
                 "ebsOnly": true,
                 "family": "General purpose",
@@ -398,10 +490,484 @@
                 "discount": 70,
                 "interruption_frequency": "<5%",
                 "interruption_frequency_filter": 0.0,
-                "spot_price": 0.1204,
-                "Price_per_CPU": 0.01505,
-                "Price_per_memory": 0.0037625,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
                 "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.744,
+                "region": "eu-north-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 69,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.2293,
+                "Price_per_CPU": 0.01433125,
+                "Price_per_memory": 0.007165625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 2.8392,
+        "EC2 Type": "onDemand",
+        "region": "eu-north-1",
+        "instances": [
+            {
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.0216,
+                "region": "eu-north-1",
+                "cpu": "2",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "2",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "small",
+                "storage": "EBS only",
+                "typeName": "t3.small",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0065,
+                "Price_per_CPU": 0.00325,
+                "Price_per_memory": 0.00325,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1728,
+                "region": "eu-north-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0518,
+                "Price_per_CPU": 0.01295,
+                "Price_per_memory": 0.0032375,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.744,
+                "region": "eu-north-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 69,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.2293,
+                "Price_per_CPU": 0.01433125,
+                "Price_per_memory": 0.007165625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3456,
+                "region": "eu-north-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1037,
+                "Price_per_CPU": 0.0129625,
+                "Price_per_memory": 0.003240625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    },
                     {
                         "appName": "App4",
                         "componentName": "Comp14"
@@ -411,42 +977,71 @@
         ]
     },
     {
-        "price": 0.4264,
+        "price": 2.8544,
         "EC2 Type": "onDemand",
-        "region": "me-south-1",
+        "region": "us-west-2",
         "instances": [
             {
-                "onDemandPrice": 0.0251,
-                "region": "me-south-1",
-                "cpu": "2",
+                "onDemandPrice": 0.1664,
+                "region": "us-west-2",
+                "cpu": "4",
                 "ebsOnly": true,
                 "family": "General purpose",
-                "memory": "2",
+                "memory": "16",
                 "network": "Up to 5 Gigabit",
                 "os": "Linux",
                 "typeMajor": "t3",
-                "typeMinor": "small",
+                "typeMinor": "xlarge",
                 "storage": "EBS only",
-                "typeName": "t3.small",
+                "typeName": "t3.xlarge",
                 "physicalProcessor": "Intel Skylake E5 2686 v5",
                 "processorArchitecture": "64-bit",
                 "Architecture": "x86_64",
                 "discount": 70,
                 "interruption_frequency": "<5%",
                 "interruption_frequency_filter": 0.0,
-                "spot_price": 0.0075,
-                "Price_per_CPU": 0.00375,
-                "Price_per_memory": 0.00375,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
                 "components": [
                     {
-                        "appName": "App4",
-                        "componentName": "Comp5"
+                        "appName": "App1",
+                        "componentName": "Comp2"
                     }
                 ]
             },
             {
-                "onDemandPrice": 0.4013,
-                "region": "me-south-1",
+                "onDemandPrice": 0.1664,
+                "region": "us-west-2",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
                 "cpu": "8",
                 "ebsOnly": true,
                 "family": "General purpose",
@@ -463,13 +1058,1422 @@
                 "discount": 70,
                 "interruption_frequency": "<5%",
                 "interruption_frequency_filter": 0.0,
-                "spot_price": 0.1204,
-                "Price_per_CPU": 0.01505,
-                "Price_per_memory": 0.0037625,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1664,
+                "region": "us-west-2",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.6912,
+                "region": "us-west-2",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 61,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.2704,
+                "Price_per_CPU": 0.0169,
+                "Price_per_memory": 0.00845,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 2.8752,
+        "EC2 Type": "onDemand",
+        "region": "us-west-2",
+        "instances": [
+            {
+                "onDemandPrice": 0.1664,
+                "region": "us-west-2",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1664,
+                "region": "us-west-2",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.0208,
+                "region": "us-west-2",
+                "cpu": "2",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "2",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "small",
+                "storage": "EBS only",
+                "typeName": "t3.small",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0062,
+                "Price_per_CPU": 0.0031,
+                "Price_per_memory": 0.0031,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1664,
+                "region": "us-west-2",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.6912,
+                "region": "us-west-2",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 61,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.2704,
+                "Price_per_CPU": 0.0169,
+                "Price_per_memory": 0.00845,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-west-2",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 2.9848,
+        "EC2 Type": "onDemand",
+        "region": "us-east-1",
+        "instances": [
+            {
+                "onDemandPrice": 0.1664,
+                "region": "us-east-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.6912,
+                "region": "us-east-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 61,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.2721,
+                "Price_per_CPU": 0.01700625,
+                "Price_per_memory": 0.008503125,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.796,
+                "region": "us-east-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "30",
+                "network": "High",
+                "os": "Linux",
+                "typeMajor": "c4",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c4.4xlarge",
+                "physicalProcessor": "Intel Xeon E5-2666 v3 (Haswell)",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 69,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.2468,
+                "Price_per_CPU": 0.015425,
+                "Price_per_memory": 0.008226666666666667,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.0052,
+        "EC2 Type": "onDemand",
+        "region": "us-east-1",
+        "instances": [
+            {
+                "onDemandPrice": 0.1664,
+                "region": "us-east-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1664,
+                "region": "us-east-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0499,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3328,
+                "region": "us-east-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0998,
+                "Price_per_CPU": 0.012475,
+                "Price_per_memory": 0.00311875,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.6912,
+                "region": "us-east-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 61,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.2721,
+                "Price_per_CPU": 0.01700625,
+                "Price_per_memory": 0.008503125,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.65,
+                "region": "us-east-1",
+                "cpu": "12",
+                "ebsOnly": true,
+                "family": "Media Accelerator Instances",
+                "memory": "24",
+                "network": "3125 Megabit",
+                "os": "Linux",
+                "typeMajor": "vt1",
+                "typeMinor": "3xlarge",
+                "storage": "EBS only",
+                "typeName": "vt1.3xlarge",
+                "physicalProcessor": "Intel Xeon Platinum 8259CL",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.195,
+                "Price_per_CPU": 0.01625,
+                "Price_per_memory": 0.008125,
                 "components": [
                     {
                         "appName": "App4",
                         "componentName": "Comp8"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.16,
+        "EC2 Type": "onDemand",
+        "region": "ca-central-1",
+        "instances": [
+            {
+                "onDemandPrice": 0.1856,
+                "region": "ca-central-1",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0557,
+                "Price_per_CPU": 0.013925,
+                "Price_per_memory": 0.00348125,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3712,
+                "region": "ca-central-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1114,
+                "Price_per_CPU": 0.013925,
+                "Price_per_memory": 0.00348125,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3712,
+                "region": "ca-central-1",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1114,
+                "Price_per_CPU": 0.013925,
+                "Price_per_memory": 0.00348125,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 2.232,
+                "region": "ca-central-1",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "12 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c5",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c5.12xlarge",
+                "physicalProcessor": "Intel Xeon Platinum 8275L",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 69,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.6939,
+                "Price_per_CPU": 0.014456249999999999,
+                "Price_per_memory": 0.007228124999999999,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.1632,
+        "EC2 Type": "onDemand",
+        "region": "eu-west-3",
+        "instances": [
+            {
+                "onDemandPrice": 0.1888,
+                "region": "eu-west-3",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0566,
+                "Price_per_CPU": 0.01415,
+                "Price_per_memory": 0.0035375,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp2"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1888,
+                "region": "eu-west-3",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0566,
+                "Price_per_CPU": 0.01415,
+                "Price_per_memory": 0.0035375,
+                "components": [
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp3"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.0236,
+                "region": "eu-west-3",
+                "cpu": "2",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "2",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "small",
+                "storage": "EBS only",
+                "typeName": "t3.small",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0071,
+                "Price_per_CPU": 0.00355,
+                "Price_per_memory": 0.00355,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp5"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.1888,
+                "region": "eu-west-3",
+                "cpu": "4",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "16",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.0566,
+                "Price_per_CPU": 0.01415,
+                "Price_per_memory": 0.0035375,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp10"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3776,
+                "region": "eu-west-3",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1133,
+                "Price_per_CPU": 0.0141625,
+                "Price_per_memory": 0.003540625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.3776,
+                "region": "eu-west-3",
+                "cpu": "8",
+                "ebsOnly": true,
+                "family": "General purpose",
+                "memory": "32",
+                "network": "Up to 5 Gigabit",
+                "os": "Linux",
+                "typeMajor": "t3",
+                "typeMinor": "2xlarge",
+                "storage": "EBS only",
+                "typeName": "t3.2xlarge",
+                "physicalProcessor": "Intel Skylake E5 2686 v5",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.1133,
+                "Price_per_CPU": 0.0141625,
+                "Price_per_memory": 0.003540625,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp13"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 1.818,
+                "region": "eu-west-3",
+                "cpu": "36",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "72",
+                "network": "10 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c5",
+                "typeMinor": "9xlarge",
+                "storage": "EBS only",
+                "typeName": "c5.9xlarge",
+                "physicalProcessor": "Intel Xeon Platinum 8124M",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.5454,
+                "Price_per_CPU": 0.01515,
+                "Price_per_memory": 0.007575,
+                "components": [
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp8"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp9"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp14"
+                    },
+                    {
+                        "appName": "App2",
+                        "componentName": "Comp4"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp7"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp6"
+                    },
+                    {
+                        "appName": "App1",
+                        "componentName": "Comp1"
+                    },
+                    {
+                        "appName": "App4",
+                        "componentName": "Comp12"
                     }
                 ]
             }
