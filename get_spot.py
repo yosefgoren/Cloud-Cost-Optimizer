@@ -97,6 +97,8 @@ class SpotCalculator:
         architecture,
         type_major,
         filter_instances,
+            candidate_list_size, time_per_region, exploitation_score_price_bias, exploration_score_depth_bias, exploitation_bias,
+            output_path
     ):  ## params- list of all components
         """Get_fleet_offers function."""
         import os.path
@@ -147,7 +149,9 @@ class SpotCalculator:
         # ebs_data = self.get_ebs_from_cache(region) ## get EBS volumes from AWS
         # ebs = EbsCalculator(ebs_data)
         return get_fleet_offers(
-            params, region, user_os, app_size, ec2, pricing, architecture, type_major
+            params, region, user_os, app_size, ec2, pricing, architecture, type_major,
+            candidate_list_size, time_per_region, exploitation_score_price_bias, exploration_score_depth_bias, exploitation_bias,
+            output_path
         )
 
     def is_cached(self, os, region):
