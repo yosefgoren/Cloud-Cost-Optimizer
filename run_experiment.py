@@ -1,8 +1,14 @@
 # ============================= Settings ==============================================
-#component counts:
-UNIQUE_SAMPLES = 8
-SAMPLE_COUNT_STRIDE = 1
-SAMPLES_PER_COMPONANT_COUNT = 1
+RANGE = [i for i in range(1,4)]
+N = len(RANGE)
+EACH_COMPONENT_COUNTS = [2*i for i in RANGE]
+
+#core algorithm parameters:
+EACH_CANDIDATE_LIST_SIZE =              [10]*N
+EACH_TIME_PER_REGION =   	        	[10.0]*N
+EACH_EXPLOITATION_SCORE_PRICE_BIAS =    [0.5]*N
+EACH_EXPLORATION_SCORE_DEPTH_BIAS =  	[1.0]*N
+EACH_EXPLOITATION_BIAS =     	        [0.8]*N
 
 #hw resources distributions:
 CPU_MEAN = 4
@@ -15,21 +21,14 @@ NET_MEAN = 2
 NET_DIV = 1
 NET_CUTOFF_RANGE = (1, 5)
 
-#algorithm parameters:
-ALGORITHM_CORE_PARAMS = {
-	"time_per_region": 		2.0,
-	"candidate_list_size": 	10,
-	"tation_score_bias": 	0.8,
-	"depth_score_bias": 	1.0,
-	"price_score_bias": 	0.5
-}
-
 #additional configurations:
 FILTER_INSTANCES = ["a1", "t4g","i3","t3a","c5a.xlarge"]
 
 # ============================= Implementation =========================================
 
+from importlib.metadata import metadata
 from sys import argv
+from venv import create
 import Fleet_Optimizer
 import json
 import numpy as np
@@ -37,134 +36,173 @@ import os
 import shutil
 import argparse
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 class Component:
-	def __init__(self, cpu: int, ram: int, net: int):
-		self.cpu = cpu
-		self.ram = ram
-		self.net = net
+    def __init__(self, cpu: int, ram: int, net: int):
+        self.cpu = cpu
+        self.ram = ram
+        self.net = net
+
+def to_json(collection, file_path: str)->None:
+    with open(file_path, 'w') as file:
+        json.dump(collection, file, indent=2)
+
+def from_json(file_path: str):
+    with open(file_path, 'r') as file:
+        res = json.load(file)
+    return res
 
 class Sample:
-	def __init__(self, comps: list):
-		"""comps is a list of items of type 'Component'"""
-		self.comps = comps
-	
-	def generateInputJson(self, file_name: str):
-		comp_dicts = [{
-			"name"		:"component_"+str(idx),
-			"vCPUs"		:comp.cpu,
-			"memory"	:comp.ram,
-			"network"	:comp.net
-		} for idx, comp in enumerate(self.comps)]
+    def __init__(self, comps: list):
+        """comps is a list of items of type 'Component'"""
+        self.comps = comps
+    
+    def generateInputJson(self, file_name: str):
+        comp_dicts = [{
+            "name"		:"component_"+str(idx),
+            "vCPUs"		:comp.cpu,
+            "memory"	:comp.ram,
+            "network"	:comp.net
+        } for idx, comp in enumerate(self.comps)]
 
-		json_dict = {
-			"selectedOs"		:"linux",
-			"region"			:"all",
-			"spot/onDemand"		:"onDemand",
-			"AvailabilityZone"	:"all",
-			"Architecture"		:"all",
-			"filterInstances"	:FILTER_INSTANCES,
-			"apps" 				:[{
-				"app"		:"App",
-				"share"		:True,
-				"components":comp_dicts
-			}]
-		}
-		with open(file_name, 'w') as file:
-			json.dump(json_dict, file, indent=2)
-		
-		print("created sample input file: ", file_name)
+        json_dict = {
+            "selectedOs"		:"linux",
+            "region"			:"all",
+            "spot/onDemand"		:"onDemand",
+            "AvailabilityZone"	:"all",
+            "Architecture"		:"all",
+            "filterInstances"	:FILTER_INSTANCES,
+            "apps" 				:[{
+                "app"		:"App",
+                "share"		:True,
+                "components":comp_dicts
+            }]
+        }
+        to_json(json_dict, file_name)
+        
+        print("created sample input file: ", file_name)
 
 class NormDistInt:
-	def __init__(self, mean: int, div: int, cutoff_start: int, cutoff_end: int):
-		if cutoff_start >= cutoff_end:
-			raise Exception("NormDistInt error: cutoff range start should be samller than cutoff range end.")
+    def __init__(self, mean: int, div: int, cutoff_start: int, cutoff_end: int):
+        if cutoff_start >= cutoff_end:
+            raise Exception("NormDistInt error: cutoff range start should be samller than cutoff range end.")
 
-		self.mean = mean
-		self.div = div
-		self.cutoff_start = cutoff_start
-		self.cutoff_end = cutoff_end
-		
-	def __call__(self)->int:
-		while True:
-			res = int(np.random.normal(self.mean, self.div, size=(1,))[0])
-			if self.cutoff_start < res and res < self.cutoff_end:
-				return res
+        self.mean = mean
+        self.div = div
+        self.cutoff_start = cutoff_start
+        self.cutoff_end = cutoff_end
+        
+    def __call__(self)->int:
+        while True:
+            res = int(np.random.normal(self.mean, self.div, size=(1,))[0])
+            if self.cutoff_start < res and res < self.cutoff_end:
+                return res
 
 def create_sample(num_componants: int, cpu_dist: NormDistInt, ram_dist: NormDistInt, net_dist: NormDistInt)->Sample:
-	comps = [Component(cpu_dist(), ram_dist(), net_dist()) for i in range(num_componants)]
-	return Sample(comps)
+    comps = [Component(cpu_dist(), ram_dist(), net_dist()) for _ in range(num_componants)]
+    return Sample(comps)
 
 def make_experiment_dir(exp_dir_path: str):
-	try:
-		shutil.rmtree(exp_dir_path)
-	except FileNotFoundError:
-		pass
-	except PermissionError:
-		print("error: tried to create expriment dir at: '"+exp_dir_path+"', but got premission error.")
-		exit(1)
+    try:
+        shutil.rmtree(exp_dir_path)
+    except FileNotFoundError:
+        pass
+    except PermissionError:
+        print("error: tried to create expriment dir at: '"+exp_dir_path+"', but got premission error.")
+        exit(1)
 
-	os.mkdir(exp_dir_path)
-	for name in ["inputs", "outputs", "stats"]:
-		os.mkdir(exp_dir_path+"/"+name)
+    os.mkdir(exp_dir_path)
+    for name in ["inputs", "outputs", "stats"]:
+        os.mkdir(exp_dir_path+"/"+name)
 
-def main(argv: list):
-	if len(argv) < 2:
-		print("Missing experiment name argument.\nPlease enter experiment name:")
-		experiment_name = input()
-	else:
-		experiment_name = argv[1]
+def input_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
+    return exp_dir_path+"/inputs/"+exp_name+"_"+str(sample_idx)+"_input.json"
 
-	comp_counts = [i*SAMPLE_COUNT_STRIDE for i in range(1, UNIQUE_SAMPLES+1)]
-	samples = []
-	cpu_dist = NormDistInt(CPU_MEAN, CPU_DIV, CPU_CUTOFF_RANGE[0], CPU_CUTOFF_RANGE[1])
-	ram_dist = NormDistInt(RAM_MEAN, RAM_DIV, RAM_CUTOFF_RANGE[0], RAM_CUTOFF_RANGE[1])
-	net_dist = NormDistInt(NET_MEAN, NET_DIV, NET_CUTOFF_RANGE[0], NET_CUTOFF_RANGE[1])
+def output_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
+    return exp_dir_path+"/outputs/"+exp_name+"_"+str(sample_idx)+"_input.json"
 
-	for num_comps in comp_counts:
-		samples += [create_sample(num_comps, cpu_dist, ram_dist, net_dist) 
-			for i in range(SAMPLES_PER_COMPONANT_COUNT)]
-	
-	experiment_dir_prefix = "./experiments/"+experiment_name+"/"
-	make_experiment_dir(experiment_dir_prefix)
-	
-	input_dir_prefix = experiment_dir_prefix+"inputs/"
-	output_dir_prefix = experiment_dir_prefix+"outputs/"
-	stats_dir_prefix = experiment_dir_prefix+"stats/"
+def stats_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
+    return exp_dir_path+"/stats/"+exp_name+"_"+str(sample_idx)+"_input.json"
 
-	metadata_dict = {}
-	try:
-		for sample_idx, sample in enumerate(samples):	
-			sample_name = experiment_name+"_"+str(sample_idx)
-			
-			metadata_dict[sample_idx] = ALGORITHM_CORE_PARAMS
+def generate_sample_inputs(exp_name: str, exp_dir_path: str):
+    cpu_dist = NormDistInt(CPU_MEAN, CPU_DIV, CPU_CUTOFF_RANGE[0], CPU_CUTOFF_RANGE[1])
+    ram_dist = NormDistInt(RAM_MEAN, RAM_DIV, RAM_CUTOFF_RANGE[0], RAM_CUTOFF_RANGE[1])
+    net_dist = NormDistInt(NET_MEAN, NET_DIV, NET_CUTOFF_RANGE[0], NET_CUTOFF_RANGE[1])
+    
+    samples = [create_sample(num_comps, cpu_dist, ram_dist, net_dist) for num_comps in EACH_COMPONENT_COUNTS]
 
-			input_file_full_name = input_dir_prefix + sample_name + "_input.json"
-			output_file_full_name = output_dir_prefix + sample_name + "_output.json"
-			stats_file_full_name = stats_dir_prefix + sample_name + "_stats.sqlite3"
-		
-			sample.generateInputJson(input_file_full_name)
-			
-			Fleet_Optimizer.run_optimizer(
-				candidate_list_size = float(ALGORITHM_CORE_PARAMS["candidate_list_size"]),
-				time_per_region = int(ALGORITHM_CORE_PARAMS["time_per_region"]),
-				exploitation_score_price_bias = float(ALGORITHM_CORE_PARAMS["tation_score_bias"]),
-				exploration_score_depth_bias = float(ALGORITHM_CORE_PARAMS["depth_score_bias"]),
-				exploitation_bias = float(ALGORITHM_CORE_PARAMS["price_score_bias"]),
-				input_file_name = input_file_full_name,
-				output_file_name = output_file_full_name,
-				stats_file_name = stats_file_full_name,
-				verbose = False
-			)
-	finally:
-		metadata_file_name = experiment_dir_prefix+"/"+experiment_name+"_metadata.json"
-		with open(metadata_file_name, "w") as file:
-			json.dump(metadata_dict, file, indent=2)
+    make_experiment_dir(exp_dir_path)
+
+    metadata_dict = {}
+    for sample_idx, sample in enumerate(samples):	
+        
+        metadata_dict[sample_idx] = {
+            "number_of_components":     len(sample.comps),   
+            "algorithm_core_params":    {
+                "candidate_list_size" : EACH_CANDIDATE_LIST_SIZE[sample_idx],
+                "time_per_region" : EACH_TIME_PER_REGION[sample_idx],
+                "exploitation_score_price_bias" : EACH_EXPLOITATION_SCORE_PRICE_BIAS[sample_idx],
+                "exploration_score_depth_bias" : EACH_EXPLORATION_SCORE_DEPTH_BIAS[sample_idx],
+                "exploitation_bias" : EACH_EXPLOITATION_BIAS[sample_idx]
+            }
+        }
+        sample.generateInputJson(input_path_format(exp_dir_path, exp_name, sample_idx))
+        
+    to_json(metadata_dict, exp_dir_path+"/metadata.json")
+    
+
+def run_algorithm_on_samples(exp_name: str, exp_dir_path: str, verbosealg: bool, retry: int):
+    metadata_dict = {int(key):value for key, value in from_json(exp_dir_path+"/"+"metadata.json").items()}
+
+    for sample_idx, sample_metadata in metadata_dict.items():
+        algorithm_core_params = sample_metadata["algorithm_core_params"]
+        sample_attempts_left = retry
+        try:
+            Fleet_Optimizer.run_optimizer(
+                **algorithm_core_params,
+                input_file_name = input_path_format(exp_dir_path, exp_name, sample_idx),
+                output_file_name = output_path_format(exp_dir_path, exp_name, sample_idx),
+                stats_file_name = stats_path_format(exp_dir_path, exp_name, sample_idx),
+                verbose = verbosealg
+            )
+        except Exception as e:
+            print(f"{bcolors.WARNING}Error: Unknown exception occured:{bcolors.ENDC}\n")
+            print(e)
+            if sample_attempts_left <= 0:
+                print(f"{bcolors.WARNING}too many errors, dropping experiment.{bcolors.ENDC}\n")
+                exit(1)
+
+def main(experiment_name: str, run_generate: bool, run_algorithm: bool, verbosealg: bool, retry: int):
+    experiment_dir_path = "./experiments/"+experiment_name
+    if run_generate:
+        generate_sample_inputs(experiment_name, experiment_dir_path)
+    if run_algorithm:
+        run_algorithm_on_samples(experiment_name, experiment_dir_path, verbosealg, retry)
 
 if __name__ == "__main__":
-	# parser = argparse.ArgumentParser(description='Process some integers.')
-	# parser.add_argument('integers', metavar='N', type=int, nargs='+',
-	# 					help='an integer for the accumulator')
-	# args = parser.parse_args()
-	# print(args.accumulate(args.integers))
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--name', type=str, help='The name of the experiment.')
+    parser.add_argument('--nogen', action='store_true', help='run the experiment on all input samples in experiment directory, no new samples are generated.')
+    parser.add_argument('--norun', action='store_true', help='create experiment samples and metadata without running the algorithm.')
+    parser.add_argument('--verbosealg', action='store_true', help='if enabled - algorithm will print more details during runtime.')
+    parser.add_argument('--retry', type=int, help='the number of times the experiment will retry to run the algorithm after unknown exception occurs.')
+    
+    args = parser.parse_args()
 
-	main(argv)
+    experiment_name = args.name
+    if experiment_name is None:
+        print("Please enter experiment name:")
+        experiment_name = input()
+    retry = 0 if args.retry is None else args.retry
+    
+    main(experiment_name, run_generate = not args.nogen, run_algorithm=not args.norun, verbosealg=args.verbosealg, retry=retry)

@@ -1,0 +1,32 @@
+{
+  "0": {
+    "number_of_components": 2,
+    "algorithm_core_params": {
+      "candidate_list_size": 10,
+      "time_per_region": 10.0,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.8
+    }
+  },
+  "1": {
+    "number_of_components": 4,
+    "algorithm_core_params": {
+      "candidate_list_size": 10,
+      "time_per_region": 10.0,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.8
+    }
+  },
+  "2": {
+    "number_of_components": 6,
+    "algorithm_core_params": {
+      "candidate_list_size": 10,
+      "time_per_region": 10.0,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.8
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "selectedOs": "linux",
+  "region": "all",
+  "spot/onDemand": "onDemand",
+  "AvailabilityZone": "all",
+  "Architecture": "all",
+  "filterInstances": [
+    "a1",
+    "t4g",
+    "i3",
+    "t3a",
+    "c5a.xlarge"
+  ],
+  "apps": [
+    {
+      "app": "App",
+      "share": true,
+      "components": [
+        {
+          "name": "component_0",
+          "vCPUs": 6,
+          "memory": 7,
+          "network": 3
+        },
+        {
+          "name": "component_1",
+          "vCPUs": 4,
+          "memory": 7,
+          "network": 2
+        },
+        {
+          "name": "component_2",
+          "vCPUs": 5,
+          "memory": 9,
+          "network": 2
+        },
+        {
+          "name": "component_3",
+          "vCPUs": 2,
+          "memory": 2,
+          "network": 2
+        }
+      ]
+    }
+  ]
+}
