@@ -1,5 +1,7 @@
 # from msilib.schema import Component
 # from importlib_metadata import Pair
+import sqlite3
+
 import numpy as np
 from numpy import ndarray, ones_like
 # from urllib3 import Retry
@@ -65,7 +67,32 @@ class CombOptim:
         self.exploration_score_depth_bias = exploration_score_depth_bias
         self.exploitation_bias=exploitation_bias
         self.output_path=output_path
+        self.conn = sqlite3.connect(output_path)
 
+    def finish_stats_operation(self):
+        self.conn.commit()
+        self.conn.close()
+
+    def insert_stats(self, iteration):
+        returned_best = self.optim_set.returnBest()
+        best_node = returned_best[0]
+        best_price = best_node.getPrice()
+        depth_best = best_node.getDepth()
+        query = "INSERT INTO STATS (INSERT_TIME, NODES_COUNT, BEST_PRICE, DEPTH_BEST, ITERATION, REGION_SOLUTION)\
+                          VALUES ({insert_time}, {NODES_COUNT}, {BEST_PRICE}, {DEPTH_BEST}, {ITERATION}, '{region}')".format(insert_time=time.time(), NODES_COUNT=len(Node.node_cache), BEST_PRICE=best_price, \
+                                DEPTH_BEST=depth_best, ITERATION=iteration, region=self.region)
+        print(query)
+        self.conn.execute(query)
+
+    def create_stats_table(self):
+        self.conn.execute('''
+        CREATE TABLE IF NOT EXISTS STATS
+        (INSERT_TIME    REAL PRIMARY KEY     NOT NULL,
+        NODES_COUNT   INT     NOT NULL,
+        BEST_PRICE  REAL    NOT NULL,
+        DEPTH_BEST  INT NOT NULL,
+        ITERATION  INT NOT NULL,
+        REGION_SOLUTION TEXT    NOT NULL);''')
 
     @staticmethod
     def calc_root(initial_seperated):
@@ -92,6 +119,8 @@ class CombOptim:
             print("CombOptim.run: infinite price for root, returning empty result.")
             return []
         # print("comb optimizer starting run.")
+        self.create_stats_table()
+        i = 1
         while not self.isDone():
             start_node = self.reset_sel.getStartNode()
             # start_node = self.root #for debugging without reset sel...
@@ -99,6 +128,12 @@ class CombOptim:
             if len(path) != 0:
                 self.optim_set.update(path)
                 self.reset_sel.update(path)
+
+            self.insert_stats(i)
+            i += 1
+
+        self.finish_stats_operation()
+
         return [node.getOffer() for node in self.optim_set.returnBest()]
 
     def isDone(self)->bool:
@@ -118,10 +153,10 @@ class Node:
 
         self.sons = None
         Node.node_cache[self.hashCode()] = self
-        print(f"Node.__init__;\
-        hash: {self.hashCode()}\
-        , depth: {self.getDepth()}\
-        , total_score: {self.price}")
+        #print(f"Node.__init__;\
+        # hash: {self.hashCode()}\
+        # , depth: {self.getDepth()}\
+        # , total_score: {self.price}")
 
     def __calc_offer(self):
         modules = []

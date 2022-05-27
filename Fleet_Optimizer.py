@@ -126,7 +126,7 @@ def run_optimizer(
         architecture,
         type_major,
         filter_instances,
-        candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path
+        candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,stats_file_name
 
     )
     # print('Connecting to boto3')
