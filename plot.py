@@ -7,7 +7,8 @@ def get_plots():
 	pass
 
 def price_plot(db_path, title, best_price=1.0):
-	query = "SELECT INSERT_TIME, (BEST_PRICE/{}) FROM STATS WHERE REGION_SOLUTION='us-east-1'".format(best_price)
+	query = "SELECT INSERT_TIME, (BEST_PRICE/{}) FROM STATS".format(best_price)
+	# query = "SELECT INSERT_TIME, (BEST_PRICE/{}) FROM STATS WHERE REGION_SOLUTION='us-east-1'".format(best_price)
 	#title = "price plot, 14 comp"
 	x_label = "time (seconds)"
 	y_label = "price"
@@ -34,3 +35,28 @@ def plot(db_path, query, title, x_label, y_label):
 	plt.show()
 
 	conn.close()
+
+def plot_single_time_line(db_path: str, title: str, x_label: str = "x", y_label: str = "y"):
+	query = "SELECT INSERT_TIME, (BEST_PRICE) FROM STATS ORDER BY INSERT_TIME; "
+	conn = sqlite3.connect(db_path)
+
+	res = conn.execute(query)
+
+	arr = np.array(list(res))
+	xs = [arr[0,0]]
+	ys = [arr[0,1]]
+	for i in range(1, arr.shape[0]):
+		if arr[i, 1] <= ys[-1]:
+			xs.append(arr[i, 0])
+			ys.append(arr[i, 1])
+
+	# plt.plot(arr[:,0], arr[:,1])
+	plt.plot(xs, ys)
+	plt.title(title)
+	plt.xlabel(x_label)
+	plt.ylabel(y_label)
+	plt.show()
+
+	conn.close()
+
+plot_single_time_line("./experiments/single_sample_20cv2/stats/0.sqlite3", "a very noble graph")

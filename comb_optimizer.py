@@ -79,7 +79,7 @@ class CombOptim:
         best_price = best_node.getPrice()
         depth_best = best_node.getDepth()
         query = "INSERT INTO STATS (INSERT_TIME, NODES_COUNT, BEST_PRICE, DEPTH_BEST, ITERATION, REGION_SOLUTION)\
-                          VALUES ({insert_time}, {NODES_COUNT}, {BEST_PRICE}, {DEPTH_BEST}, {ITERATION}, '{region}')".format(insert_time=time.time(), NODES_COUNT=len(Node.node_cache), BEST_PRICE=best_price, \
+                          VALUES ({insert_time}, {NODES_COUNT}, {BEST_PRICE}, {DEPTH_BEST}, {ITERATION}, '{region}')".format(insert_time=time.time()-self.start_time, NODES_COUNT=len(Node.node_cache), BEST_PRICE=best_price, \
                                 DEPTH_BEST=depth_best, ITERATION=iteration, region=self.region)
         if self.verbose:
             print(query)

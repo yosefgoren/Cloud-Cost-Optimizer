@@ -1,14 +1,15 @@
 # ============================= Settings ==============================================
-RANGE = [10 for i in range(1)]
-N = len(RANGE)
-EACH_COMPONENT_COUNTS = [i for i in RANGE]
+N = 4
+
+#number of components in each sample:
+EACH_COMPONENT_COUNTS = [18]*N
 
 #core algorithm parameters:
-EACH_CANDIDATE_LIST_SIZE =              [10]*N #make sure int here!
-EACH_TIME_PER_REGION =   	        	[3.0]*N
-EACH_EXPLOITATION_SCORE_PRICE_BIAS =    [0.5]*N
-EACH_EXPLORATION_SCORE_DEPTH_BIAS =  	[1.0]*N
-EACH_EXPLOITATION_BIAS =     	        [0.8]*N
+EACH_CANDIDATE_LIST_SIZE =              [10]*N + [5*(i**2) for i in range(1, N+1)] #make sure int here!
+EACH_TIME_PER_REGION =   	        	[15.0]*N*2
+EACH_EXPLOITATION_SCORE_PRICE_BIAS =    [0.5]*N*2
+EACH_EXPLORATION_SCORE_DEPTH_BIAS =  	[1.0]*N*2
+EACH_EXPLOITATION_BIAS =     	        [0.2*i for i in range(1, N+1)] + [0.8]*N
 
 #hw resources distributions:
 CPU_MEAN = 4
@@ -26,9 +27,6 @@ FILTER_INSTANCES = ["a1", "t4g","i3","t3a","c5a.xlarge"]
 
 # ============================= Implementation =========================================
 
-from importlib.metadata import metadata
-from sys import argv
-from venv import create
 import Fleet_Optimizer
 import json
 import numpy as np
@@ -126,20 +124,26 @@ def make_experiment_dir(exp_dir_path: str):
         os.mkdir(exp_dir_path+"/"+name)
 
 def input_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
-    return exp_dir_path+"/inputs/"+exp_name+"_"+str(sample_idx)+"_input.json"
+    # return exp_dir_path+"/inputs/"+exp_name+"_"+str(sample_idx)+"_input.json"
+    return exp_dir_path+"/inputs/"+str(sample_idx)+".json"
 
 def output_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
-    return exp_dir_path+"/outputs/"+exp_name+"_"+str(sample_idx)+"_input.json"
+    # return exp_dir_path+"/outputs/"+exp_name+"_"+str(sample_idx)+"_output.json"
+    return exp_dir_path+"/outputs/"+str(sample_idx)+".json"
 
 def stats_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
-    return exp_dir_path+"/stats/"+exp_name+"_"+str(sample_idx)+"_input.json"
+    # return exp_dir_path+"/stats/"+exp_name+"_"+str(sample_idx)+"_stats.sqlite3"
+    return exp_dir_path+"/stats/"+str(sample_idx)+".sqlite3"
 
-def generate_sample_inputs(exp_name: str, exp_dir_path: str):
+def generate_sample_inputs(exp_name: str, exp_dir_path: str, significance: int):
     cpu_dist = NormDistInt(CPU_MEAN, CPU_DIV, CPU_CUTOFF_RANGE[0], CPU_CUTOFF_RANGE[1])
     ram_dist = NormDistInt(RAM_MEAN, RAM_DIV, RAM_CUTOFF_RANGE[0], RAM_CUTOFF_RANGE[1])
     net_dist = NormDistInt(NET_MEAN, NET_DIV, NET_CUTOFF_RANGE[0], NET_CUTOFF_RANGE[1])
     
-    samples = [create_sample(num_comps, cpu_dist, ram_dist, net_dist) for num_comps in EACH_COMPONENT_COUNTS]
+    samples = []
+    for num_comps in EACH_COMPONENT_COUNTS:
+        sample = create_sample(num_comps, cpu_dist, ram_dist, net_dist)
+        samples += [sample]*significance
 
     make_experiment_dir(exp_dir_path)
 
@@ -178,18 +182,19 @@ def run_algorithm_on_samples(exp_name: str, exp_dir_path: str, verbosealg: bool,
                     bruteforce = bruteforce
                 )
             except Exception as e:
-                print(f"{bcolors.WARNING}Error: Unknown exception occured:{bcolors.ENDC}\n")
+                print(f"{bcolors.WARNING}Error: Unknown exception occured:{bcolors.ENDC}")
                 print(e)
                 if sample_attempts_left <= 0:
-                    print(f"{bcolors.WARNING}too many errors, dropping experiment.{bcolors.ENDC}\n")
+                    print(f"{bcolors.WARNING}too many errors, dropping experiment.{bcolors.ENDC}")
                     exit(1)
+                sample_attempts_left -= 1
                 continue
             break
 
-def main(experiment_name: str, run_generate: bool, run_algorithm: bool, verbosealg: bool, retry: int, bruteforce: bool):
+def main(experiment_name: str, run_generate: bool, run_algorithm: bool, verbosealg: bool, retry: int, bruteforce: bool, significance: int):
     experiment_dir_path = "./experiments/"+experiment_name
     if run_generate:
-        generate_sample_inputs(experiment_name, experiment_dir_path)
+        generate_sample_inputs(experiment_name, experiment_dir_path, significance)
     if run_algorithm:
         run_algorithm_on_samples(experiment_name, experiment_dir_path, verbosealg, retry, bruteforce)
 
@@ -200,7 +205,7 @@ if __name__ == "__main__":
     parser.add_argument('--norun', action='store_true', help='create experiment samples and metadata without running the algorithm.')
     parser.add_argument('--verbosealg', action='store_true', help='if enabled - algorithm will print more details during runtime.')
     parser.add_argument('--retry', type=int, help='the number of times the experiment will retry to run the algorithm after unknown exception occurs.')
-    parser.add_argument('--bruteforce', type=int, help='if enabled - use bruteforce algorithm rather than regular search algorithm.')
+    parser.add_argument('--significance', type=int, help='each sample will be repeated this many times with the same generated input.')
 
     args = parser.parse_args()
 
@@ -209,5 +214,6 @@ if __name__ == "__main__":
         print("Please enter experiment name:")
         experiment_name = input()
     retry = 0 if args.retry is None else args.retry
+    significance = 1 if args.significance is None else args.significance
     
-    main(experiment_name, run_generate = not args.nogen, run_algorithm=not args.norun, verbosealg=args.verbosealg, retry=retry, bruteforce=args.retry)
+    main(experiment_name, run_generate = not args.nogen, run_algorithm=not args.norun, verbosealg=args.verbosealg, retry=retry, bruteforce=args.retry, significance=significance)
