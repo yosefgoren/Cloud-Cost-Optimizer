@@ -1,9 +1,9 @@
 {
   "0": {
-    "number_of_components": 100,
+    "number_of_components": 10,
     "algorithm_core_params": {
       "candidate_list_size": 10,
-      "time_per_region": 2.0,
+      "time_per_region": 3.0,
       "exploitation_score_price_bias": 0.5,
       "exploration_score_depth_bias": 1.0,
       "exploitation_bias": 0.8

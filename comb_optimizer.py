@@ -463,7 +463,7 @@ def sampleFromWeighted(weight_arr: np.ndarray) -> int:
 
     sum_array = weight_arr.sum()
     if sum_array == 0:
-        raise Exception("sampleFromWeighter: error: sum of weights is 0")
+        return np.random.choice(weight_arr.shape[0], p=np.ones_like(weight_arr)/weight_arr.shape[0])
     weight_arr1 = weight_arr / sum_array
     index = np.random.choice(weight_arr1.shape[0], p=weight_arr1)
 

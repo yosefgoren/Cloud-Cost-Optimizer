@@ -183,7 +183,7 @@ class FleetCalculator:
 		for i in group.remaining_partitions:
 			new_instance = self.match_group(i, region, pricing, architecture, type_major)
 			if new_instance is None:
-				print("get_best_price return None")
+				# print("get_best_price return None")
 				return None
 			else:
 				instances.append(new_instance)

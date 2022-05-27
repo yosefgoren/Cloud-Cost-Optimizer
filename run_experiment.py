@@ -1,11 +1,11 @@
 # ============================= Settings ==============================================
-RANGE = [40 for i in range(1)]
+RANGE = [10 for i in range(1)]
 N = len(RANGE)
 EACH_COMPONENT_COUNTS = [i for i in RANGE]
 
 #core algorithm parameters:
 EACH_CANDIDATE_LIST_SIZE =              [10]*N #make sure int here!
-EACH_TIME_PER_REGION =   	        	[2.0]*N
+EACH_TIME_PER_REGION =   	        	[3.0]*N
 EACH_EXPLOITATION_SCORE_PRICE_BIAS =    [0.5]*N
 EACH_EXPLORATION_SCORE_DEPTH_BIAS =  	[1.0]*N
 EACH_EXPLOITATION_BIAS =     	        [0.8]*N

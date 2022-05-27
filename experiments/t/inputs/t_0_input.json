@@ -19,37 +19,61 @@
         {
           "name": "component_0",
           "vCPUs": 3,
-          "memory": 15,
+          "memory": 3,
           "network": 2
         },
         {
           "name": "component_1",
-          "vCPUs": 5,
-          "memory": 12,
+          "vCPUs": 7,
+          "memory": 5,
           "network": 3
         },
         {
           "name": "component_2",
-          "vCPUs": 7,
-          "memory": 9,
+          "vCPUs": 4,
+          "memory": 4,
           "network": 2
         },
         {
           "name": "component_3",
-          "vCPUs": 7,
-          "memory": 5,
+          "vCPUs": 6,
+          "memory": 6,
           "network": 2
         },
         {
           "name": "component_4",
-          "vCPUs": 3,
-          "memory": 12,
+          "vCPUs": 9,
+          "memory": 4,
           "network": 2
         },
         {
           "name": "component_5",
+          "vCPUs": 3,
+          "memory": 4,
+          "network": 3
+        },
+        {
+          "name": "component_6",
+          "vCPUs": 8,
+          "memory": 10,
+          "network": 2
+        },
+        {
+          "name": "component_7",
+          "vCPUs": 3,
+          "memory": 10,
+          "network": 2
+        },
+        {
+          "name": "component_8",
           "vCPUs": 7,
-          "memory": 5,
+          "memory": 3,
+          "network": 3
+        },
+        {
+          "name": "component_9",
+          "vCPUs": 2,
+          "memory": 10,
           "network": 2
         }
       ]
