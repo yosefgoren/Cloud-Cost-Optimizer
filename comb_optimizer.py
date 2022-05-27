@@ -31,10 +31,9 @@ class KeyMannager:
 class CombOptim:
     def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
                  region, exploitation_score_price_bias, exploration_score_depth_bias,
-                 exploitation_bias, output_path):
+                 exploitation_bias, output_path, verbose = True):
+        self.verbose = verbose
         Node.node_cache = {}
-        if(region == "ap-northeast-2"):
-            print("aaa")
 
         CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
         """given a component, return a unique key associated with it, based on it's name."""
@@ -58,7 +57,7 @@ class CombOptim:
         CombOptim.price_calc_func = price_calc
         self.root = CombOptim.calc_root(initial_seperated)
         self.optim_set = OptimumSet(1)
-        self.reset_sel = ResetSelector(candidate_list_size,self.get_num_components(),self.root,exploitation_score_price_bias,  exploration_score_depth_bias,exploitation_bias)
+        self.reset_sel = ResetSelector(candidate_list_size,self.get_num_components(),self.root,exploitation_score_price_bias,  exploration_score_depth_bias,exploitation_bias,self.verbose)
         self.search_algo = SearchAlgorithm()
         self.start_time = time.time()
         self.time_per_region = time_per_region
@@ -81,13 +80,14 @@ class CombOptim:
         query = "INSERT INTO STATS (INSERT_TIME, NODES_COUNT, BEST_PRICE, DEPTH_BEST, ITERATION, REGION_SOLUTION)\
                           VALUES ({insert_time}, {NODES_COUNT}, {BEST_PRICE}, {DEPTH_BEST}, {ITERATION}, '{region}')".format(insert_time=time.time(), NODES_COUNT=len(Node.node_cache), BEST_PRICE=best_price, \
                                 DEPTH_BEST=depth_best, ITERATION=iteration, region=self.region)
-        print(query)
+        if self.verbose:
+            print(query)
         self.conn.execute(query)
 
     def create_stats_table(self):
         self.conn.execute('''
         CREATE TABLE IF NOT EXISTS STATS
-        (INSERT_TIME    REAL PRIMARY KEY     NOT NULL,
+        (INSERT_TIME    REAL     NOT NULL,
         NODES_COUNT   INT     NOT NULL,
         BEST_PRICE  REAL    NOT NULL,
         DEPTH_BEST  INT NOT NULL,
@@ -241,12 +241,13 @@ class ResetSelector:
             self.subtree_price_penalty = -self.node.getPrice()
             self.hash = None
 
-    def __init__(self, candidate_list_size: int, num_componants: int, root: Node , exploitation_score_price_bias , exploration_score_depth_bias,exploitation_bias):
+    def __init__(self, candidate_list_size: int, num_componants: int, root: Node , exploitation_score_price_bias , exploration_score_depth_bias,exploitation_bias, verbose=True):
         """ The reset-selector remembers a list of the best candidates (candidate nodes) seen so far,
             list is saved at: self.top_candidates.
             The parameter 'k' is the maximum allowed size for the candidate list."""
+        self.verbose = verbose
         self.top_candidates = [ResetSelector.Candidate(root)]
-        self.candidate_list_size = candidate_list_size
+        self.candidate_list_size = int(candidate_list_size)
         self.num_componants = num_componants
 
         #reachable_bonus_formula_base is calculated here so we only have to calculate it once.
@@ -270,10 +271,11 @@ class ResetSelector:
             print("sample from weighted raised err, scores list: ", scores_list)
             exit(1)
         selected_candidate = self.top_candidates[selected_node_idx]
-        print(f"ResetSelector.getStartNode;\
-    hash: {selected_candidate.node.hashCode()}\
-    , depth: {selected_candidate.node.getDepth()}\
-    , total_score: {selected_candidate.total_score}")
+        if self.verbose:
+            print(f"ResetSelector.getStartNode;\
+                hash: {selected_candidate.node.hashCode()}\
+                , depth: {selected_candidate.node.getDepth()}\
+                , total_score: {selected_candidate.total_score}")
         return selected_candidate.node
 
     def update(self, path: list):
@@ -303,8 +305,8 @@ class ResetSelector:
         #update the list of top candidates and re-calculate total scores for all candidates currently saved:
         self.top_candidates = [item for item in candidate_dict.values()]
         self.updateTotalScores()
-        if 0 in [c.total_score for c in self.top_candidates]:
-            raise Exception("ResetSelector.update: error: a candidates has a total score of 0.")
+        # if 0 in [c.total_score for c in self.top_candidates]:
+        #     raise Exception("ResetSelector.update: error: a candidates has a total score of 0.")
         
         #sort the list of top candidates and throw away the candidates that are not in the top k:
         self.top_candidates.sort(key=lambda candidate: candidate.total_score)
@@ -319,6 +321,8 @@ class ResetSelector:
         total_scores = tation_bias*tation_scores + (1-tation_bias)*ration_scores
         for idx in range(len(self.top_candidates)):
             self.top_candidates[idx].total_score = total_scores[idx]
+        if np.all(total_scores < 1e-6):
+            total_scores = np.ones_like(total_scores, dtype=np.float)
 
     def getCurrentTationBias(self)->float:
         """get the current exploitation bias, this represents the current preference of the algorithm for exploitation
@@ -384,8 +388,6 @@ class ResetSelector:
     
         return exploitation_scores
 
-
-
 class SearchAlgorithm:
     def __init__(self):
         self.temperature = 0
@@ -416,7 +418,6 @@ class SearchAlgorithm:
             return SearchAlgorithm.get_son_by_weights(improves)
         else:
             return None
-
 
     @staticmethod
     def get_son_by_weights(sons):

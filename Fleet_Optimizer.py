@@ -85,7 +85,8 @@ def run_optimizer(
     exploitation_bias,
     input_file_name = "input_Fleet.json",
     output_file_name="FleetResults.json",
-    stats_file_name="Run_Statistic.sqlite3"
+    stats_file_name="Run_Statistic.sqlite3",
+    verbose = True
 ):
     """Run Optimizer- Fleet calculator."""
     file = open(input_file_name)
@@ -126,7 +127,13 @@ def run_optimizer(
         architecture,
         type_major,
         filter_instances,
-        candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,stats_file_name
+        candidate_list_size,
+        time_per_region,
+        exploitation_score_price_bias,
+        exploration_score_depth_bias,
+        exploitation_bias,
+        stats_file_name,
+        verbose
 
     )
     # print('Connecting to boto3')
@@ -142,10 +149,10 @@ def run_optimizer(
 
 
 if __name__ == "__main__":
-    candidate_list_size = 30
+    candidate_list_size = 30.0
     time_per_region = 1
     exploitation_score_price_bias = 0.5
-    exploration_score_depth_bias = 1
+    exploration_score_depth_bias = 1.0
     exploitation_bias = 0.5
     input_file_name = "input_Fleet.json"
     output_file_name = "FleetResults.json"

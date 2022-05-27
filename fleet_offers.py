@@ -202,7 +202,7 @@ class FleetCalculator:
 
 def get_fleet_offers(
 	params, region, os, app_size, ec2, pricing, architecture, type_major,
-	candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path
+	candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path, verbose=True
 ):
 	"""Get fleet offers function."""
 	res = []
@@ -245,11 +245,10 @@ def get_fleet_offers(
 			print(time.time() - start_time)
 
 		else:#our code
-			print(region_to_check)
+			print("running optimizer of region: ", region_to_check)
 			price_calc = lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major)
 			res += CombOptim(candidate_list_size,price_calc , updated_params , time_per_region , region_to_check ,exploitation_score_price_bias ,
-							  exploration_score_depth_bias, exploitation_bias,output_path ).run()
-			print()
+							  exploration_score_depth_bias, exploitation_bias,output_path, verbose=verbose).run()
 
 
 		# First Step- match an instance for every component

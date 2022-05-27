@@ -1,15 +1,15 @@
 # ============================= Settings ==============================================
 #component counts:
-UNIQUE_SAMPLES = 3
-SAMPLE_COUNT_STRIDE = 2
-SAMPLES_PER_COMPONANT_COUNT = 4
+UNIQUE_SAMPLES = 8
+SAMPLE_COUNT_STRIDE = 1
+SAMPLES_PER_COMPONANT_COUNT = 1
 
 #hw resources distributions:
 CPU_MEAN = 4
 CPU_DIV = 3
 CPU_CUTOFF_RANGE = (1, 32)
-RAM_MEAN = 8
-RAM_DIV = 8
+RAM_MEAN = 6
+RAM_DIV = 4
 RAM_CUTOFF_RANGE = (1, 128)
 NET_MEAN = 2
 NET_DIV = 1
@@ -17,12 +17,15 @@ NET_CUTOFF_RANGE = (1, 5)
 
 #algorithm parameters:
 ALGORITHM_CORE_PARAMS = {
-	"time_per_region": 		10.0,
+	"time_per_region": 		2.0,
 	"candidate_list_size": 	10,
 	"tation_score_bias": 	0.8,
 	"depth_score_bias": 	1.0,
 	"price_score_bias": 	0.5
 }
+
+#additional configurations:
+FILTER_INSTANCES = ["a1", "t4g","i3","t3a","c5a.xlarge"]
 
 # ============================= Implementation =========================================
 
@@ -32,7 +35,7 @@ import json
 import numpy as np
 import os
 import shutil
-
+import argparse
 
 class Component:
 	def __init__(self, cpu: int, ram: int, net: int):
@@ -59,7 +62,7 @@ class Sample:
 			"spot/onDemand"		:"onDemand",
 			"AvailabilityZone"	:"all",
 			"Architecture"		:"all",
-			"filterInstances"	:[],
+			"filterInstances"	:FILTER_INSTANCES,
 			"apps" 				:[{
 				"app"		:"App",
 				"share"		:True,
@@ -74,7 +77,7 @@ class Sample:
 class NormDistInt:
 	def __init__(self, mean: int, div: int, cutoff_start: int, cutoff_end: int):
 		if cutoff_start >= cutoff_end:
-			exception("NormDistInt error: cutoff range start should be samller than cutoff range end.")
+			raise Exception("NormDistInt error: cutoff range start should be samller than cutoff range end.")
 
 		self.mean = mean
 		self.div = div
@@ -109,7 +112,7 @@ def main(argv: list):
 		print("Missing experiment name argument.\nPlease enter experiment name:")
 		experiment_name = input()
 	else:
-		experiment_name = argv[2]
+		experiment_name = argv[1]
 
 	comp_counts = [i*SAMPLE_COUNT_STRIDE for i in range(1, UNIQUE_SAMPLES+1)]
 	samples = []
@@ -129,31 +132,39 @@ def main(argv: list):
 	stats_dir_prefix = experiment_dir_prefix+"stats/"
 
 	metadata_dict = {}
-	for sample_idx, sample in enumerate(samples):	
-		sample_name = experiment_name+"_"+str(sample_idx)
-		
-		metadata_dict[sample_idx] = ALGORITHM_CORE_PARAMS
+	try:
+		for sample_idx, sample in enumerate(samples):	
+			sample_name = experiment_name+"_"+str(sample_idx)
+			
+			metadata_dict[sample_idx] = ALGORITHM_CORE_PARAMS
 
-		input_file_full_name = input_dir_prefix + sample_name + "_input.json"
-		output_file_full_name = output_dir_prefix + sample_name + "_output.json"
-		stats_file_full_name = stats_dir_prefix + sample_name + "_stats.sqlite3"
-	
-		sample.generateInputJson(input_file_full_name)
+			input_file_full_name = input_dir_prefix + sample_name + "_input.json"
+			output_file_full_name = output_dir_prefix + sample_name + "_output.json"
+			stats_file_full_name = stats_dir_prefix + sample_name + "_stats.sqlite3"
 		
-		Fleet_Optimizer.run_optimizer(
-			ALGORITHM_CORE_PARAMS["time_per_region"],
-			ALGORITHM_CORE_PARAMS["candidate_list_size"],
-			ALGORITHM_CORE_PARAMS["tation_score_bias"],
-			ALGORITHM_CORE_PARAMS["depth_score_bias"],
-			ALGORITHM_CORE_PARAMS["price_score_bias"],
-			input_file_name=input_file_full_name,
-			output_file_name=output_file_full_name,
-			stats_file_name=stats_file_full_name
-		)
-
-	metadata_file_name = experiment_dir_prefix+"/"+experiment_name+"_metadata.json"
-	with open(metadata_file_name, "w") as file:
-		json.dump(metadata_dict, file, indent=2)
+			sample.generateInputJson(input_file_full_name)
+			
+			Fleet_Optimizer.run_optimizer(
+				candidate_list_size = float(ALGORITHM_CORE_PARAMS["candidate_list_size"]),
+				time_per_region = int(ALGORITHM_CORE_PARAMS["time_per_region"]),
+				exploitation_score_price_bias = float(ALGORITHM_CORE_PARAMS["tation_score_bias"]),
+				exploration_score_depth_bias = float(ALGORITHM_CORE_PARAMS["depth_score_bias"]),
+				exploitation_bias = float(ALGORITHM_CORE_PARAMS["price_score_bias"]),
+				input_file_name = input_file_full_name,
+				output_file_name = output_file_full_name,
+				stats_file_name = stats_file_full_name,
+				verbose = False
+			)
+	finally:
+		metadata_file_name = experiment_dir_prefix+"/"+experiment_name+"_metadata.json"
+		with open(metadata_file_name, "w") as file:
+			json.dump(metadata_dict, file, indent=2)
 
 if __name__ == "__main__":
+	# parser = argparse.ArgumentParser(description='Process some integers.')
+	# parser.add_argument('integers', metavar='N', type=int, nargs='+',
+	# 					help='an integer for the accumulator')
+	# args = parser.parse_args()
+	# print(args.accumulate(args.integers))
+
 	main(argv)
