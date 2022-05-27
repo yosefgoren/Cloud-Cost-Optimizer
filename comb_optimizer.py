@@ -33,6 +33,7 @@ class CombOptim:
                  region, exploitation_score_price_bias, exploration_score_depth_bias,
                  exploitation_bias, output_path, verbose = True):
         self.verbose = verbose
+        Node.verbose = verbose
         Node.node_cache = {}
 
         CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
@@ -141,7 +142,7 @@ class CombOptim:
 
 class Node:
     node_cache = {}
-
+    verbose = False
     def __init__(self, partitions, node_depth: int):
         self.node_depth = node_depth
         self.partitions = copy.deepcopy(partitions)
@@ -153,10 +154,11 @@ class Node:
 
         self.sons = None
         Node.node_cache[self.hashCode()] = self
-        #print(f"Node.__init__;\
-        # hash: {self.hashCode()}\
-        # , depth: {self.getDepth()}\
-        # , total_score: {self.price}")
+        if Node.verbose:
+            print(f"Node.__init__;\
+            hash: {self.hashCode()}\
+            , depth: {self.getDepth()}\
+            , total_score: {self.price}")
 
     def __calc_offer(self):
         modules = []

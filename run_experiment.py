@@ -1,11 +1,11 @@
 # ============================= Settings ==============================================
-RANGE = [i for i in range(1,4)]
+RANGE = [40 for i in range(1)]
 N = len(RANGE)
-EACH_COMPONENT_COUNTS = [2*i for i in RANGE]
+EACH_COMPONENT_COUNTS = [i for i in RANGE]
 
 #core algorithm parameters:
-EACH_CANDIDATE_LIST_SIZE =              [10]*N
-EACH_TIME_PER_REGION =   	        	[10.0]*N
+EACH_CANDIDATE_LIST_SIZE =              [10]*N #make sure int here!
+EACH_TIME_PER_REGION =   	        	[2.0]*N
 EACH_EXPLOITATION_SCORE_PRICE_BIAS =    [0.5]*N
 EACH_EXPLORATION_SCORE_DEPTH_BIAS =  	[1.0]*N
 EACH_EXPLOITATION_BIAS =     	        [0.8]*N
@@ -161,33 +161,37 @@ def generate_sample_inputs(exp_name: str, exp_dir_path: str):
     to_json(metadata_dict, exp_dir_path+"/metadata.json")
     
 
-def run_algorithm_on_samples(exp_name: str, exp_dir_path: str, verbosealg: bool, retry: int):
+def run_algorithm_on_samples(exp_name: str, exp_dir_path: str, verbosealg: bool, retry: int, bruteforce: bool):
     metadata_dict = {int(key):value for key, value in from_json(exp_dir_path+"/"+"metadata.json").items()}
 
     for sample_idx, sample_metadata in metadata_dict.items():
         algorithm_core_params = sample_metadata["algorithm_core_params"]
         sample_attempts_left = retry
-        try:
-            Fleet_Optimizer.run_optimizer(
-                **algorithm_core_params,
-                input_file_name = input_path_format(exp_dir_path, exp_name, sample_idx),
-                output_file_name = output_path_format(exp_dir_path, exp_name, sample_idx),
-                stats_file_name = stats_path_format(exp_dir_path, exp_name, sample_idx),
-                verbose = verbosealg
-            )
-        except Exception as e:
-            print(f"{bcolors.WARNING}Error: Unknown exception occured:{bcolors.ENDC}\n")
-            print(e)
-            if sample_attempts_left <= 0:
-                print(f"{bcolors.WARNING}too many errors, dropping experiment.{bcolors.ENDC}\n")
-                exit(1)
+        while True: #finish this loop when no exceptions happen
+            try:
+                Fleet_Optimizer.run_optimizer(
+                    **algorithm_core_params,
+                    input_file_name = input_path_format(exp_dir_path, exp_name, sample_idx),
+                    output_file_name = output_path_format(exp_dir_path, exp_name, sample_idx),
+                    stats_file_name = stats_path_format(exp_dir_path, exp_name, sample_idx),
+                    verbose = verbosealg,
+                    bruteforce = bruteforce
+                )
+            except Exception as e:
+                print(f"{bcolors.WARNING}Error: Unknown exception occured:{bcolors.ENDC}\n")
+                print(e)
+                if sample_attempts_left <= 0:
+                    print(f"{bcolors.WARNING}too many errors, dropping experiment.{bcolors.ENDC}\n")
+                    exit(1)
+                continue
+            break
 
-def main(experiment_name: str, run_generate: bool, run_algorithm: bool, verbosealg: bool, retry: int):
+def main(experiment_name: str, run_generate: bool, run_algorithm: bool, verbosealg: bool, retry: int, bruteforce: bool):
     experiment_dir_path = "./experiments/"+experiment_name
     if run_generate:
         generate_sample_inputs(experiment_name, experiment_dir_path)
     if run_algorithm:
-        run_algorithm_on_samples(experiment_name, experiment_dir_path, verbosealg, retry)
+        run_algorithm_on_samples(experiment_name, experiment_dir_path, verbosealg, retry, bruteforce)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -196,7 +200,8 @@ if __name__ == "__main__":
     parser.add_argument('--norun', action='store_true', help='create experiment samples and metadata without running the algorithm.')
     parser.add_argument('--verbosealg', action='store_true', help='if enabled - algorithm will print more details during runtime.')
     parser.add_argument('--retry', type=int, help='the number of times the experiment will retry to run the algorithm after unknown exception occurs.')
-    
+    parser.add_argument('--bruteforce', type=int, help='if enabled - use bruteforce algorithm rather than regular search algorithm.')
+
     args = parser.parse_args()
 
     experiment_name = args.name
@@ -205,4 +210,4 @@ if __name__ == "__main__":
         experiment_name = input()
     retry = 0 if args.retry is None else args.retry
     
-    main(experiment_name, run_generate = not args.nogen, run_algorithm=not args.norun, verbosealg=args.verbosealg, retry=retry)
+    main(experiment_name, run_generate = not args.nogen, run_algorithm=not args.norun, verbosealg=args.verbosealg, retry=retry, bruteforce=args.retry)

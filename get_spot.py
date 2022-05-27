@@ -97,8 +97,10 @@ class SpotCalculator:
         architecture,
         type_major,
         filter_instances,
-            candidate_list_size, time_per_region, exploitation_score_price_bias, exploration_score_depth_bias, exploitation_bias,
-            output_path, verbose=True
+        candidate_list_size, time_per_region, exploitation_score_price_bias, exploration_score_depth_bias, exploitation_bias,
+        output_path,
+        verbose,
+        bruteforce
     ):  ## params- list of all components
         """Get_fleet_offers function."""
         import os.path
@@ -151,7 +153,7 @@ class SpotCalculator:
         return get_fleet_offers(
             params, region, user_os, app_size, ec2, pricing, architecture, type_major,
             candidate_list_size, time_per_region, exploitation_score_price_bias, exploration_score_depth_bias, exploitation_bias,
-            output_path, verbose=verbose
+            output_path, verbose, bruteforce
         )
 
     def is_cached(self, os, region):

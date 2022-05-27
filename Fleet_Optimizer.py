@@ -86,7 +86,8 @@ def run_optimizer(
     input_file_name = "input_Fleet.json",
     output_file_name="FleetResults.json",
     stats_file_name="Run_Statistic.sqlite3",
-    verbose = True
+    verbose = True,
+    bruteforce = False
 ):
     """Run Optimizer- Fleet calculator."""
     file = open(input_file_name)
@@ -133,7 +134,8 @@ def run_optimizer(
         exploration_score_depth_bias,
         exploitation_bias,
         stats_file_name,
-        verbose
+        verbose,
+        bruteforce
 
     )
     # print('Connecting to boto3')
@@ -166,5 +168,6 @@ if __name__ == "__main__":
         exploitation_bias,
         input_file_name,
         output_file_name,
-        stats_file_name
+        stats_file_name,
+        bruteforce=False
     )

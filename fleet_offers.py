@@ -202,7 +202,7 @@ class FleetCalculator:
 
 def get_fleet_offers(
 	params, region, os, app_size, ec2, pricing, architecture, type_major,
-	candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias,exploitation_bias,output_path, verbose=True
+	candidate_list_size,time_per_region,exploitation_score_price_bias,exploration_score_depth_bias, exploitation_bias, output_path, verbose, bruteforce
 ):
 	"""Get fleet offers function."""
 	res = []
@@ -228,8 +228,7 @@ def get_fleet_offers(
 					)
 				p.storage_offer = storage_offer
 
-		BRUTE = False
-		if BRUTE:# Brute-Force Algorithm- optimal results / more complex
+		if bruteforce:# Brute-Force Algorithm- optimal results / more complex
 			start_time = time.time()
 			groups = create_groups(
 				updated_params, app_size
@@ -243,7 +242,6 @@ def get_fleet_offers(
 					combination, region_to_check, pricing, architecture, type_major
 				)
 			print(time.time() - start_time)
-
 		else:#our code
 			print("running optimizer of region: ", region_to_check)
 			price_calc = lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major)
