@@ -1,15 +1,17 @@
 # ============================= Settings ==============================================
 N = 4
 
-#number of components in each sample:
-EACH_COMPONENT_COUNTS = [18]*N
+
+
+COMPONENT_COUNTS = [18]*N
+SIGNIFICANCE = [14]*N
 
 #core algorithm parameters:
-EACH_CANDIDATE_LIST_SIZE =              [10]*N + [5*(i**2) for i in range(1, N+1)] #make sure int here!
-EACH_TIME_PER_REGION =   	        	[15.0]*N*2
-EACH_EXPLOITATION_SCORE_PRICE_BIAS =    [0.5]*N*2
-EACH_EXPLORATION_SCORE_DEPTH_BIAS =  	[1.0]*N*2
-EACH_EXPLOITATION_BIAS =     	        [0.2*i for i in range(1, N+1)] + [0.8]*N
+CANDIDATE_LIST_SIZE =              [5*(i**2) for i in range(1, N+1)] #make sure int here!
+TIME_PER_REGION =   	        	[15.0]*N
+EXPLOITATION_SCORE_PRICE_BIAS =    [0.5]*N
+EXPLORATION_SCORE_DEPTH_BIAS =  	[1.0]*N
+EXPLOITATION_BIAS =     	        [0.8]*N
 
 #hw resources distributions:
 CPU_MEAN = 4
@@ -25,7 +27,7 @@ NET_CUTOFF_RANGE = (1, 5)
 #additional configurations:
 FILTER_INSTANCES = ["a1", "t4g","i3","t3a","c5a.xlarge"]
 
-# ============================= Implementation =========================================
+# ============================= Imports =========================================
 
 import Fleet_Optimizer
 import json
@@ -33,6 +35,37 @@ import numpy as np
 import os
 import shutil
 import argparse
+import math
+
+# ============================= File System Utilities =========================================
+
+def to_json(collection, file_path: str)->None:
+    with open(file_path, 'w') as file:
+        json.dump(collection, file, indent=2)
+
+def from_json(file_path: str):
+    with open(file_path, 'r') as file:
+        res = json.load(file)
+    return res
+
+def input_path_format(exp_dir_path: str, sample_idx: int)->str:
+    return exp_dir_path+"/inputs/sample"+str(sample_idx)+".json"
+
+def output_path_format(exp_dir_path: str, sample_idx: int, repetition: int)->str:
+    return exp_dir_path+"/outputs/sample"+str(sample_idx)+"_repetition"+str(repetition)+".json"
+
+def stats_path_format(exp_dir_path: str, sample_idx: int, repetition: int)->str:
+    return exp_dir_path+"/stats/sample"+str(sample_idx)+"_repetition"+str(repetition)+".sqlite3"
+
+def metadata_path_formtat(exp_dir_path: str)->str:
+    return exp_dir_path+"/metadata.json"
+
+def get_metadata_dict(experiment_dir_path: str)->dict:
+    """returns a dictionary containing the medatada saved about the experiment."""
+    return {int(key):value for key, value in from_json(metadata_path_formtat(experiment_dir_path)).items()}
+
+
+# ============================= Implementation =========================================
 
 class bcolors:
     HEADER = '\033[95m'
@@ -50,15 +83,6 @@ class Component:
         self.cpu = cpu
         self.ram = ram
         self.net = net
-
-def to_json(collection, file_path: str)->None:
-    with open(file_path, 'w') as file:
-        json.dump(collection, file, indent=2)
-
-def from_json(file_path: str):
-    with open(file_path, 'r') as file:
-        res = json.load(file)
-    return res
 
 class Sample:
     def __init__(self, comps: list):
@@ -123,80 +147,63 @@ def make_experiment_dir(exp_dir_path: str):
     for name in ["inputs", "outputs", "stats"]:
         os.mkdir(exp_dir_path+"/"+name)
 
-def input_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
-    # return exp_dir_path+"/inputs/"+exp_name+"_"+str(sample_idx)+"_input.json"
-    return exp_dir_path+"/inputs/"+str(sample_idx)+".json"
-
-def output_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
-    # return exp_dir_path+"/outputs/"+exp_name+"_"+str(sample_idx)+"_output.json"
-    return exp_dir_path+"/outputs/"+str(sample_idx)+".json"
-
-def stats_path_format(exp_dir_path: str, exp_name: str, sample_idx: int)->str:
-    # return exp_dir_path+"/stats/"+exp_name+"_"+str(sample_idx)+"_stats.sqlite3"
-    return exp_dir_path+"/stats/"+str(sample_idx)+".sqlite3"
-
-def generate_sample_inputs(exp_name: str, exp_dir_path: str, significance: int):
+    
+def generate_sample_inputs(exp_dir_path: str):
     cpu_dist = NormDistInt(CPU_MEAN, CPU_DIV, CPU_CUTOFF_RANGE[0], CPU_CUTOFF_RANGE[1])
     ram_dist = NormDistInt(RAM_MEAN, RAM_DIV, RAM_CUTOFF_RANGE[0], RAM_CUTOFF_RANGE[1])
     net_dist = NormDistInt(NET_MEAN, NET_DIV, NET_CUTOFF_RANGE[0], NET_CUTOFF_RANGE[1])
     
-    samples = []
-    for num_comps in EACH_COMPONENT_COUNTS:
-        sample = create_sample(num_comps, cpu_dist, ram_dist, net_dist)
-        samples += [sample]*significance
-
+    samples = [create_sample(num_comps, cpu_dist, ram_dist, net_dist) for num_comps in COMPONENT_COUNTS]
     make_experiment_dir(exp_dir_path)
 
     metadata_dict = {}
-    for sample_idx, sample in enumerate(samples):	
-        
+    for sample_idx, sample in enumerate(samples):
         metadata_dict[sample_idx] = {
-            "number_of_components":     len(sample.comps),   
+            "number_of_components":     len(sample.comps),
+            "significance": SIGNIFICANCE[sample_idx],
             "algorithm_core_params":    {
-                "candidate_list_size" : EACH_CANDIDATE_LIST_SIZE[sample_idx],
-                "time_per_region" : EACH_TIME_PER_REGION[sample_idx],
-                "exploitation_score_price_bias" : EACH_EXPLOITATION_SCORE_PRICE_BIAS[sample_idx],
-                "exploration_score_depth_bias" : EACH_EXPLORATION_SCORE_DEPTH_BIAS[sample_idx],
-                "exploitation_bias" : EACH_EXPLOITATION_BIAS[sample_idx]
+                "candidate_list_size" : CANDIDATE_LIST_SIZE[sample_idx],
+                "time_per_region" : TIME_PER_REGION[sample_idx],
+                "exploitation_score_price_bias" : EXPLOITATION_SCORE_PRICE_BIAS[sample_idx],
+                "exploration_score_depth_bias" : EXPLORATION_SCORE_DEPTH_BIAS[sample_idx],
+                "exploitation_bias" : EXPLOITATION_BIAS[sample_idx]
             }
         }
-        sample.generateInputJson(input_path_format(exp_dir_path, exp_name, sample_idx))
+        sample.generateInputJson(input_path_format(exp_dir_path, sample_idx))
         
-    to_json(metadata_dict, exp_dir_path+"/metadata.json")
-    
+    to_json(metadata_dict, metadata_path_formtat(exp_dir_path))
 
-def run_algorithm_on_samples(exp_name: str, exp_dir_path: str, verbosealg: bool, retry: int, bruteforce: bool):
-    metadata_dict = {int(key):value for key, value in from_json(exp_dir_path+"/"+"metadata.json").items()}
-
-    for sample_idx, sample_metadata in metadata_dict.items():
+def run_algorithm_on_samples(exp_dir_path: str, verbosealg: bool, retry: int, bruteforce: bool):
+    for sample_idx, sample_metadata in get_metadata_dict(exp_dir_path).items():
         algorithm_core_params = sample_metadata["algorithm_core_params"]
-        sample_attempts_left = retry
-        while True: #finish this loop when no exceptions happen
-            try:
-                Fleet_Optimizer.run_optimizer(
-                    **algorithm_core_params,
-                    input_file_name = input_path_format(exp_dir_path, exp_name, sample_idx),
-                    output_file_name = output_path_format(exp_dir_path, exp_name, sample_idx),
-                    stats_file_name = stats_path_format(exp_dir_path, exp_name, sample_idx),
-                    verbose = verbosealg,
-                    bruteforce = bruteforce
-                )
-            except Exception as e:
-                print(f"{bcolors.WARNING}Error: Unknown exception occured:{bcolors.ENDC}")
-                print(e)
-                if sample_attempts_left <= 0:
-                    print(f"{bcolors.WARNING}too many errors, dropping experiment.{bcolors.ENDC}")
-                    exit(1)
-                sample_attempts_left -= 1
-                continue
-            break
+        for repetition in range(sample_metadata["significance"]):
+            sample_attempts_left = retry
+            while True: # This loop will end when no exceptions happen, or retried too many times.
+                try:
+                    Fleet_Optimizer.run_optimizer(
+                        **algorithm_core_params,
+                        input_file_name = input_path_format(exp_dir_path, sample_idx),
+                        output_file_name = output_path_format(exp_dir_path, sample_idx, repetition),
+                        stats_file_name = stats_path_format(exp_dir_path, sample_idx, repetition),
+                        verbose = verbosealg,
+                        bruteforce = bruteforce
+                    )
+                except Exception as e:
+                    print(f"{bcolors.WARNING}Error: Unknown exception occured:{bcolors.ENDC}")
+                    print(e)
+                    if sample_attempts_left <= 0:
+                        print(f"{bcolors.WARNING}too many errors, dropping experiment.{bcolors.ENDC}")
+                        exit(1)
+                    sample_attempts_left -= 1
+                    continue
+                break
 
-def main(experiment_name: str, run_generate: bool, run_algorithm: bool, verbosealg: bool, retry: int, bruteforce: bool, significance: int):
+def main(experiment_name: str, run_generate: bool, run_algorithm: bool, verbosealg: bool, retry: int, bruteforce: bool):
     experiment_dir_path = "./experiments/"+experiment_name
     if run_generate:
-        generate_sample_inputs(experiment_name, experiment_dir_path, significance)
+        generate_sample_inputs(experiment_dir_path)
     if run_algorithm:
-        run_algorithm_on_samples(experiment_name, experiment_dir_path, verbosealg, retry, bruteforce)
+        run_algorithm_on_samples(experiment_dir_path, verbosealg, retry, bruteforce)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -205,7 +212,7 @@ if __name__ == "__main__":
     parser.add_argument('--norun', action='store_true', help='create experiment samples and metadata without running the algorithm.')
     parser.add_argument('--verbosealg', action='store_true', help='if enabled - algorithm will print more details during runtime.')
     parser.add_argument('--retry', type=int, help='the number of times the experiment will retry to run the algorithm after unknown exception occurs.')
-    parser.add_argument('--significance', type=int, help='each sample will be repeated this many times with the same generated input.')
+    parser.add_argument('--bruteforce', action='store_true', help='if selected - use bruteforce algorith instead.')
 
     args = parser.parse_args()
 
@@ -216,4 +223,4 @@ if __name__ == "__main__":
     retry = 0 if args.retry is None else args.retry
     significance = 1 if args.significance is None else args.significance
     
-    main(experiment_name, run_generate = not args.nogen, run_algorithm=not args.norun, verbosealg=args.verbosealg, retry=retry, bruteforce=args.retry, significance=significance)
+    main(experiment_name, run_generate = not args.nogen, run_algorithm=not args.norun, verbosealg=args.verbosealg, retry=retry, bruteforce=args.bruteforce)

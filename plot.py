@@ -2,12 +2,8 @@ import sqlite3
 import numpy as np
 from matplotlib import pyplot as plt
 
-
-def get_plots():
-	pass
-
 def price_plot(db_path, title, best_price=1.0):
-	query = "SELECT INSERT_TIME, (BEST_PRICE/{}) FROM STATS".format(best_price)
+	query = f"SELECT INSERT_TIME, (BEST_PRICE/{best_price}) FROM STATS"
 	# query = "SELECT INSERT_TIME, (BEST_PRICE/{}) FROM STATS WHERE REGION_SOLUTION='us-east-1'".format(best_price)
 	#title = "price plot, 14 comp"
 	x_label = "time (seconds)"
@@ -59,4 +55,5 @@ def plot_single_time_line(db_path: str, title: str, x_label: str = "x", y_label:
 
 	conn.close()
 
-plot_single_time_line("./experiments/single_sample_20cv2/stats/0.sqlite3", "a very noble graph")
+
+plot_single_time_line("./experiments/overnight_bias_candidates/stats/0.sqlite3", "a")

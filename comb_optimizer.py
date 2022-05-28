@@ -271,7 +271,9 @@ class ResetSelector:
             selected_node_idx = sampleFromWeighted(scores_arr)
         except:
             print("sample from weighted raised err, scores list: ", scores_list)
-            exit(1)
+            return self.top_candidates[0]
+            #tmp fix, retun random node instead of exit...
+            # exit(1)
         selected_candidate = self.top_candidates[selected_node_idx]
         if self.verbose:
             print(f"ResetSelector.getStartNode;\
@@ -414,11 +416,15 @@ class SearchAlgorithm:
         node.calcAllSons()
         flag = self.is_choosing_downgrades()
         improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(node.sons, node.getPrice())
-        if (downgrades.shape[0] != 0) and flag:
-            return SearchAlgorithm.get_son_by_weights(downgrades)
-        elif improves.shape[0] != 0:
-            return SearchAlgorithm.get_son_by_weights(improves)
-        else:
+        #temp fix, if got exception, return None:
+        try:
+            if (downgrades.shape[0] != 0) and flag:
+                return SearchAlgorithm.get_son_by_weights(downgrades)
+            elif improves.shape[0] != 0:
+                return SearchAlgorithm.get_son_by_weights(improves)
+            else:
+                return None
+        except:
             return None
 
     @staticmethod
