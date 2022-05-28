@@ -88,10 +88,10 @@ def make_experiment_dir(exp_dir_path: str):
     for name in ["inputs", "outputs", "stats"]:
         os.mkdir(exp_dir_path+"/"+name)
 
-def query_as_list(db_path: str, query: str)->list:
+def get_query(db_path: str, query: str)->list:
     with sqlite3.connect(db_path) as conn:
         res = conn.execute(query)
-    return list(res)
+    return res
 
 def verify_dict_keys(d: dict, expected_keys: set):
         actual_keys = set(d.keys())
@@ -183,6 +183,8 @@ class Sample:
                     sample_attempts_left -= 1
                     continue
                 break
+    def expected_runtime(self, num_regions: int)->float:
+        return self.metadata["control_parameters"]["time_per_region"]*self.metadata["control_parameters"]["significance"]*float(num_regions)/3600
 
 def run_sample(s: Sample, retry: int, verbosealg: bool, bruteforce: bool):
     s.run(retry, verbosealg, bruteforce)
@@ -195,7 +197,7 @@ class Experiment:
         self.experiment_name = experiment_name
         self.exp_dir_path = experiments_root_dir+"/"+self.experiment_name
         self.samples = samples
-    
+
     @staticmethod
     def create(
             experiment_name: str,
@@ -203,7 +205,8 @@ class Experiment:
             algorithm_parameter_lists: dict,
             component_resource_distirubtions: dict,
             experiments_root_dir: str = default_experiments_root_dir,
-            force: bool = False
+            force: bool = False,
+            unique_sample_inputs: bool = True 
     ):
         #verify input correctness:
         verify_dict_keys(control_parameter_lists, control_parameter_names)
@@ -219,16 +222,22 @@ class Experiment:
         sample_hw_requirments = lambda : [component_resource_distirubtions[resource_name]() for resource_name in component_resource_type_names]
         exp_dir_path = experiments_root_dir+"/"+experiment_name
         if os.path.exists(exp_dir_path) and not force:
-            if bool_prompt(f"an experiment by the name '{experiment_name}'. load existing experiment? (press 'n' to override)"):
-                return Experiment.load(experiment_name, experiments_root_dir)
+            if not bool_prompt(f"an experiment by the name '{experiment_name}'. override old experiment?"):
+                exit(0)
         make_experiment_dir(exp_dir_path)
 
         control_parameter_dicts = dict_of_lists_to_list_of_dicts(control_parameter_lists)
         algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(algorithm_parameter_lists)
         samples = []
+
+        component_set_generator = lambda : [Component(*(sample_hw_requirments())) for _ in range(max(control_parameter_lists["component_count"]))]
+        if not unique_sample_inputs:
+            static_component_set = component_set_generator()
+            component_set_generator = lambda : static_component_set
+
         for sample_idx in range(num_samples):
             num_sample_components = control_parameter_lists["component_count"][sample_idx]
-            sample_components = [Component(*(sample_hw_requirments())) for _ in range(num_sample_components)]
+            sample_components = component_set_generator()[:num_sample_components]
             samples.append(Sample.create(
                     exp_dir_path, 
                     sample_idx, 
@@ -240,13 +249,17 @@ class Experiment:
         to_json([sample.metadata for sample in samples], metadata_path_format(exp_dir_path))
         return Experiment(experiment_name, experiments_root_dir, samples)
 
+    def calc_expected_time(self, num_cores: int, num_regions: int = 20):
+        return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
+
     @staticmethod
     def load(
             experiment_name: str, 
             experiments_root_dir: str = default_experiments_root_dir
     ):
         exp_dir_path = experiments_root_dir+"/"+experiment_name
-        samples = [Sample(metadata, sample_idx) for metadata, sample_idx in from_json(metadata_path_format(exp_dir_path))]
+        exp_metadata = from_json(metadata_path_format(exp_dir_path))
+        samples = [Sample(metadata, sample_idx, exp_dir_path) for sample_idx, metadata in enumerate(exp_metadata)]
         return Experiment(experiment_name, experiments_root_dir, samples)
 
     def run(self, 
@@ -262,6 +275,8 @@ class Experiment:
             if not bool_prompt("this experiment has already been run. override results?"):
                 return
         
+        print(yellow(f"Running '{self.experiment_name}'. Expected runtime is {self.calc_expected_time(multiprocess, 20)} hours."))
+
         if multiprocess == 1:
             for sample in self.samples:
                 sample.run(retry, verbosealg, bruteforce)
@@ -273,12 +288,13 @@ class Experiment:
                 p.join()
 
     def get_num_samples(self)->int:
-        return len(self.metadata)
+        return len(self.samples)
 
-    def qury_each_sample(self, query_each: str)->list:
+    def query_each_sample(self, query: str)->list:
         """this will return a list where each element is a list representing a sample in the test.
-            each inner list is obtained by querying the sql-db of a sample with the query 'query_each'"""
+            each inner list is obtained by querying the sql-db of a sample with 'query'."""
         results = []
-        for sample_idx, _ in self.metadata:
-            results.append(query_as_list(stats_path_format(self.exp_dir_path, sample_idx), query_each))
+        for sample_idx, sample in enumerate(self.samples):
+            for repetition in range(sample.metadata["control_parameters"]["significance"]):
+                results.append(get_query(stats_path_format(self.exp_dir_path, sample_idx, repetition), query))
         return results
