@@ -1,5 +1,8 @@
 from audioop import mul
+from matplotlib import pyplot as plt
+from requests import delete
 import Fleet_Optimizer
+import math
 import json
 import numpy as np
 import os
@@ -88,11 +91,6 @@ def make_experiment_dir(exp_dir_path: str):
     for name in ["inputs", "outputs", "stats"]:
         os.mkdir(exp_dir_path+"/"+name)
 
-def get_query(db_path: str, query: str)->list:
-    with sqlite3.connect(db_path) as conn:
-        res = conn.execute(query)
-    return res
-
 def verify_dict_keys(d: dict, expected_keys: set):
         actual_keys = set(d.keys())
         if actual_keys != expected_keys:
@@ -157,6 +155,10 @@ class Sample:
         self.metadata = metadata
         self.sample_idx = sample_idx
         self.exp_dir_path = exp_dir_path
+        
+        self.component_count = self.metadata["control_parameters"]["component_count"]
+        self.time_per_region = self.metadata["control_parameters"]["time_per_region"]
+        self.segnificance = self.metadata["control_parameters"]["significance"]
 
     def run(self, retry: int, verbosealg: bool, bruteforce: bool):
         algorithm_parameters = self.metadata["algorithm_parameters"]
@@ -183,14 +185,159 @@ class Sample:
                     sample_attempts_left -= 1
                     continue
                 break
+
     def expected_runtime(self, num_regions: int)->float:
         return self.metadata["control_parameters"]["time_per_region"]*self.metadata["control_parameters"]["significance"]*float(num_regions)/3600
+    
+    def query_repetition(self, repetition: int, query: str)->list:
+        db_path = stats_path_format(self.exp_dir_path, self.sample_idx, repetition)
+        with sqlite3.connect(db_path) as conn:
+            res = conn.execute(query)
+        return list(res)
 
-def run_sample(s: Sample, retry: int, verbosealg: bool, bruteforce: bool):
-    s.run(retry, verbosealg, bruteforce)
+    def query_stats(self, query: str):
+        return [self.query_repetition(repetition, query) for repetition in range(self.segnificance)]
+
+def partition_tuples_list_by_field(entries: list, unique_field_idx: int):
+    """stat fields are: 0:INSERT_TIME, 1:NODES_COUNT, 2:BEST_PRICE, 3:DEPTH_BEST, 4:ITERATION, 5:REGION_SOLUTION"""
+    field_values = {entry[unique_field_idx] for entry in entries}
+    return {value:[entry for entry in entries if entry[unique_field_idx] == value] for value in field_values}
+
+class Stats:
+    def __init__(self, content: list):
+        self.content = content
+        self.repetitions_aggregated = False
+
+    def map_entries(self, mapping_func):
+        if not self.repetitions_aggregated:
+            self.content = [[[mapping_func(entry)
+                        for entry in repetition_stats
+                    ]
+                    for repetition_stats in sample_stats
+                ]
+                for sample_stats in self.content
+            ]
+        else:
+            self.content = [[mapping_func(entry)
+                        for entry in sample_stats
+                    ]
+                for sample_stats in self.content
+            ]
+            
+    def aggregate_field_partition(self, aggregation_func, unique_field_idx: int):
+        """given an index of a field within the query tuple, aggregate together all sets of entries with the same value for that field."""
+        if not self.repetitions_aggregated:
+            self.content = [[[aggregation_func(stats)
+                        for stats in partition_tuples_list_by_field(repetition_stats, unique_field_idx).values()
+                    ]
+                    for repetition_stats in sample_stats
+                ]
+                for sample_stats in self.content
+            ]
+        else:
+            self.content = [[aggregation_func(stats)
+                        for stats in partition_tuples_list_by_field(sample_stats, unique_field_idx).values()
+                    ]
+                for sample_stats in self.content
+            ]
+
+    def flatten_list_of_lists(ls: list)->list:
+        res = []
+        for inner_ls in ls:
+            res += inner_ls
+        return res
+
+    def flatten_repetitions(self, aggregation_func = flatten_list_of_lists):
+        self.content = [aggregation_func(sample_stats)
+            for sample_stats in self.content
+        ]
+        self.repetitions_aggregated = True
+
+def run_samples(sample_list: list, retry: int, verbosealg: bool, bruteforce: bool, pid: int):
+    print(green(f"process {pid}, starting. got {len(sample_list)} samples."))
+    for sample in sample_list:
+        sample.run(retry, verbosealg, bruteforce)
+        print(green(f"process {pid}, finished running sample {sample.sample_idx}."))
 
 class Experiment:
     default_experiments_root_dir = "./experiments"
+
+    def get_num_samples(self)->int:
+        return len(self.samples)
+
+    def query_each_sample(self, query: str)->list:
+        return [sample.query_stats(query) for sample in self.samples]
+
+    def get_stats(self, query: str)->Stats:
+        return Stats(self.query_each_sample(query))
+
+    def plot_time_price(self):
+        # get best price for each sample:
+        best_prices = self.get_stats("SELECT MIN(BEST_PRICE) FROM STATS;")
+        best_prices.flatten_repetitions()
+        best_prices = [sample_stats[0][0] for sample_stats in best_prices.content]
+        #'best_prices' should now we a list of floats. each one represents the best price seen in a sample.
+
+
+        # find interval timing:
+        times = self.get_stats("SELECT INSERT_TIME FROM STATS ORDER BY INSERT_TIME;")
+        times.flatten_repetitions()
+        times = [[time for (time,) in sample_stats] for sample_stats in times.content]
+        #TODO: perhaps need to drop samples where times don't make sense?
+        #'times' should transform as: [[(t1,), (t2,) ...], [...] ...] ---> [[t1, t2 ...], [...] ...]
+        experiment_max_min_time = max([min(sample_stats) for sample_stats in times])
+        #'experiment_max_min_time' is the amount untill the last sample repetition (aka run of the algorithm) has written it's first entry.
+        experiment_max_time = max([max(sample_stats) for sample_stats in times])# each 'sample_stats' contains a list times of entries of the sample.
+        total_time = experiment_max_time - experiment_max_min_time
+        if total_time == 0:
+            fetal_error("Error: difference between first and last entry times is zero")
+
+        num_intervals = int(self.get_num_samples()/float(10))
+        interval_len = float(total_time)/num_intervals
+        interval_mids = [experiment_max_min_time+interval_len*(float(i)+0.5) for i in range(num_intervals)]
+        
+        def get_containing_interval_idx(time: float)->int:
+            idx = math.floor(float(time-experiment_max_min_time)/total_time)
+            return idx
+
+        # get the best price for each interval for each sample:
+        interval_prices_for_each_sample = []
+        times_and_prices = self.get_stats("SELECT * FROM STATS ORDER BY INSERT_TIME;")
+        times_and_prices.flatten_repetitions()
+        times_and_prices.map_entries(lambda entry: (entry[0], entry[2]))
+
+        for sample_times_prices in times_and_prices.content:
+            sample_entries_by_interval = [[]]*num_intervals
+            for time, price in sample_times_prices:
+                sample_entries_by_interval[get_containing_interval_idx(time)].append((time, price))
+            
+            interval_prices = [min(interval_entries+[(None, math.inf)], lambda time, price: price)[1] for interval_entries in sample_entries_by_interval]
+            #'interval_prices' should now have one (best) price for each interval (from this sample).
+            #if an interval is empty it will have infinite price and will be filtered later.
+            interval_prices_for_each_sample.append(interval_prices)
+
+
+        # normalize each sample according to 'best_prices':
+        for sample_idx in range(self.get_num_samples()):
+            interval_prices_for_each_sample[sample_idx] = [interval_price/float(best_prices[sample_idx]) for interval_price in interval_prices_for_each_sample[sample_idx]]
+
+
+        # aggregate all samples of each interval into average:
+        average = lambda ls: sum(ls)/float(len(ls))
+        interval_average_prices = [average(sample_price) for sample_price in interval_prices_for_each_sample]
+
+
+        # remove all intervals with infinite price due to missing entries:
+        times_and_average_prices = [(interval_mids[interval_idx], price) for interval_idx, price in enumerate(interval_average_prices)]
+
+        # plot results:
+        x_axis = [time for time, price in times_and_average_prices]
+        y_axis = [price for time, price in times_and_average_prices]
+        plt.plot(x_axis, y_axis)
+        plt.xlabel("time")
+        plt.ylabel("average normalized price")
+        plt.show()
+
 
     def __init__(self, experiment_name: str, experiments_root_dir: str, samples: list):
         """this method is for internal use only, 'Experiment' objects should be created with the static methods 'create, load'."""
@@ -219,7 +366,7 @@ class Experiment:
         num_samples = lengths[0]
 
         #create experiment files and objects
-        sample_hw_requirments = lambda : [component_resource_distirubtions[resource_name]() for resource_name in component_resource_type_names]
+        sample_hw_requirments = lambda : {resource_name:component_resource_distirubtions[resource_name]() for resource_name in component_resource_type_names}
         exp_dir_path = experiments_root_dir+"/"+experiment_name
         if os.path.exists(exp_dir_path) and not force:
             if not bool_prompt(f"an experiment by the name '{experiment_name}'. override old experiment?"):
@@ -230,7 +377,7 @@ class Experiment:
         algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(algorithm_parameter_lists)
         samples = []
 
-        component_set_generator = lambda : [Component(*(sample_hw_requirments())) for _ in range(max(control_parameter_lists["component_count"]))]
+        component_set_generator = lambda : [Component(**(sample_hw_requirments())) for _ in range(max(control_parameter_lists["component_count"]))]
         if not unique_sample_inputs:
             static_component_set = component_set_generator()
             component_set_generator = lambda : static_component_set
@@ -251,6 +398,9 @@ class Experiment:
 
     def calc_expected_time(self, num_cores: int, num_regions: int = 20):
         return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
+
+    def print_expected_runtime(self, multiprocess: int):
+        print(f" Expected runtime is {self.calc_expected_time(multiprocess, 20)} hours.")
 
     @staticmethod
     def load(
@@ -275,26 +425,21 @@ class Experiment:
             if not bool_prompt("this experiment has already been run. override results?"):
                 return
         
-        print(yellow(f"Running '{self.experiment_name}'. Expected runtime is {self.calc_expected_time(multiprocess, 20)} hours."))
+        print(yellow(f"Running '{self.experiment_name}'."))
+        self.print_expected_runtime(multiprocess)
 
         if multiprocess == 1:
             for sample in self.samples:
                 sample.run(retry, verbosealg, bruteforce)
+                print(green(f"finished running sample {sample.sample_idx}."))
         else:
-            ps = [Process(target=run_sample, args=(sample, retry, verbosealg, bruteforce)) for sample in self.samples]
+            samples_each_process = [self.samples[pid:self.get_num_samples():multiprocess] for pid in range(multiprocess)]
+            ps = [Process(
+                    target=run_samples, args=(samples_each_process[pid], retry, verbosealg, bruteforce, pid)
+                )
+                for pid in range(multiprocess)
+            ]
             for p in ps:
                 p.start()
             for p in ps:
                 p.join()
-
-    def get_num_samples(self)->int:
-        return len(self.samples)
-
-    def query_each_sample(self, query: str)->list:
-        """this will return a list where each element is a list representing a sample in the test.
-            each inner list is obtained by querying the sql-db of a sample with 'query'."""
-        results = []
-        for sample_idx, sample in enumerate(self.samples):
-            for repetition in range(sample.metadata["control_parameters"]["significance"]):
-                results.append(get_query(stats_path_format(self.exp_dir_path, sample_idx, repetition), query))
-        return results
