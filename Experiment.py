@@ -72,6 +72,9 @@ def fetal_error(msg: str):
     print(red("Fetal Error: "+msg))
     exit(1)
 
+class Flags:
+    ALL = None
+
 class Component:
     def __init__(self, cpu: int, ram: int, net: int):
         self.cpu = cpu
@@ -101,6 +104,19 @@ def dict_of_lists_to_list_of_dicts(dict_of_lists: dict)->list:
     keys = list(dict_of_lists.keys())
     n = len(dict_of_lists[keys[0]])
     return [{key:dict_of_lists[key][idx] for key in keys} for idx in range(n)]
+
+def invert_list(ls: list)->list:
+    """turn list of lists inside out, function assumes all inner lists have same length.
+        [[1,2,3], [4,5,6]] ---> [[1,4], [2,5], [3,6]]
+        also, inner lists can also be tuples or sets insetead:
+        [(1,2,3), (4,5,6)] ---> [[1,4], [2,5], [3,6]]"""
+    return [[inner_list[idx] for inner_list in ls] for idx in range(len(ls[0]))]
+
+def flatten_list_of_lists(ls: list)->list:
+    res = []
+    for inner_ls in ls:
+        res += inner_ls
+    return res
 
 class Sample:
     @staticmethod
@@ -165,29 +181,34 @@ class Sample:
         control_parameters = self.metadata["control_parameters"]
         for repetition in range(control_parameters["significance"]):
             sample_attempts_left = retry
-            while True: # This loop will end when no exceptions happen, or retried too many times.
-                try:
-                    Fleet_Optimizer.run_optimizer(
-                        **algorithm_parameters,
-                        time_per_region = control_parameters["time_per_region"],
-                        input_file_name = input_path_format(self.exp_dir_path, self.sample_idx),
-                        output_file_name = output_path_format(self.exp_dir_path, self.sample_idx, repetition),
-                        stats_file_name = stats_path_format(self.exp_dir_path, self.sample_idx, repetition),
-                        verbose = verbosealg,
-                        bruteforce = bruteforce #TODO: enable different algorithms...
-                    )
-                except Exception as e:
-                    print(yellow("Error: Unknown exception occured:"))
-                    print(e)
-                    if sample_attempts_left <= 0:
-                        print(yellow("too many errors, stopping run."))
-                        raise e
-                    sample_attempts_left -= 1
-                    continue
-                break
+            def run_alg():
+                Fleet_Optimizer.run_optimizer(
+                    **algorithm_parameters,
+                    time_per_region = control_parameters["time_per_region"],
+                    input_file_name = input_path_format(self.exp_dir_path, self.sample_idx),
+                    output_file_name = output_path_format(self.exp_dir_path, self.sample_idx, repetition),
+                    stats_file_name = stats_path_format(self.exp_dir_path, self.sample_idx, repetition),
+                    verbose = verbosealg,
+                    bruteforce = bruteforce #TODO: enable different algorithms...
+                )
+            if retry > 0:
+                while True: # This loop will end when no exceptions happen, or retried too many times.
+                    try:
+                        run_alg()
+                    except Exception as e:
+                        print(yellow("Error: Unknown exception occured:"))
+                        print(e)
+                        if sample_attempts_left <= 0:
+                            print(yellow("too many errors, stopping run."))
+                            raise e
+                        sample_attempts_left -= 1
+                        continue
+                    break
+            else:
+                run_alg()
 
     def expected_runtime(self, num_regions: int)->float:
-        return self.metadata["control_parameters"]["time_per_region"]*self.metadata["control_parameters"]["significance"]*float(num_regions)/3600
+        return self.time_per_region*self.segnificance*float(num_regions)/3600.0
     
     def query_repetition(self, repetition: int, query: str)->list:
         db_path = stats_path_format(self.exp_dir_path, self.sample_idx, repetition)
@@ -195,15 +216,31 @@ class Sample:
             res = conn.execute(query)
         return list(res)
 
-    def query_stats(self, query: str):
+    def query_stats(self, query: str)->list:
         return [self.query_repetition(repetition, query) for repetition in range(self.segnificance)]
 
+    def filter_entries_inf_price(entries: list)->list:
+        """expects input to be a list of tuples where each tuple is (time, price)"""
+        return [
+            (time, price)
+            for time, price in entries
+            if (price is not math.inf and price is not np.inf)
+        ]
+
+    def get_times_prices(self, repetition: int = Flags.ALL, region: str = Flags.ALL)->tuple:
+        """the first element of the result is a list of floats (times), the second is list of prices."""
+        query = f"SELECT INSERT_TIME,BEST_PRICE FROM STATS WHERE REGION_SOLUTION = '{region}' ORDER BY INSERT_TIME;"
+        
+        entries = flatten_list_of_lists(self.query_stats(query)) if repetition is Flags.ALL else self.query_repetition(repetition, query)
+        return invert_list(Sample.filter_entries_inf_price(entries))
+
+
 def partition_tuples_list_by_field(entries: list, unique_field_idx: int):
-    """stat fields are: 0:INSERT_TIME, 1:NODES_COUNT, 2:BEST_PRICE, 3:DEPTH_BEST, 4:ITERATION, 5:REGION_SOLUTION"""
     field_values = {entry[unique_field_idx] for entry in entries}
     return {value:[entry for entry in entries if entry[unique_field_idx] == value] for value in field_values}
 
 class Stats:
+    """stat fields are: 0:INSERT_TIME, 1:NODES_COUNT, 2:BEST_PRICE, 3:DEPTH_BEST, 4:ITERATION, 5:REGION_SOLUTION"""
     def __init__(self, content: list):
         self.content = content
         self.repetitions_aggregated = False
@@ -241,11 +278,6 @@ class Stats:
                 for sample_stats in self.content
             ]
 
-    def flatten_list_of_lists(ls: list)->list:
-        res = []
-        for inner_ls in ls:
-            res += inner_ls
-        return res
 
     def flatten_repetitions(self, aggregation_func = flatten_list_of_lists):
         self.content = [aggregation_func(sample_stats)
@@ -259,6 +291,18 @@ def run_samples(sample_list: list, retry: int, verbosealg: bool, bruteforce: boo
         sample.run(retry, verbosealg, bruteforce)
         print(green(f"process {pid}, finished running sample {sample.sample_idx}."))
 
+def describe_time(time_in_hours: float)->str:
+    def trucated_str(num: float)->str:
+        pre_dec_dot, post_dec_dot = str(num).split('.')
+        return pre_dec_dot + '.' + post_dec_dot[:4]
+
+    if time_in_hours < 1:
+        return trucated_str(time_in_hours*60) + " minutes"
+    if time_in_hours > 24:
+        return trucated_str(time_in_hours/24.0) + " days"
+    else:
+        return trucated_str(time_in_hours) + " hours"
+        
 class Experiment:
     default_experiments_root_dir = "./experiments"
 
@@ -271,7 +315,7 @@ class Experiment:
     def get_stats(self, query: str)->Stats:
         return Stats(self.query_each_sample(query))
 
-    def plot_time_price(self):
+    def plot_time_price(self, interval_sample_ratio: float = 0.2):
         # get best price for each sample:
         best_prices = self.get_stats("SELECT MIN(BEST_PRICE) FROM STATS;")
         best_prices.flatten_repetitions()
@@ -292,7 +336,7 @@ class Experiment:
         if total_time == 0:
             fetal_error("Error: difference between first and last entry times is zero")
 
-        num_intervals = int(self.get_num_samples()/float(10))
+        num_intervals = math.ceil(self.get_num_samples()*interval_sample_ratio)
         interval_len = float(total_time)/num_intervals
         interval_mids = [experiment_max_min_time+interval_len*(float(i)+0.5) for i in range(num_intervals)]
         
@@ -311,7 +355,10 @@ class Experiment:
             for time, price in sample_times_prices:
                 sample_entries_by_interval[get_containing_interval_idx(time)].append((time, price))
             
-            interval_prices = [min(interval_entries+[(None, math.inf)], lambda time, price: price)[1] for interval_entries in sample_entries_by_interval]
+            interval_prices = [
+                min(interval_entries+[(None, math.inf)], key=lambda t: t[1])[1]
+                for interval_entries in sample_entries_by_interval
+            ]
             #'interval_prices' should now have one (best) price for each interval (from this sample).
             #if an interval is empty it will have infinite price and will be filtered later.
             interval_prices_for_each_sample.append(interval_prices)
@@ -319,16 +366,25 @@ class Experiment:
 
         # normalize each sample according to 'best_prices':
         for sample_idx in range(self.get_num_samples()):
-            interval_prices_for_each_sample[sample_idx] = [interval_price/float(best_prices[sample_idx]) for interval_price in interval_prices_for_each_sample[sample_idx]]
-
+            interval_prices_for_each_sample[sample_idx] = [
+                interval_price/float(best_prices[sample_idx])
+                for interval_price in interval_prices_for_each_sample[sample_idx]
+            ]
+        interval_prices_for_each_interval = invert_list(interval_prices_for_each_sample)
 
         # aggregate all samples of each interval into average:
         average = lambda ls: sum(ls)/float(len(ls))
-        interval_average_prices = [average(sample_price) for sample_price in interval_prices_for_each_sample]
-
+        interval_average_prices = [
+            average(sample_price) 
+            for sample_price in interval_prices_for_each_interval
+        ]
 
         # remove all intervals with infinite price due to missing entries:
-        times_and_average_prices = [(interval_mids[interval_idx], price) for interval_idx, price in enumerate(interval_average_prices)]
+        times_and_average_prices = [
+            (interval_mids[interval_idx], price)
+            for interval_idx, price in enumerate(interval_average_prices)
+            if price is not math.inf
+        ]
 
         # plot results:
         x_axis = [time for time, price in times_and_average_prices]
@@ -338,6 +394,20 @@ class Experiment:
         plt.ylabel("average normalized price")
         plt.show()
 
+    ALL = None
+    def plot_sample_times_prices(self, 
+            sample_idx: int = 0, 
+            repetition: int = Flags.ALL, 
+            region: str = Flags.ALL
+    ):
+        plt.plot(*self.samples[sample_idx].get_times_prices(repetition, region))
+        repetition_title = "all repetitions" if repetition == Flags.ALL else f"repeition:{repetition}"
+
+        plt.title(f"times & prices ; {repetition_title}, sample:{sample_idx}, region:{region}")
+        plt.xlabel("time")
+        plt.xlabel("best price")
+        plt.show()
+    
 
     def __init__(self, experiment_name: str, experiments_root_dir: str, samples: list):
         """this method is for internal use only, 'Experiment' objects should be created with the static methods 'create, load'."""
@@ -400,7 +470,7 @@ class Experiment:
         return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
 
     def print_expected_runtime(self, multiprocess: int):
-        print(f" Expected runtime is {self.calc_expected_time(multiprocess, 20)} hours.")
+        print(yellow(f" Expected runtime is {describe_time(self.calc_expected_time(multiprocess, 20)*1.1)}."))
 
     @staticmethod
     def load(
