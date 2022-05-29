@@ -125,5 +125,5 @@ if __name__ == "__main__":
     eb = Experiment.load("time_price_B")
 
     for sample_idx in range(eb.get_num_samples()):
-        eb.plot_sample_times_prices("ap-south-1", sample_idx, repetition=0)
+        eb.plot_sample_times_prices("ap-south-1", sample_idx)
     # eb.plot_time_price()

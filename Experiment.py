@@ -227,7 +227,7 @@ class Sample:
             if (price is not math.inf and price is not np.inf)
         ]
 
-    def get_times_prices(self, repetition: int = Flags.ALL, region: str = Flags.ALL)->tuple:
+    def get_times_prices(self, region: str, repetition: int = Flags.ALL)->tuple:
         """the first element of the result is a list of floats (times), the second is list of prices."""
         query = f"SELECT INSERT_TIME,BEST_PRICE FROM STATS WHERE REGION_SOLUTION = '{region}' ORDER BY INSERT_TIME;"
         
@@ -396,11 +396,11 @@ class Experiment:
 
     ALL = None
     def plot_sample_times_prices(self, 
+            region: str,
             sample_idx: int = 0, 
-            repetition: int = Flags.ALL, 
-            region: str = Flags.ALL
+            repetition: int = Flags.ALL
     ):
-        plt.plot(*self.samples[sample_idx].get_times_prices(repetition, region))
+        plt.plot(*self.samples[sample_idx].get_times_prices(region, repetition))
         repetition_title = "all repetitions" if repetition == Flags.ALL else f"repeition:{repetition}"
 
         plt.title(f"times & prices ; {repetition_title}, sample:{sample_idx}, region:{region}")
