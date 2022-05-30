@@ -1,8 +1,10 @@
+from audioop import mul
 from Experiment import *
 from Distributions import NormDistInt
 
-def create_tation_bias_experiment(N: int, C: int, T: int, Bias: float)->Experiment:
+def create_tation_bias_experiment(N: int, C: int, T: int, Bias: float, force: bool = False)->Experiment:
     name = f"time-price_N-{N}_C-{C}_T-{T}_Bias-{Bias}"
+    print(f"created experiment named:\n{name}\n")
     return Experiment.create(
         experiment_name=name,
         control_parameter_lists = {
@@ -20,7 +22,9 @@ def create_tation_bias_experiment(N: int, C: int, T: int, Bias: float)->Experime
             "cpu": NormDistInt(4, 3, 1, 32),
             "ram": NormDistInt(6, 4 ,1, 128),
             "net": NormDistInt(2, 1, 1, 5)
-        }
+        },
+        force = force,
+        region = "us-east-2"
     )
 
 def one_big_sample_experiment()->Experiment:
@@ -72,24 +76,17 @@ def create_time_price_experiment(N: int, C: int, T: int)->Experiment:
     )
 
 if __name__ == "__main__":
-    e = one_big_sample_experiment()
-    e.run(retry=3)
-    
     # experiment_name = "time-price_N-100_C-10_T-15"
     # experiment_name = "time-price_N-300_C-18_T-20"
     # e = Experiment.load(experiment_name)
-    # print(e.get_regions_list()[:3])
-    
-    # for bias in [0.25*i for i in range(5)]:
-    #     e = create_tation_bias_experiment(300, 18, 20, bias)
-    # e = create_tation_bias_experiment(200, 18, 20, 0)
-    
-    # e.print_expected_runtime(6)
-    # if not bool_prompt("sure you want to run?"):
-    #     exit()
-    # # e.run(multiprocess=6, retry=5)
-    
 
+    
+    experiments = []
+    biasies = [0.2*i for i in range(6)]
+    for bias in biasies:
+        e = create_tation_bias_experiment(300, 18, 20, bias, force=True)
+        e.run(multiprocess=6)
+        experiments.append(e)
 
     # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
     # e.plot("INSERT_TIME", "NODES_COUNT", normalize=False)

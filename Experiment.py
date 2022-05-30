@@ -150,7 +150,8 @@ class Sample:
             sample_idx: int, 
             components: list, 
             control_parameters: dict,
-            algorithm_parameters: dict
+            algorithm_parameters: dict,
+            region: str
     ):
         verify_dict_keys(control_parameters, control_parameter_names)
         verify_dict_keys(algorithm_parameters, algorithm_parameter_names)
@@ -165,7 +166,7 @@ class Sample:
 
         algorithm_input_json_dict = {
             "selectedOs"		:"linux",
-            "region"			:"all",
+            "region"			:region,
             "spot/onDemand"		:"onDemand",
             "AvailabilityZone"	:"all",
             "Architecture"		:"all",
@@ -332,6 +333,10 @@ class Experiment:
                     regions.add(region[0])
         return list(regions)
 
+    def get_static_region(self)->list:
+        json_dict = from_json(input_path_format(self.exp_dir_path, 0))
+        return json_dict["region"]
+
     ALL = None
     def plot(self, 
             x_variable: str = "INSERT_TIME",
@@ -378,7 +383,8 @@ class Experiment:
             component_resource_distirubtions: dict,
             experiments_root_dir: str = default_experiments_root_dir,
             force: bool = False,
-            unique_sample_inputs: bool = True 
+            unique_sample_inputs: bool = True,
+            region: str = "all"
     ):
         #verify input correctness:
         verify_dict_keys(control_parameter_lists, control_parameter_names)
@@ -415,17 +421,23 @@ class Experiment:
                     sample_idx, 
                     sample_components, 
                     control_parameter_dicts[sample_idx],
-                    algorithm_parameter_dicts[sample_idx]
+                    algorithm_parameter_dicts[sample_idx],
+                    region=region
             ))
 
         to_json([sample.metadata for sample in samples], metadata_path_format(exp_dir_path))
         return Experiment(experiment_name, experiments_root_dir, samples)
 
-    def calc_expected_time(self, num_cores: int, num_regions: int = 21):
+    def calc_expected_time(self, num_cores: int):
+        region = self.get_static_region()
+        if region == "all":
+            num_regions = 21
+        else:
+            num_regions = len(region.split(' '))
         return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
 
     def print_expected_runtime(self, multiprocess: int = 1):
-        print(yellow(f" Expected runtime is {get_time_description(self.calc_expected_time(multiprocess, 20)*1.1)}."))
+        print(yellow(f" Expected runtime is {get_time_description(self.calc_expected_time(multiprocess)*1.1)}."))
 
     @staticmethod
     def load(
