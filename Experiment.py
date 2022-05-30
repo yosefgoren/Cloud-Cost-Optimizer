@@ -9,6 +9,7 @@ import os
 import shutil
 import sqlite3
 from multiprocessing import Process
+from interp import average_curve
 
 # ============================= File System Utilities =========================================
 
@@ -227,12 +228,16 @@ class Sample:
             if (price is not math.inf and price is not np.inf)
         ]
 
-    def get_times_prices(self, region: str, repetition: int = Flags.ALL)->tuple:
+    def get_times_prices(self, region: str, normalize: bool = True, repetition: int = Flags.ALL)->tuple:
         """the first element of the result is a list of floats (times), the second is list of prices."""
         query = f"SELECT INSERT_TIME,BEST_PRICE FROM STATS WHERE REGION_SOLUTION = '{region}' ORDER BY INSERT_TIME;"
         
         entries = flatten_list_of_lists(self.query_stats(query)) if repetition is Flags.ALL else self.query_repetition(repetition, query)
-        return invert_list(Sample.filter_entries_inf_price(entries))
+        entries = Sample.filter_entries_inf_price(entries)
+        if normalize:
+            min_price = min([price for time, price in entries])
+            entries = [(time, price/min_price) for (time, price) in entries]
+        return invert_list(entries)
 
 
 def partition_tuples_list_by_field(entries: list, unique_field_idx: int):
@@ -312,102 +317,124 @@ class Experiment:
     def query_each_sample(self, query: str)->list:
         return [sample.query_stats(query) for sample in self.samples]
 
-    def get_stats(self, query: str)->Stats:
-        return Stats(self.query_each_sample(query))
+    def get_regions_list(self)->list:
+        regions = set()
+        for sample_regions in self.query_each_sample("SELECT DISTINCT REGION_SOLUTION FROM STATS;"): 
+            for repetition_regions in sample_regions:
+                for region in repetition_regions:
+                    regions.add(region[0])
+        return list(regions)
 
-    def plot_time_price(self, interval_sample_ratio: float = 0.2):
-        # get best price for each sample:
-        best_prices = self.get_stats("SELECT MIN(BEST_PRICE) FROM STATS;")
-        best_prices.flatten_repetitions()
-        best_prices = [sample_stats[0][0] for sample_stats in best_prices.content]
-        #'best_prices' should now we a list of floats. each one represents the best price seen in a sample.
+    # def get_stats(self, query: str)->Stats:
+    #     return Stats(self.query_each_sample(query))
+
+    # def plot_time_price(self, interval_sample_ratio: float = 0.2):
+    #     # get best price for each sample:
+    #     best_prices = self.get_stats("SELECT MIN(BEST_PRICE) FROM STATS;")
+    #     best_prices.flatten_repetitions()
+    #     best_prices = [sample_stats[0][0] for sample_stats in best_prices.content]
+    #     #'best_prices' should now we a list of floats. each one represents the best price seen in a sample.
 
 
-        # find interval timing:
-        times = self.get_stats("SELECT INSERT_TIME FROM STATS ORDER BY INSERT_TIME;")
-        times.flatten_repetitions()
-        times = [[time for (time,) in sample_stats] for sample_stats in times.content]
-        #TODO: perhaps need to drop samples where times don't make sense?
-        #'times' should transform as: [[(t1,), (t2,) ...], [...] ...] ---> [[t1, t2 ...], [...] ...]
-        experiment_max_min_time = max([min(sample_stats) for sample_stats in times])
-        #'experiment_max_min_time' is the amount untill the last sample repetition (aka run of the algorithm) has written it's first entry.
-        experiment_max_time = max([max(sample_stats) for sample_stats in times])# each 'sample_stats' contains a list times of entries of the sample.
-        total_time = experiment_max_time - experiment_max_min_time
-        if total_time == 0:
-            fetal_error("Error: difference between first and last entry times is zero")
+    #     # find interval timing:
+    #     times = self.get_stats("SELECT INSERT_TIME FROM STATS ORDER BY INSERT_TIME;")
+    #     times.flatten_repetitions()
+    #     times = [[time for (time,) in sample_stats] for sample_stats in times.content]
+    #     #TODO: perhaps need to drop samples where times don't make sense?
+    #     #'times' should transform as: [[(t1,), (t2,) ...], [...] ...] ---> [[t1, t2 ...], [...] ...]
+    #     experiment_max_min_time = max([min(sample_stats) for sample_stats in times])
+    #     #'experiment_max_min_time' is the amount untill the last sample repetition (aka run of the algorithm) has written it's first entry.
+    #     experiment_max_time = max([max(sample_stats) for sample_stats in times])# each 'sample_stats' contains a list times of entries of the sample.
+    #     total_time = experiment_max_time - experiment_max_min_time
+    #     if total_time == 0:
+    #         fetal_error("Error: difference between first and last entry times is zero")
 
-        num_intervals = math.ceil(self.get_num_samples()*interval_sample_ratio)
-        interval_len = float(total_time)/num_intervals
-        interval_mids = [experiment_max_min_time+interval_len*(float(i)+0.5) for i in range(num_intervals)]
+    #     num_intervals = math.ceil(self.get_num_samples()*interval_sample_ratio)
+    #     interval_len = float(total_time)/num_intervals
+    #     interval_mids = [experiment_max_min_time+interval_len*(float(i)+0.5) for i in range(num_intervals)]
         
-        def get_containing_interval_idx(time: float)->int:
-            idx = math.floor(float(time-experiment_max_min_time)/total_time)
-            return idx
+    #     def get_containing_interval_idx(time: float)->int:
+    #         idx = math.floor(float(time-experiment_max_min_time)/total_time)
+    #         return idx
 
-        # get the best price for each interval for each sample:
-        interval_prices_for_each_sample = []
-        times_and_prices = self.get_stats("SELECT * FROM STATS ORDER BY INSERT_TIME;")
-        times_and_prices.flatten_repetitions()
-        times_and_prices.map_entries(lambda entry: (entry[0], entry[2]))
+    #     # get the best price for each interval for each sample:
+    #     interval_prices_for_each_sample = []
+    #     times_and_prices = self.get_stats("SELECT * FROM STATS ORDER BY INSERT_TIME;")
+    #     times_and_prices.flatten_repetitions()
+    #     times_and_prices.map_entries(lambda entry: (entry[0], entry[2]))
 
-        for sample_times_prices in times_and_prices.content:
-            sample_entries_by_interval = [[]]*num_intervals
-            for time, price in sample_times_prices:
-                sample_entries_by_interval[get_containing_interval_idx(time)].append((time, price))
+    #     for sample_times_prices in times_and_prices.content:
+    #         sample_entries_by_interval = [[]]*num_intervals
+    #         for time, price in sample_times_prices:
+    #             sample_entries_by_interval[get_containing_interval_idx(time)].append((time, price))
             
-            interval_prices = [
-                min(interval_entries+[(None, math.inf)], key=lambda t: t[1])[1]
-                for interval_entries in sample_entries_by_interval
-            ]
-            #'interval_prices' should now have one (best) price for each interval (from this sample).
-            #if an interval is empty it will have infinite price and will be filtered later.
-            interval_prices_for_each_sample.append(interval_prices)
+    #         interval_prices = [
+    #             min(interval_entries+[(None, math.inf)], key=lambda t: t[1])[1]
+    #             for interval_entries in sample_entries_by_interval
+    #         ]
+    #         #'interval_prices' should now have one (best) price for each interval (from this sample).
+    #         #if an interval is empty it will have infinite price and will be filtered later.
+    #         interval_prices_for_each_sample.append(interval_prices)
 
 
-        # normalize each sample according to 'best_prices':
-        for sample_idx in range(self.get_num_samples()):
-            interval_prices_for_each_sample[sample_idx] = [
-                interval_price/float(best_prices[sample_idx])
-                for interval_price in interval_prices_for_each_sample[sample_idx]
-            ]
-        interval_prices_for_each_interval = invert_list(interval_prices_for_each_sample)
+    #     # normalize each sample according to 'best_prices':
+    #     for sample_idx in range(self.get_num_samples()):
+    #         interval_prices_for_each_sample[sample_idx] = [
+    #             interval_price/float(best_prices[sample_idx])
+    #             for interval_price in interval_prices_for_each_sample[sample_idx]
+    #         ]
+    #     interval_prices_for_each_interval = invert_list(interval_prices_for_each_sample)
 
-        # aggregate all samples of each interval into average:
-        average = lambda ls: sum(ls)/float(len(ls))
-        interval_average_prices = [
-            average(sample_price) 
-            for sample_price in interval_prices_for_each_interval
-        ]
+    #     # aggregate all samples of each interval into average:
+    #     average = lambda ls: sum(ls)/float(len(ls))
+    #     interval_average_prices = [
+    #         average(sample_price) 
+    #         for sample_price in interval_prices_for_each_interval
+    #     ]
 
-        # remove all intervals with infinite price due to missing entries:
-        times_and_average_prices = [
-            (interval_mids[interval_idx], price)
-            for interval_idx, price in enumerate(interval_average_prices)
-            if price is not math.inf
-        ]
+    #     # remove all intervals with infinite price due to missing entries:
+    #     times_and_average_prices = [
+    #         (interval_mids[interval_idx], price)
+    #         for interval_idx, price in enumerate(interval_average_prices)
+    #         if price is not math.inf
+    #     ]
 
-        # plot results:
-        x_axis = [time for time, price in times_and_average_prices]
-        y_axis = [price for time, price in times_and_average_prices]
-        plt.plot(x_axis, y_axis)
-        plt.xlabel("time")
-        plt.ylabel("average normalized price")
-        plt.show()
+    #     # plot results:
+    #     x_axis = [time for time, price in times_and_average_prices]
+    #     y_axis = [price for time, price in times_and_average_prices]
+    #     plt.plot(x_axis, y_axis)
+    #     plt.xlabel("time")
+    #     plt.ylabel("average normalized price")
+    #     plt.show()
 
     ALL = None
-    def plot_sample_times_prices(self, 
+    def plot_times_prices(self, 
             region: str,
-            sample_idx: int = 0, 
-            repetition: int = Flags.ALL
+            sample_indices = Flags.ALL,
+            normalize: bool = True,
+            repetition: int = Flags.ALL,
+            granularity: int = 50
     ):
-        plt.plot(*self.samples[sample_idx].get_times_prices(region, repetition))
+        if sample_indices == Flags.ALL:
+            sample_indices = [i for i in range(self.get_num_samples())]
+        if type(sample_indices) == int:
+            sample_indices = [sample_indices]
+        
+        curves = []
+        for sample_idx in sample_indices:
+            sample_times, sample_prices = self.samples[sample_idx].get_times_prices(region, normalize, repetition)
+            sample_curve = np.array([[time, price] for time, price in zip(sample_times, sample_prices)])
+            curves.append(sample_curve)
+        
+        times, prices = average_curve(granularity, *curves)
+
+        plt.plot(times, prices)
         repetition_title = "all repetitions" if repetition == Flags.ALL else f"repeition:{repetition}"
 
-        plt.title(f"times & prices ; {repetition_title}, sample:{sample_idx}, region:{region}")
+        plt.title(f"{repetition_title}, with {len(sample_indices)} samples, in region:{region}")
         plt.xlabel("time")
         plt.xlabel("best price")
         plt.show()
-    
 
     def __init__(self, experiment_name: str, experiments_root_dir: str, samples: list):
         """this method is for internal use only, 'Experiment' objects should be created with the static methods 'create, load'."""
@@ -469,7 +496,7 @@ class Experiment:
     def calc_expected_time(self, num_cores: int, num_regions: int = 20):
         return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
 
-    def print_expected_runtime(self, multiprocess: int):
+    def print_expected_runtime(self, multiprocess: int = 1):
         print(yellow(f" Expected runtime is {describe_time(self.calc_expected_time(multiprocess, 20)*1.1)}."))
 
     @staticmethod
