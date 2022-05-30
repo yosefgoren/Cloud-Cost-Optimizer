@@ -1,6 +1,4 @@
-from audioop import mul
 from matplotlib import pyplot as plt
-from requests import delete
 import Fleet_Optimizer
 import math
 import json
@@ -423,7 +421,7 @@ class Experiment:
         to_json([sample.metadata for sample in samples], metadata_path_format(exp_dir_path))
         return Experiment(experiment_name, experiments_root_dir, samples)
 
-    def calc_expected_time(self, num_cores: int, num_regions: int = 20):
+    def calc_expected_time(self, num_cores: int, num_regions: int = 21):
         return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
 
     def print_expected_runtime(self, multiprocess: int = 1):
