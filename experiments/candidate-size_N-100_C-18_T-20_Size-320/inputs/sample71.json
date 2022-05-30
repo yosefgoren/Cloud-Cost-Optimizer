@@ -1,0 +1,130 @@
+{
+  "selectedOs": "linux",
+  "region": "us-east-1",
+  "spot/onDemand": "onDemand",
+  "AvailabilityZone": "all",
+  "Architecture": "all",
+  "filterInstances": [
+    "a1",
+    "t4g",
+    "i3",
+    "t3a",
+    "c5a.xlarge"
+  ],
+  "apps": [
+    {
+      "app": "App",
+      "share": true,
+      "components": [
+        {
+          "name": "component_0",
+          "vCPUs": 6,
+          "memory": 8,
+          "network": 2
+        },
+        {
+          "name": "component_1",
+          "vCPUs": 5,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_2",
+          "vCPUs": 4,
+          "memory": 3,
+          "network": 2
+        },
+        {
+          "name": "component_3",
+          "vCPUs": 5,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_4",
+          "vCPUs": 5,
+          "memory": 12,
+          "network": 2
+        },
+        {
+          "name": "component_5",
+          "vCPUs": 2,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_6",
+          "vCPUs": 2,
+          "memory": 8,
+          "network": 2
+        },
+        {
+          "name": "component_7",
+          "vCPUs": 3,
+          "memory": 11,
+          "network": 2
+        },
+        {
+          "name": "component_8",
+          "vCPUs": 6,
+          "memory": 6,
+          "network": 2
+        },
+        {
+          "name": "component_9",
+          "vCPUs": 3,
+          "memory": 3,
+          "network": 2
+        },
+        {
+          "name": "component_10",
+          "vCPUs": 5,
+          "memory": 5,
+          "network": 3
+        },
+        {
+          "name": "component_11",
+          "vCPUs": 3,
+          "memory": 7,
+          "network": 2
+        },
+        {
+          "name": "component_12",
+          "vCPUs": 4,
+          "memory": 6,
+          "network": 2
+        },
+        {
+          "name": "component_13",
+          "vCPUs": 3,
+          "memory": 14,
+          "network": 2
+        },
+        {
+          "name": "component_14",
+          "vCPUs": 4,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_15",
+          "vCPUs": 2,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_16",
+          "vCPUs": 7,
+          "memory": 4,
+          "network": 2
+        },
+        {
+          "name": "component_17",
+          "vCPUs": 2,
+          "memory": 3,
+          "network": 2
+        }
+      ]
+    }
+  ]
+}

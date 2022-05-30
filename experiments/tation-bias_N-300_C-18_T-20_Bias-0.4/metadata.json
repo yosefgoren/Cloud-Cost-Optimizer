@@ -1,0 +1,3902 @@
+[
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  },
+  {
+    "control_parameters": {
+      "component_count": 18,
+      "time_per_region": 20.0,
+      "significance": 1
+    },
+    "algorithm_parameters": {
+      "candidate_list_size": 64,
+      "exploitation_score_price_bias": 0.5,
+      "exploration_score_depth_bias": 1.0,
+      "exploitation_bias": 0.4
+    }
+  }
+]
