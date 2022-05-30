@@ -77,16 +77,15 @@ def create_time_price_experiment(N: int, C: int, T: int)->Experiment:
 
 if __name__ == "__main__":
     # experiment_name = "time-price_N-100_C-10_T-15"
-    # experiment_name = "time-price_N-300_C-18_T-20"
-    # e = Experiment.load(experiment_name)
-
+    experiment_name = "time-price_N-300_C-18_T-20"
+    e = Experiment.load(experiment_name)
     
-    experiments = []
-    biasies = [0.2*i for i in range(6)]
-    for bias in biasies:
-        e = create_tation_bias_experiment(300, 18, 20, bias, force=True)
-        e.run(multiprocess=6)
-        experiments.append(e)
+    # experiments = []
+    # biasies = [0.2*i for i in range(6)]
+    # for bias in biasies:
+    #     e = create_tation_bias_experiment(300, 18, 20, bias, force=True)
+    #     e.run(multiprocess=6)
+    #     experiments.append(e)
 
     # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
     # e.plot("INSERT_TIME", "NODES_COUNT", normalize=False)
@@ -96,7 +95,8 @@ if __name__ == "__main__":
     # e.plot("NODES_COUNT", "DEPTH_BEST", normalize=False)
     # e.plot("ITERATION", "DEPTH_BEST", normalize=False)
 
+    e.plot("INSERT_TIME", "BEST_PRICE", normalize=True)
     # e.plot("INSERT_TIME", "BEST_PRICE", normalize=False)
     # e.plot("NODES_COUNT", "BEST_PRICE", normalize=True)
     # e.plot("ITERATION", "BEST_PRICE", normalize=True)
-    
+     
