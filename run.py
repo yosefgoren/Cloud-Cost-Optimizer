@@ -75,28 +75,53 @@ def create_time_price_experiment(N: int, C: int, T: int)->Experiment:
         unique_sample_inputs = True
     )
 
+def create_trail_experiment()->Experiment:
+    name = "trail"
+    N=2
+    return Experiment.create(
+        experiment_name=name,
+        control_parameter_lists = {
+            "component_count":  [8]*N,
+            "time_per_region":  [float(3)]*N,
+            "significance":     [1]*N
+        },
+        algorithm_parameter_lists = {
+            "candidate_list_size":              [64]*N,   
+            "exploitation_score_price_bias":    [0.5]*N,
+            "exploration_score_depth_bias":     [1.0]*N,
+            "exploitation_bias":                [0.8]*N
+        },
+        component_resource_distirubtions = {
+            "cpu": NormDistInt(3, 3, 1, 32),
+            "ram": NormDistInt(4, 4 ,1, 128),
+            "net": NormDistInt(1, 1, 1, 4)
+        },
+        region="us-east-1"
+    )
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def plot_multiple_curves(curves: list, z_axis: list):
+    ax = plt.axes(projection='3d')
+    for (xs, ys), z in zip(curves, z_axis):
+        xline = xs
+        yline = ys
+        zline = np.ones_like(xs)*z
+        ax.plot3D(xline, zline, yline, 'gray')
+    plt.show()
+
+def plot_hyperparam_experiments(experiment_names: list, hyperparam_values: list):
+    curves = []
+    for name in experiment_names:
+        e = Experiment.load(name)
+        curves.append(e.get_plot_curves("INSERT_TIME", "BEST_PRICE", normalize=False)[0])
+    plot_multiple_curves(curves, hyperparam_values)
+
+# variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
-    # experiment_name = "time-price_N-100_C-10_T-15"
-    # experiment_name = "time-price_N-300_C-18_T-20"
-    # e = Experiment.load(experiment_name)
 
+    plot_hyperparam_experiments()
     
-    experiments = []
-    biasies = [0.2*i for i in range(6)]
-    for bias in biasies:
-        e = create_tation_bias_experiment(300, 18, 20, bias, force=True)
-        e.run(multiprocess=6)
-        experiments.append(e)
-
-    # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
-    # e.plot("INSERT_TIME", "NODES_COUNT", normalize=False)
-    # e.plot("ITERATION", "NODES_COUNT", normalize=False)
-
-    # e.plot("INSERT_TIME", "DEPTH_BEST", normalize=False)
-    # e.plot("NODES_COUNT", "DEPTH_BEST", normalize=False)
-    # e.plot("ITERATION", "DEPTH_BEST", normalize=False)
-
-    # e.plot("INSERT_TIME", "BEST_PRICE", normalize=False)
-    # e.plot("NODES_COUNT", "BEST_PRICE", normalize=True)
-    # e.plot("ITERATION", "BEST_PRICE", normalize=True)
-    
+ 

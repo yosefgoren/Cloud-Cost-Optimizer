@@ -347,27 +347,46 @@ class Experiment:
             repetition: int = Flags.ALL,
             granularity: int = 50
     ):
-        regions = listify(regions, lambda:self.get_regions_list())
-        sample_indices = listify(sample_indices, lambda:list(range(self.get_num_samples())))
-
-        for region in regions:
-            curves = []
-            for sample in [self.samples[idx] for idx in sample_indices]:
-                sample_times, sample_prices = sample.get_plot_axis(region, x_variable, y_variable, normalize, repetition)
-                sample_curve = np.array([[time, price] for time, price in zip(sample_times, sample_prices)])
-                curves.append(sample_curve)
-            
-            times, prices = average_curve(granularity, *curves)
-
-            plt.plot(times, prices)
+        curves = self.get_plot_curves(x_variable, y_variable, regions, sample_indices, normalize, repetition, granularity)
+        for xs, ys in curves:
+            plt.plot(xs, ys)
 
         repetition_title = "all repetitions" if repetition == Flags.ALL else f"repeition:{repetition}"
+        
+        sample_indices = listify(sample_indices, lambda:list(range(self.get_num_samples())))
+        regions = listify(regions, lambda:self.get_regions_list())# this is just so we know length
         region_tile = f"region:{regions[0]}" if len(regions) == 1 else f"{len(regions)} regions"
-
+        
         plt.title(f"{repetition_title}, with {len(sample_indices)} samples, in {region_tile}")
         plt.xlabel(x_variable.lower().replace('_', ' '))
         plt.ylabel(y_variable.lower().replace('_', ' '))
         plt.show()
+
+    def get_plot_curves(self, 
+            x_variable: str = "INSERT_TIME",
+            y_variable: str = "BEST_PRICE",
+            regions: str = Flags.ALL,
+            sample_indices = Flags.ALL,
+            normalize: bool = True,
+            repetition: int = Flags.ALL,
+            granularity: int = 50
+    )->list:
+        regions = listify(regions, lambda:self.get_regions_list())
+        sample_indices = listify(sample_indices, lambda:list(range(self.get_num_samples())))
+
+        all_curves = []
+        for region in regions:
+            region_curves = []
+            for sample in [self.samples[idx] for idx in sample_indices]:
+                sample_times, sample_prices = sample.get_plot_axis(region, x_variable, y_variable, normalize, repetition)
+                sample_curve = np.array([[time, price] for time, price in zip(sample_times, sample_prices)])
+                region_curves.append(sample_curve)
+            
+            times, prices = average_curve(granularity, *region_curves)
+
+            all_curves += [(times, prices)]
+        return all_curves
+        
 
     def __init__(self, experiment_name: str, experiments_root_dir: str, samples: list):
         """this method is for internal use only, 'Experiment' objects should be created with the static methods 'create, load'."""
