@@ -46,13 +46,27 @@ def create_time_price_experiment(N: int, C: int, T: int)->Experiment:
     )
 
 if __name__ == "__main__":
-    # e = Experiment.load("time-price_N-300_C-18_T-20")
-    e = create_time_price_experiment(100, 10, 15)
-    e.print_expected_runtime(6)
-    if not bool_prompt("sure you want to run?"):
-        exit()
-    e.run(multiprocess=6, retry=5)
+    # experiment_name = "time-price_N-100_C-10_T-15"
+    experiment_name = "time-price_N-300_C-18_T-20"
     
-    # for region in e.get_regions_list()[:-1]:
-    #     e.plot_times_prices(region, normalize=True)
+    e = Experiment.load(experiment_name)
+    # e = create_time_price_experiment(100, 10, 15)
+
+    # e.print_expected_runtime(6)
+    # if not bool_prompt("sure you want to run?"):
+    #     exit()
+    # e.run(multiprocess=6, retry=5)
+    
+    # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
+
+    e.plot("INSERT_TIME", "NODES_COUNT", normalize=False)
+    e.plot("ITERATION", "NODES_COUNT", normalize=False)
+
+    e.plot("INSERT_TIME", "DEPTH_BEST", normalize=False)
+    e.plot("NODES_COUNT", "DEPTH_BEST", normalize=False)
+    e.plot("ITERATION", "DEPTH_BEST", normalize=False)
+
+    e.plot("INSERT_TIME", "BEST_PRICE", normalize=False)
+    e.plot("NODES_COUNT", "BEST_PRICE", normalize=False)
+    e.plot("ITERATION", "BEST_PRICE", normalize=False)
     

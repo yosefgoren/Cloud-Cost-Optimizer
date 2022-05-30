@@ -1,0 +1,82 @@
+{
+  "selectedOs": "linux",
+  "region": "all",
+  "spot/onDemand": "onDemand",
+  "AvailabilityZone": "all",
+  "Architecture": "all",
+  "filterInstances": [
+    "a1",
+    "t4g",
+    "i3",
+    "t3a",
+    "c5a.xlarge"
+  ],
+  "apps": [
+    {
+      "app": "App",
+      "share": true,
+      "components": [
+        {
+          "name": "component_0",
+          "vCPUs": 5,
+          "memory": 3,
+          "network": 2
+        },
+        {
+          "name": "component_1",
+          "vCPUs": 7,
+          "memory": 4,
+          "network": 2
+        },
+        {
+          "name": "component_2",
+          "vCPUs": 4,
+          "memory": 3,
+          "network": 2
+        },
+        {
+          "name": "component_3",
+          "vCPUs": 8,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_4",
+          "vCPUs": 3,
+          "memory": 4,
+          "network": 3
+        },
+        {
+          "name": "component_5",
+          "vCPUs": 3,
+          "memory": 6,
+          "network": 2
+        },
+        {
+          "name": "component_6",
+          "vCPUs": 3,
+          "memory": 9,
+          "network": 3
+        },
+        {
+          "name": "component_7",
+          "vCPUs": 2,
+          "memory": 10,
+          "network": 2
+        },
+        {
+          "name": "component_8",
+          "vCPUs": 4,
+          "memory": 11,
+          "network": 3
+        },
+        {
+          "name": "component_9",
+          "vCPUs": 3,
+          "memory": 5,
+          "network": 3
+        }
+      ]
+    }
+  ]
+}

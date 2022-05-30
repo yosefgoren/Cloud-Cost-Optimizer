@@ -1,0 +1,1342 @@
+[
+    {
+        "price": 2.0448,
+        "EC2 Type": "onDemand",
+        "region": "ap-south-1",
+        "instances": [
+            {
+                "onDemandPrice": 1.0224,
+                "region": "ap-south-1",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6g",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6g.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 35,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.6653,
+                "Price_per_CPU": 0.013860416666666667,
+                "Price_per_memory": 0.006930208333333333,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 1.0224,
+                "region": "ap-south-1",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6g",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6g.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 35,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.6653,
+                "Price_per_CPU": 0.013860416666666667,
+                "Price_per_memory": 0.006930208333333333,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.456,
+        "EC2 Type": "onDemand",
+        "region": "us-east-1",
+        "instances": [
+            {
+                "onDemandPrice": 0.6912,
+                "region": "us-east-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 61,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.2721,
+                "Price_per_CPU": 0.01700625,
+                "Price_per_memory": 0.008503125,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 2.7648,
+                "region": "us-east-1",
+                "cpu": "64",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "128",
+                "network": "100 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "16xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.16xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 61,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 1.0882,
+                "Price_per_CPU": 0.017003125,
+                "Price_per_memory": 0.0085015625,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.5232,
+        "EC2 Type": "onDemand",
+        "region": "ca-central-1",
+        "instances": [
+            {
+                "onDemandPrice": 1.488,
+                "region": "ca-central-1",
+                "cpu": "32",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "64",
+                "network": "12500 Megabit",
+                "os": "Linux",
+                "typeMajor": "c6i",
+                "typeMinor": "8xlarge",
+                "storage": "EBS only",
+                "typeName": "c6i.8xlarge",
+                "physicalProcessor": "Intel Xeon 8375C (Ice Lake)",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 67,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.4857,
+                "Price_per_CPU": 0.015178125,
+                "Price_per_memory": 0.0075890625,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 2.0352,
+                "region": "ca-central-1",
+                "cpu": "48",
+                "ebsOnly": false,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gd",
+                "typeMinor": "12xlarge",
+                "storage": "2 x 1425 NVMe SSD",
+                "typeName": "c6gd.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 64,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.7285,
+                "Price_per_CPU": 0.015177083333333334,
+                "Price_per_memory": 0.007588541666666667,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.5792,
+        "EC2 Type": "onDemand",
+        "region": "eu-west-2",
+        "instances": [
+            {
+                "onDemandPrice": 0.82,
+                "region": "eu-west-2",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 68,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.2639,
+                "Price_per_CPU": 0.01649375,
+                "Price_per_memory": 0.008246875,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.82,
+                "region": "eu-west-2",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 68,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.2639,
+                "Price_per_CPU": 0.01649375,
+                "Price_per_memory": 0.008246875,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 1.9392,
+                "region": "eu-west-2",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6g",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6g.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 59,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.7918,
+                "Price_per_CPU": 0.01649583333333333,
+                "Price_per_memory": 0.008247916666666666,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.6728,
+        "EC2 Type": "onDemand",
+        "region": "eu-central-1",
+        "instances": [
+            {
+                "onDemandPrice": 0.7888,
+                "region": "eu-central-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 65,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.2785,
+                "Price_per_CPU": 0.01740625,
+                "Price_per_memory": 0.008703125,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 0.7888,
+                "region": "eu-central-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 65,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.2785,
+                "Price_per_CPU": 0.01740625,
+                "Price_per_memory": 0.008703125,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 2.0952,
+                "region": "eu-central-1",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "18750 Megabit",
+                "os": "Linux",
+                "typeMajor": "c6a",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6a.12xlarge",
+                "physicalProcessor": "AMD EPYC 7R13 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 60,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.8355,
+                "Price_per_CPU": 0.01740625,
+                "Price_per_memory": 0.008703125,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.72,
+        "EC2 Type": "onDemand",
+        "region": "eu-north-1",
+        "instances": [
+            {
+                "onDemandPrice": 0.744,
+                "region": "eu-north-1",
+                "cpu": "16",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "32",
+                "network": "25 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "4xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.4xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 69,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.2293,
+                "Price_per_CPU": 0.01433125,
+                "Price_per_memory": 0.007165625,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 2.976,
+                "region": "eu-north-1",
+                "cpu": "64",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "128",
+                "network": "100 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6gn",
+                "typeMinor": "16xlarge",
+                "storage": "EBS only",
+                "typeName": "c6gn.16xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 69,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.9173,
+                "Price_per_CPU": 0.0143328125,
+                "Price_per_memory": 0.00716640625,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.8011,
+        "EC2 Type": "onDemand",
+        "region": "eu-west-1",
+        "instances": [
+            {
+                "onDemandPrice": 1.8312,
+                "region": "eu-west-1",
+                "cpu": "32",
+                "ebsOnly": false,
+                "family": "Compute optimized",
+                "memory": "64",
+                "network": "12500 Megabit",
+                "os": "Linux",
+                "typeMajor": "c6id",
+                "typeMinor": "8xlarge",
+                "storage": "1 x 1900 SSD",
+                "typeName": "c6id.8xlarge",
+                "physicalProcessor": "Intel Xeon 8375C (Ice Lake)",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 68,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.5771,
+                "Price_per_CPU": 0.018034375,
+                "Price_per_memory": 0.0090171875,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 1.9699,
+                "region": "eu-west-1",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "18750 Megabit",
+                "os": "Linux",
+                "typeMajor": "c6a",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6a.12xlarge",
+                "physicalProcessor": "AMD EPYC 7R13 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 56,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.8657,
+                "Price_per_CPU": 0.01803541666666667,
+                "Price_per_memory": 0.009017708333333334,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.84,
+        "EC2 Type": "onDemand",
+        "region": "ap-northeast-2",
+        "instances": [
+            {
+                "onDemandPrice": 2.304,
+                "region": "ap-northeast-2",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "18750 Megabit",
+                "os": "Linux",
+                "typeMajor": "c6i",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6i.12xlarge",
+                "physicalProcessor": "Intel Xeon 8375C (Ice Lake)",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 67,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.7552,
+                "Price_per_CPU": 0.015733333333333332,
+                "Price_per_memory": 0.007866666666666666,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 1.536,
+                "region": "ap-northeast-2",
+                "cpu": "32",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "64",
+                "network": "12500 Megabit",
+                "os": "Linux",
+                "typeMajor": "c6i",
+                "typeMinor": "8xlarge",
+                "storage": "EBS only",
+                "typeName": "c6i.8xlarge",
+                "physicalProcessor": "Intel Xeon 8375C (Ice Lake)",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 67,
+                "interruption_frequency": "10%-15%",
+                "interruption_frequency_filter": 2.0,
+                "spot_price": 0.5034,
+                "Price_per_CPU": 0.01573125,
+                "Price_per_memory": 0.007865625,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.8784,
+        "EC2 Type": "onDemand",
+        "region": "eu-south-1",
+        "instances": [
+            {
+                "onDemandPrice": 1.9392,
+                "region": "eu-south-1",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6g",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6g.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 61,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.7636,
+                "Price_per_CPU": 0.015908333333333333,
+                "Price_per_memory": 0.007954166666666667,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 1.9392,
+                "region": "eu-south-1",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6g",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6g.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 61,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.7636,
+                "Price_per_CPU": 0.015908333333333333,
+                "Price_per_memory": 0.007954166666666667,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "price": 3.888,
+        "EC2 Type": "onDemand",
+        "region": "eu-west-3",
+        "instances": [
+            {
+                "onDemandPrice": 1.944,
+                "region": "eu-west-3",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6g",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6g.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 61,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.7636,
+                "Price_per_CPU": 0.015908333333333333,
+                "Price_per_memory": 0.007954166666666667,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_14"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_13"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_11"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_12"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_15"
+                    }
+                ]
+            },
+            {
+                "onDemandPrice": 1.944,
+                "region": "eu-west-3",
+                "cpu": "48",
+                "ebsOnly": true,
+                "family": "Compute optimized",
+                "memory": "96",
+                "network": "20 Gigabit",
+                "os": "Linux",
+                "typeMajor": "c6g",
+                "typeMinor": "12xlarge",
+                "storage": "EBS only",
+                "typeName": "c6g.12xlarge",
+                "physicalProcessor": "AWS Graviton2 Processor",
+                "processorArchitecture": "64-bit",
+                "Architecture": "arm64",
+                "discount": 61,
+                "interruption_frequency": "5%-10%",
+                "interruption_frequency_filter": 1.0,
+                "spot_price": 0.7636,
+                "Price_per_CPU": 0.015908333333333333,
+                "Price_per_memory": 0.007954166666666667,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_10"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_16"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_17"
+                    }
+                ]
+            }
+        ]
+    }
+]
