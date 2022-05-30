@@ -110,16 +110,18 @@ class SpotCalculator:
         config_file = json.load(file)
         if config_file["Data Extraction (always / onceAday)"] == "onceAday":
             if user_os == "linux":
-                if (
-                    datetime.datetime.now()
-                    - datetime.datetime.fromtimestamp(
-                        os.path.getmtime("ec2_data_Linux.json")
-                    )
-                ).days != 0:  ## if the file hasn't modified today
-                    ec2_data = self.get_ec2_from_cache(region, user_os)
-                else:
-                    file = open("ec2_data_Linux.json")
-                    ec2_data = json.load(file)
+                # if (
+                #     datetime.datetime.now()
+                #     - datetime.datetime.fromtimestamp(
+                #         os.path.getmtime("ec2_data_Linux.json")
+                #     )
+                # ).days != 0:  ## if the file hasn't modified today
+                #     ec2_data = self.get_ec2_from_cache(region, user_os)
+                # else:
+                #     file = open("ec2_data_Linux.json")
+                #     ec2_data = json.load(file)
+                file = open("ec2_data_Linux.json")
+                ec2_data = json.load(file)
             else:
                 if (
                     datetime.datetime.now()
