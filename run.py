@@ -126,21 +126,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_multiple_curves(curves: list, z_axis: list):
+def plot_multiple_curves(curves: list, z_axis: list, x_axis_name: str = "", y_axis_name: str = "", z_axis_name: str = ""):
     ax = plt.axes(projection='3d')
     for (xs, ys), z in zip(curves, z_axis):
-        xline = xs
-        yline = ys
-        zline = np.ones_like(xs)*z
-        ax.plot3D(xline, zline, yline, 'gray')
+        zs = np.ones_like(xs)*z
+        ax.plot3D(xs, zs, ys)
     plt.show()
 
-def plot_hyperparam_experiments(experiment_names: list, hyperparam_values: list):
+def plot_hyperparam_experiments(experiment_names: list, hyperparam_values: list, x_axis_name: str = "", y_axis_name: str = "", z_axis_name: str = ""):
     curves = []
+    best_prices = []
     for name in experiment_names:
         e = Experiment.load(name)
         curves.append(e.get_plot_curves("INSERT_TIME", "BEST_PRICE", normalize=False)[0])
-    plot_multiple_curves(curves, hyperparam_values)
+        best_prices.append(curves[-1][1][-1])
+    # plot_multiple_curves(curves, hyperparam_values, z_axis_name)
+    
+    plt.plot(hyperparam_values, best_prices)
+    plt.xlabel(x_axis_name)
+    plt.ylabel(y_axis_name)
+    plt.show()
+
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
@@ -154,11 +160,11 @@ if __name__ == "__main__":
     #     e = create_candidate_size_experiement(N, C, T, size)
     #     e.run(multiprocess=6, retry=2)
 
-    candidate_experiment_naems = [f"candidate-size_N-{N}_C-{18}_T-{T}_Size-{size}" for size in sizes]
-    plot_hyperparam_experiments(candidate_experiment_naems, sizes)
+    candidate_experiment_naemes = [f"candidate-size_N-{N}_C-{18}_T-{T}_Size-{size}" for size in sizes]
+    plot_hyperparam_experiments(candidate_experiment_naemes, sizes, "candidate list size", "price", "runtime")
     
     bias_values = [i*2/10.0 for i in range(5)]
     bias_experiment_names = [f"tation-bias_N-300_C-18_T-20_Bias-0.{i*2}" for i in range(5)]
-    plot_hyperparam_experiments(bias_experiment_names, bias_values)
+    plot_hyperparam_experiments(bias_experiment_names, bias_values, "exploitation bias", "price", "runtime")
     
  
