@@ -16,6 +16,10 @@ class DevelopMode(Enum):
     ALL = 1
     PROPORTIONAL = 2
 
+class GetNextMode(Enum):
+    ALG = 1
+    GREEDY = 2
+
 class KeyMannager:
     def __init__(self, unique_identifier_func):
         """an instance of this class will be able to take elements and assign each element a unique int key,
@@ -36,7 +40,7 @@ class KeyMannager:
 class CombOptim:
     def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
                  region, exploitation_score_price_bias, exploration_score_depth_bias,
-                 exploitation_bias, output_path, verbose = True , develop_mode=DevelopMode.PROPORTIONAL , proportion_amount_node_sons_to_develop=0.005):
+                 exploitation_bias, output_path, verbose = True , develop_mode=DevelopMode.PROPORTIONAL , proportion_amount_node_sons_to_develop=0.005 , get_next_mode=GetNextMode.ALG ):
         self.verbose = verbose
         Node.verbose = verbose
         Node.node_cache.clear()
@@ -64,7 +68,7 @@ class CombOptim:
         self.root = CombOptim.calc_root(initial_seperated)
         self.optim_set = OptimumSet(1)
         self.reset_sel = ResetSelector(candidate_list_size,self.get_num_components(),self.root,exploitation_score_price_bias,  exploration_score_depth_bias,exploitation_bias,self.verbose)
-        self.search_algo = SearchAlgorithm(develop_mode=develop_mode,proportion_amount_node_sons_to_develop=proportion_amount_node_sons_to_develop)
+        self.search_algo = SearchAlgorithm(develop_mode=develop_mode,get_next_mode=get_next_mode,proportion_amount_node_sons_to_develop=proportion_amount_node_sons_to_develop)
         self.start_time = time.time()
         self.time_per_region = time_per_region
         self.region = region
@@ -413,11 +417,12 @@ class ResetSelector:
         return exploitation_scores
 
 class SearchAlgorithm:
-    def __init__(self, develop_mode : DevelopMode , proportion_amount_node_sons_to_develop = 0.1):
+    def __init__(self, develop_mode : DevelopMode ,get_next_mode : GetNextMode,  proportion_amount_node_sons_to_develop = 0.1):
         self.temperature = 0
         self.temperature_increment_pace = 1
         self.proportion_amount_node_sons_to_develop = proportion_amount_node_sons_to_develop
         self.develop_mode = develop_mode
+        self.get_next_mode = get_next_mode
 
     def run(self, start_node: Node) -> list:
         """returns the list of nodes visited in the run"""
@@ -433,14 +438,15 @@ class SearchAlgorithm:
             if next_node is None:
                 return path
 
-    def get_next(self, node: Node) -> Node:
-        """get the chosen son to continue to in the next iteration"""
-        sons = []
-        if self.develop_mode == DevelopMode.ALL:
-            node.calcAllSons()
-            sons = node.sons
-        elif self.develop_mode == DevelopMode.PROPORTIONAL:
-            sons = node.calcProportionSons(self.proportion_amount_node_sons_to_develop)
+    def __get_next_greedy(self, node: Node, sons):
+        best = None
+        for son in sons:
+            son_price =  son.getPrice()
+            if (best is None) or (son_price > node.price and son_price > node.price):
+                best = son
+        return best
+
+    def __get_next_alg(self, node: Node , sons):
         flag = self.is_choosing_downgrades()
         improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(sons, node.getPrice())
         #temp fix, if got exception, return None:
@@ -453,6 +459,21 @@ class SearchAlgorithm:
                 return None
         except:
             return None
+
+    def get_next(self, node: Node) -> Node:
+        """get the chosen son to continue to in the next iteration"""
+        sons = []
+        if self.develop_mode == DevelopMode.ALL:
+            node.calcAllSons()
+            sons = node.sons
+        elif self.develop_mode == DevelopMode.PROPORTIONAL:
+            sons = node.calcProportionSons(self.proportion_amount_node_sons_to_develop)
+
+        if self.get_next_mode == GetNextMode.ALG:
+            return self.__get_next_alg(node,sons)
+        elif self.get_next_mode == GetNextMode.GREEDY:
+            return self.__get_next_greedy(node,sons)
+
 
     @staticmethod
     def get_son_by_weights(sons):
