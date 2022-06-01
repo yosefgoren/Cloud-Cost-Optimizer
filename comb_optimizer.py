@@ -45,7 +45,7 @@ class KeyMannager:
 class CombOptim:
     def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
                  region, exploitation_score_price_bias, exploration_score_depth_bias,
-                 exploitation_bias, output_path, verbose = True , develop_mode=DevelopMode.ALL ,
+                 exploitation_bias, sql_path, verbose = True , develop_mode=DevelopMode.ALL ,
                  proportion_amount_node_sons_to_develop=0.005 , get_next_mode=GetNextMode.STOCHASTIC_ANNEALING, get_starting_node_mode =  GetStartNodeMode.RESET_SELECTOR):
         self.verbose = verbose
         Node.verbose = verbose
@@ -84,8 +84,7 @@ class CombOptim:
         self.exploitation_score_price_bias = exploitation_score_price_bias
         self.exploration_score_depth_bias = exploration_score_depth_bias
         self.exploitation_bias=exploitation_bias
-        self.output_path=output_path
-        self.conn = sqlite3.connect(output_path)
+        self.conn = sqlite3.connect(sql_path)
         self.get_next_mode=get_next_mode
 
     def finish_stats_operation(self):

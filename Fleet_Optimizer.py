@@ -5,7 +5,7 @@ from fleet_classes import Offer, ComponentOffer
 from fleet_offers import Component
 from get_spot import SpotCalculator
 import boto3
-
+from comb_optimizer import DevelopMode,GetNextMode,GetStartNodeMode
 
 calc = SpotCalculator()
 
@@ -78,16 +78,10 @@ def serialize_component(component: ComponentOffer):
 
 
 def run_optimizer(
-    candidate_list_size,
-    time_per_region,
-    exploitation_score_price_bias,
-    exploration_score_depth_bias,
-    exploitation_bias,
     input_file_name = "input_Fleet.json",
     output_file_name="FleetResults.json",
-    stats_file_name="Run_Statistic.sqlite3",
-    verbose = True,
-    bruteforce = False
+    bruteforce = False,
+    **kw
 ):
     """Run Optimizer- Fleet calculator."""
     file = open(input_file_name)
@@ -128,14 +122,8 @@ def run_optimizer(
         architecture,
         type_major,
         filter_instances,
-        candidate_list_size,
-        time_per_region,
-        exploitation_score_price_bias,
-        exploration_score_depth_bias,
-        exploitation_bias,
-        stats_file_name,
-        verbose,
-        bruteforce
+        bruteforce,
+        **kw
 
     )
     # print('Connecting to boto3')
@@ -151,24 +139,27 @@ def run_optimizer(
 
 
 if __name__ == "__main__":
-    candidate_list_size = 30.0
-    time_per_region = 1
-    exploitation_score_price_bias = 0.5
-    exploration_score_depth_bias = 1.0
-    exploitation_bias = 0.5
+
     input_file_name = "input_Fleet.json"
     output_file_name = "FleetResults.json"
-    stats_file_name = "Run_Statistic.sqlite"
+
+    alg_parameters = {
+        'candidate_list_size' : 350,
+        'time_per_region' : 2,
+        'exploitation_score_price_bias' : 0.5,
+        'exploration_score_depth_bias' : 1.0,
+        'exploitation_bias' : 0.5,
+        'sql_path' : "Run_Statistic.sqlite3",
+        'verbose' : False,
+        'develop_mode' : DevelopMode.ALL,
+        'proportion_amount_node_sons_to_develop' : 0.5,
+        'get_next_mode' : GetNextMode.STOCHASTIC_ANNEALING,
+        'get_starting_node_mode' : GetStartNodeMode.RESET_SELECTOR
+    }
 
     run_optimizer(
-        candidate_list_size,
-        time_per_region,
-        exploitation_score_price_bias,
-        exploration_score_depth_bias,
-        exploitation_bias,
         input_file_name,
         output_file_name,
-        stats_file_name,
         bruteforce=False,
-        verbose=False
+        **alg_parameters
     )
