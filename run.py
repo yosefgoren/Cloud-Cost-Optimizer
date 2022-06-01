@@ -140,12 +140,12 @@ def plot_hyperparam_experiments(experiment_names: list, hyperparam_values: list,
         e = Experiment.load(name)
         curves.append(e.get_plot_curves("INSERT_TIME", "BEST_PRICE", normalize=False)[0])
         best_prices.append(curves[-1][1][-1])
-    # plot_multiple_curves(curves, hyperparam_values, z_axis_name)
+    plot_multiple_curves(curves, hyperparam_values, z_axis_name)
     
-    plt.plot(hyperparam_values, best_prices)
-    plt.xlabel(x_axis_name)
-    plt.ylabel(y_axis_name)
-    plt.show()
+    # plt.plot(hyperparam_values, best_prices)
+    # plt.xlabel(x_axis_name)
+    # plt.ylabel(y_axis_name)
+    # plt.show()
 
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
