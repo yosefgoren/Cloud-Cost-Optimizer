@@ -36,10 +36,10 @@ class KeyMannager:
 class CombOptim:
     def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
                  region, exploitation_score_price_bias, exploration_score_depth_bias,
-                 exploitation_bias, output_path, verbose = True , develop_mode=DevelopMode.PROPORTIONAL , proportion_amount_node_sons_to_develop=0.2):
+                 exploitation_bias, output_path, verbose = True , develop_mode=DevelopMode.PROPORTIONAL , proportion_amount_node_sons_to_develop=0.005):
         self.verbose = verbose
         Node.verbose = verbose
-        Node.node_cache = {}
+        Node.node_cache.clear()
 
         CombOptim.getComponentKey = KeyMannager(lambda componenet: componenet.component_name)
         """given a component, return a unique key associated with it, based on it's name."""
@@ -190,6 +190,21 @@ class Node:
     def hashCodeOfPartition(partition)->int:
         return CombOptim.getGroupSetAsKey(partition)
 
+    def __append_new_node(self,container,combination,combination_index , module1,module1_index ,module2,module2_index ):
+        new_combination = copy.deepcopy(combination)
+        new_module = copy.deepcopy(module1 + module2)
+        del new_combination[max(module1_index, module2_index)]
+        del new_combination[min(module1_index, module2_index)]
+        new_combination.append(new_module)
+
+        new_partition = copy.deepcopy(self.partitions)
+        new_partition[combination_index][0] = new_combination
+
+        if Node.hashCodeOfPartition(new_partition) in Node.node_cache:
+            container.append(Node.node_cache[Node.hashCodeOfPartition(new_partition)])
+        else:
+            container.append(Node(new_partition, self.getDepth() + 1))
+
     def calcProportionSons(self, proportion_amount_to_develop): # for example, 0.1
         sons = []
         for i, group in enumerate(self.partitions):
@@ -200,19 +215,7 @@ class Node:
                     if j < k:
                         prob = np.random.binomial(1, proportion_amount_to_develop)
                         if prob == 1:
-                            new_combination = copy.deepcopy(combination)
-                            new_module = copy.deepcopy(module1 + module2)
-                            del new_combination[max(j, k)]
-                            del new_combination[min(j, k)]
-                            new_combination.append(new_module)
-
-                            new_partition = copy.deepcopy(self.partitions)
-                            new_partition[i][0] = new_combination
-
-                            if Node.hashCodeOfPartition(new_partition) in Node.node_cache:
-                                sons.append(Node.node_cache[Node.hashCodeOfPartition(new_partition)])
-                            else:
-                                sons.append(Node(new_partition, self.getDepth() + 1))
+                            self.__append_new_node(sons,combination,i , module1,j ,module2,k )
         return sons
       
     def calcAllSons(self):
@@ -223,19 +226,7 @@ class Node:
                 for j, module1 in enumerate(combination):
                     for k, module2 in enumerate(combination):
                         if j < k:
-                            new_combination = copy.deepcopy(combination)
-                            new_module = copy.deepcopy(module1 + module2)
-                            del new_combination[max(j, k)]
-                            del new_combination[min(j, k)]
-                            new_combination.append(new_module)
-
-                            new_partition = copy.deepcopy(self.partitions)
-                            new_partition[i][0] = new_combination
-
-                            if Node.hashCodeOfPartition(new_partition) in Node.node_cache:
-                                self.sons.append(Node.node_cache[Node.hashCodeOfPartition(new_partition)])
-                            else:
-                                self.sons.append(Node(new_partition, self.getDepth() + 1))
+                            self.__append_new_node(self.sons, combination, i, module1, j, module2, k)
 
 class OptimumSet:
     def __init__(self, k: int):
