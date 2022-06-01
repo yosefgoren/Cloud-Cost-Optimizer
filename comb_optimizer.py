@@ -10,17 +10,17 @@ from fleet_classes import Offer
 from math import inf
 import copy
 from BBAlgorithm import separate_partitions
-from enum import Enum
+from enum import IntEnum
 
-class DevelopMode(Enum):
+class DevelopMode(IntEnum):
     ALL = 1
     PROPORTIONAL = 2
 
-class GetNextMode(Enum):
+class GetNextMode(IntEnum):
     STOCHASTIC_ANNEALING = 1
     GREEDY = 2
 
-class GetStartNodeMode(Enum):
+class GetStartNodeMode(IntEnum):
     RESET_SELECTOR = 1
     ROOT = 2
 
@@ -149,7 +149,9 @@ class CombOptim:
             path = self.search_algo.run(start_node)
             if len(path) != 0:
                 self.optim_set.update(path)
-                self.reset_sel.update(path)
+
+                if self.get_starting_node_mode == GetStartNodeMode.RESET_SELECTOR:
+                    self.reset_sel.update(path)
 
             self.insert_stats(i)
             i += 1

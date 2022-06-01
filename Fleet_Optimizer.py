@@ -145,17 +145,18 @@ if __name__ == "__main__":
 
     alg_parameters = {
         'candidate_list_size' : 350,
-        'time_per_region' : 2,
+        'time_per_region' : 0.1,
         'exploitation_score_price_bias' : 0.5,
         'exploration_score_depth_bias' : 1.0,
-        'exploitation_bias' : 0.5,
+        'exploitation_bias' : 0.2,
         'sql_path' : "Run_Statistic.sqlite3",
         'verbose' : False,
         'develop_mode' : DevelopMode.ALL,
         'proportion_amount_node_sons_to_develop' : 0.5,
         'get_next_mode' : GetNextMode.STOCHASTIC_ANNEALING,
-        'get_starting_node_mode' : GetStartNodeMode.RESET_SELECTOR
+        'get_starting_node_mode' : GetStartNodeMode.ROOT
     }
+
 
     run_optimizer(
         input_file_name,
