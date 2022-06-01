@@ -184,7 +184,32 @@ class Node:
     @staticmethod
     def hashCodeOfPartition(partition)->int:
         return CombOptim.getGroupSetAsKey(partition)
-      
+
+    def calcFixedNumSons(self, proportion_amount_to_develop): # for exemple, 0.1
+        sons = []
+
+        for i, group in enumerate(self.partitions):
+            combination = group[0]  # each group has 1 combination
+
+            for j, module1 in enumerate(combination):
+                for k, module2 in enumerate(combination):
+                    if j < k:
+                        prob = np.random.binomial(1, proportion_amount_to_develop)
+                        if prob == 1:
+                            new_combination = copy.deepcopy(combination)
+                            new_module = copy.deepcopy(module1 + module2)
+                            del new_combination[max(j, k)]
+                            del new_combination[min(j, k)]
+                            new_combination.append(new_module)
+
+                            new_partition = copy.deepcopy(self.partitions)
+                            new_partition[i][0] = new_combination
+
+                            if Node.hashCodeOfPartition(new_partition) in Node.node_cache:
+                                sons.append(Node.node_cache[Node.hashCodeOfPartition(new_partition)])
+                            else:
+                                sons.append(Node(new_partition, self.getDepth() + 1))
+        return sons
       
     def calcAllSons(self):
         if self.sons is None:
