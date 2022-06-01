@@ -190,7 +190,7 @@ class Node:
     def hashCodeOfPartition(partition)->int:
         return CombOptim.getGroupSetAsKey(partition)
 
-    def calcFixedNumSons(self, proportion_amount_to_develop): # for example, 0.1
+    def calcProportionSons(self, proportion_amount_to_develop): # for example, 0.1
         sons = []
         for i, group in enumerate(self.partitions):
             combination = group[0]  # each group has 1 combination
@@ -449,7 +449,7 @@ class SearchAlgorithm:
             node.calcAllSons()
             sons = node.sons
         elif self.develop_mode == DevelopMode.PROPORTIONAL:
-            sons = node.calcFixedNumSons(self.proportion_amount_node_sons_to_develop)
+            sons = node.calcProportionSons(self.proportion_amount_node_sons_to_develop)
         flag = self.is_choosing_downgrades()
         improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(sons, node.getPrice())
         #temp fix, if got exception, return None:
