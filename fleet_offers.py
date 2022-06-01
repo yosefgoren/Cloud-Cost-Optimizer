@@ -154,21 +154,11 @@ class FleetCalculator:
 			instances.append(
 				self.match_group(i, region, pricing, architecture, type_major)
 			)  ## finds best configuration for each combination
-			# for i in instances:
-			#     print('i',i)
-			#     for j in i:
-			#         print('j',j)
-			#         for k in j:
-			#             for z in k.get_info():
-			#                 print('i-',i,'j-', j, 'k-', k, 'k.instance-', k.instance, k.spot_price,
-		#                 'k info-', k.get_info(),'z-',z.get_component_name())
-		### only for the First step algorithm! otherwise, don't execute the if
-		if instances == [None]:  #### check!!!!
-			print("there is no match in ", region, " region")
-			instances.clear()
 		instances = list(filter(None, instances))
+		if len(instances) < len(group.remaining_partitions):
+			return []
 		result = []
-		for partition in partition2(instances):
+		for partition in partition2(instances, region):
 			new_group = group.copy_group()
 			new_group.total_price = sum(map(lambda i: i.total_price, partition))
 			new_group.instance_groups = partition
@@ -181,16 +171,15 @@ class FleetCalculator:
 		
 		instances = []
 		for i in group.remaining_partitions:
-			new_instance = self.match_group(i, region, pricing, architecture, type_major)
-			if new_instance is None:
-				# print("get_best_price return None")
-				return None
-			else:
-				instances.append(new_instance)
-
+			instances.append(
+				self.match_group(i, region, pricing, architecture, type_major)
+			)  ## finds best configuration for each combination
+		instances = list(filter(None, instances))
+		if len(instances) < len(group.remaining_partitions):
+			return None
 
 		best_group = None
-		for partition in partition2(instances):
+		for partition in partition2(instances , region):
 			new_group = group.copy_group()
 			new_group.total_price = sum(map(lambda i: i.total_price, partition))
 			new_group.instance_groups = partition
@@ -231,7 +220,7 @@ def get_fleet_offers(
 		if bruteforce:# Brute-Force Algorithm- optimal results / more complex
 			start_time = time.time()
 			groups = create_groups(
-				updated_params, app_size
+				updated_params, app_size, region_to_check
 			)  ## creates all the possible combinations
 			for (
 				combination
