@@ -152,7 +152,7 @@ def run_optimizer(
 
 if __name__ == "__main__":
     candidate_list_size = 30.0
-    time_per_region = 0.5
+    time_per_region = 1
     exploitation_score_price_bias = 0.5
     exploration_score_depth_bias = 1.0
     exploitation_bias = 0.5

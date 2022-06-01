@@ -10,6 +10,11 @@ from fleet_classes import Offer
 from math import inf
 import copy
 from BBAlgorithm import separate_partitions
+from enum import Enum
+
+class DevelopMode(Enum):
+    ALL = 1
+    PROPORTIONAL = 2
 
 class KeyMannager:
     def __init__(self, unique_identifier_func):
@@ -31,7 +36,7 @@ class KeyMannager:
 class CombOptim:
     def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
                  region, exploitation_score_price_bias, exploration_score_depth_bias,
-                 exploitation_bias, output_path, verbose = True):
+                 exploitation_bias, output_path, verbose = True , develop_mode=DevelopMode.PROPORTIONAL , proportion_amount_node_sons_to_develop=0.2):
         self.verbose = verbose
         Node.verbose = verbose
         Node.node_cache = {}
@@ -59,7 +64,7 @@ class CombOptim:
         self.root = CombOptim.calc_root(initial_seperated)
         self.optim_set = OptimumSet(1)
         self.reset_sel = ResetSelector(candidate_list_size,self.get_num_components(),self.root,exploitation_score_price_bias,  exploration_score_depth_bias,exploitation_bias,self.verbose)
-        self.search_algo = SearchAlgorithm()
+        self.search_algo = SearchAlgorithm(develop_mode=develop_mode,proportion_amount_node_sons_to_develop=proportion_amount_node_sons_to_develop)
         self.start_time = time.time()
         self.time_per_region = time_per_region
         self.region = region
@@ -185,9 +190,8 @@ class Node:
     def hashCodeOfPartition(partition)->int:
         return CombOptim.getGroupSetAsKey(partition)
 
-    def calcFixedNumSons(self, proportion_amount_to_develop): # for exemple, 0.1
+    def calcFixedNumSons(self, proportion_amount_to_develop): # for example, 0.1
         sons = []
-
         for i, group in enumerate(self.partitions):
             combination = group[0]  # each group has 1 combination
 
@@ -418,9 +422,11 @@ class ResetSelector:
         return exploitation_scores
 
 class SearchAlgorithm:
-    def __init__(self):
+    def __init__(self, develop_mode : DevelopMode , proportion_amount_node_sons_to_develop = 0.1):
         self.temperature = 0
         self.temperature_increment_pace = 1
+        self.proportion_amount_node_sons_to_develop = proportion_amount_node_sons_to_develop
+        self.develop_mode = develop_mode
 
     def run(self, start_node: Node) -> list:
         """returns the list of nodes visited in the run"""
@@ -438,9 +444,14 @@ class SearchAlgorithm:
 
     def get_next(self, node: Node) -> Node:
         """get the chosen son to continue to in the next iteration"""
-        node.calcAllSons()
+        sons = []
+        if self.develop_mode == DevelopMode.ALL:
+            node.calcAllSons()
+            sons = node.sons
+        elif self.develop_mode == DevelopMode.PROPORTIONAL:
+            sons = node.calcFixedNumSons(self.proportion_amount_node_sons_to_develop)
         flag = self.is_choosing_downgrades()
-        improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(node.sons, node.getPrice())
+        improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(sons, node.getPrice())
         #temp fix, if got exception, return None:
         try:
             if (downgrades.shape[0] != 0) and flag:
