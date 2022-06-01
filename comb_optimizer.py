@@ -17,7 +17,7 @@ class DevelopMode(Enum):
     PROPORTIONAL = 2
 
 class GetNextMode(Enum):
-    ALG = 1
+    STOCHASTIC_ANNEALING = 1
     GREEDY = 2
 
 class GetStartNodeMode(Enum):
@@ -46,7 +46,7 @@ class CombOptim:
     def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
                  region, exploitation_score_price_bias, exploration_score_depth_bias,
                  exploitation_bias, output_path, verbose = True , develop_mode=DevelopMode.ALL ,
-                 proportion_amount_node_sons_to_develop=0.005 , get_next_mode=GetNextMode.ALG, get_starting_node_mode =  GetStartNodeMode.RESET_SELECTOR):
+                 proportion_amount_node_sons_to_develop=0.005 , get_next_mode=GetNextMode.STOCHASTIC_ANNEALING, get_starting_node_mode =  GetStartNodeMode.RESET_SELECTOR):
         self.verbose = verbose
         Node.verbose = verbose
         Node.node_cache.clear()
@@ -484,7 +484,7 @@ class SearchAlgorithm:
         elif self.develop_mode == DevelopMode.PROPORTIONAL:
             sons = node.calcProportionSons(self.proportion_amount_node_sons_to_develop)
 
-        if self.get_next_mode == GetNextMode.ALG:
+        if self.get_next_mode == GetNextMode.STOCHASTIC_ANNEALING:
             return self.__get_next_alg(node,sons)
         elif self.get_next_mode == GetNextMode.GREEDY:
             return self.__get_next_greedy(node,sons)
