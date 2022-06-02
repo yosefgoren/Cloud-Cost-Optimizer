@@ -520,15 +520,19 @@ class SearchAlgorithm:
         except:
             return None
 
-
-    def get_next(self, node: Node) -> Node:
-        """get the chosen son to continue to in the next iteration"""
+    def calc_sons(self, node):
         sons = []
         if self.develop_mode == DevelopMode.ALL:
             node.calcAllSons()
             sons = node.sons
         elif self.develop_mode == DevelopMode.PROPORTIONAL:
             sons = node.calcProportionSons(self.proportion_amount_node_sons_to_develop)
+        return sons
+
+
+    def get_next(self, node: Node) -> Node:
+        """get the chosen son to continue to in the next iteration"""
+        sons = self.calc_sons(node)
 
         if self.get_next_mode == GetNextMode.STOCHASTIC_ANNEALING:
             return self.__get_next_alg(node,sons)
