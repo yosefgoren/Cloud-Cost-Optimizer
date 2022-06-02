@@ -23,6 +23,7 @@ class GetNextMode(IntEnum):
 class GetStartNodeMode(IntEnum):
     RESET_SELECTOR = 1
     ROOT = 2
+    RANDOM = 3
 
 
 class KeyMannager:
@@ -133,6 +134,19 @@ class CombOptim:
     def price_calc(offer):
         return CombOptim.price_calc_func(offer)
 
+
+
+    def get_start_node(self):
+        start_node = None
+        if self.get_starting_node_mode == GetStartNodeMode.RESET_SELECTOR:
+            start_node = self.reset_sel.getStartNode()
+        elif self.get_starting_node_mode == GetStartNodeMode.ROOT:
+            start_node = self.root
+        elif self.get_starting_node_mode == GetStartNodeMode.RANDOM:
+            start_node = Node.random_node_from(self.root)
+
+        return start_node
+
     def run(self):
         if self.root.getPrice() == np.inf:
             print("CombOptim.run: infinite price for root, returning empty result.")
@@ -141,11 +155,7 @@ class CombOptim:
         self.create_stats_table()
         i = 1
         while not self.isDone():
-            if self.get_starting_node_mode == GetStartNodeMode.RESET_SELECTOR:
-                start_node = self.reset_sel.getStartNode()
-            elif self.get_starting_node_mode == GetStartNodeMode.ROOT:
-                start_node = self.root
-            # start_node = self.root #for debugging without reset sel...
+            start_node = self.get_start_node()
             path = self.search_algo.run(start_node)
             if len(path) != 0:
                 self.optim_set.update(path)
@@ -224,6 +234,40 @@ class Node:
             container.append(Node.node_cache[Node.hashCodeOfPartition(new_partition)])
         else:
             container.append(Node(new_partition, self.getDepth() + 1))
+
+    @staticmethod
+    def random_node_from(start_node):
+        new_partition = copy.deepcopy(start_node.partitions)
+        depth_calc = 0
+        for i, group in enumerate(start_node.partitions):
+            combination = group[0]  # each group has 1 combination
+
+            combination_number = len(combination)
+            num_final_modules = np.random.choice(combination_number)
+            if num_final_modules == 0:
+                return start_node
+            new_modules_group = np.random.choice(num_final_modules,size=combination_number)
+            num_final_modules = np.max(new_modules_group)+1
+            new_combination =  [[] for _ in range(num_final_modules)]
+            for index, combination_index in enumerate(new_modules_group):
+                new_combination[combination_index] += combination[index]
+
+            new_combination  = [new_combination[i] if new_combination[i] != []  else None for i in range(num_final_modules)]
+            new_combination = list(filter(None, new_combination))
+
+            new_partition[i][0] = copy.deepcopy(new_combination)
+            depth_calc += combination_number - num_final_modules
+
+
+
+        if Node.hashCodeOfPartition(new_partition) in Node.node_cache:
+            new_node = Node.node_cache[Node.hashCodeOfPartition(new_partition)]
+        else:
+            new_depth =  start_node.getDepth() + depth_calc
+            new_node = Node(new_partition, new_depth)
+
+        return new_node
+
 
     def calcProportionSons(self, proportion_amount_to_develop): # for example, 0.1
         sons = []
@@ -476,14 +520,19 @@ class SearchAlgorithm:
         except:
             return None
 
-    def get_next(self, node: Node) -> Node:
-        """get the chosen son to continue to in the next iteration"""
+    def calc_sons(self, node):
         sons = []
         if self.develop_mode == DevelopMode.ALL:
             node.calcAllSons()
             sons = node.sons
         elif self.develop_mode == DevelopMode.PROPORTIONAL:
             sons = node.calcProportionSons(self.proportion_amount_node_sons_to_develop)
+        return sons
+
+
+    def get_next(self, node: Node) -> Node:
+        """get the chosen son to continue to in the next iteration"""
+        sons = self.calc_sons(node)
 
         if self.get_next_mode == GetNextMode.STOCHASTIC_ANNEALING:
             return self.__get_next_alg(node,sons)
