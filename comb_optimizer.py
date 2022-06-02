@@ -245,7 +245,7 @@ class Node:
             combination_number = len(combination)
             num_final_modules = np.random.choice(combination_number)
             if num_final_modules == 0:
-                return start_node
+                continue
             new_modules_group = np.random.choice(num_final_modules,size=combination_number)
             num_final_modules = np.max(new_modules_group)+1
             new_combination =  [[] for _ in range(num_final_modules)]
@@ -256,7 +256,7 @@ class Node:
             new_combination = list(filter(None, new_combination))
 
             new_partition[i][0] = copy.deepcopy(new_combination)
-            depth_calc += combination_number - num_final_modules
+            depth_calc += combination_number - len(new_combination)
 
 
 
