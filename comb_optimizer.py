@@ -29,7 +29,7 @@ class GetStartNodeMode(IntEnum):
 class KeyMannager:
     def __init__(self, unique_identifier_func):
         """an instance of this class will be able to take elements and assign each element a unique int key,
-            the 'unique_identifier_func' function is used to determined how an element differs from other elements."""
+            the 'unique_identifier_func' function is used to determin how an element differs from other elements."""
         self.id_func = unique_identifier_func
         self.counter = 0
         self.key_mappings = {}
@@ -44,10 +44,22 @@ class KeyMannager:
         return self.key_mappings[element_id]
     
 class CombOptim:
-    def __init__(self, candidate_list_size: int, price_calc, initial_seperated, time_per_region,
-                 region, exploitation_score_price_bias, exploration_score_depth_bias,
-                 exploitation_bias, sql_path, verbose = True , develop_mode=DevelopMode.ALL ,
-                 proportion_amount_node_sons_to_develop=0.005 , get_next_mode=GetNextMode.STOCHASTIC_ANNEALING, get_starting_node_mode =  GetStartNodeMode.RESET_SELECTOR):
+    def __init__(self, 
+            candidate_list_size: int, 
+            price_calc, 
+            initial_seperated, 
+            time_per_region: float,
+            region: str,
+            exploitation_score_price_bias: float,
+            exploration_score_depth_bias: float,
+            exploitation_bias: float, 
+            sql_path: str, 
+            verbose: bool=True , 
+            develop_mode=DevelopMode.ALL,
+            proportion_amount_node_sons_to_develop: float=0.005, 
+            get_next_mode=GetNextMode.STOCHASTIC_ANNEALING, 
+            get_starting_node_mode=GetStartNodeMode.RESET_SELECTOR
+    ):
         self.verbose = verbose
         Node.verbose = verbose
         Node.node_cache.clear()

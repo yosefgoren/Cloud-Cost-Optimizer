@@ -1,7 +1,8 @@
-from audioop import mul
-import re
 from Experiment import *
 from Distributions import NormDistInt
+from comb_optimizer import DevelopMode, GetNextMode, GetStartNodeMode
+import numpy as np
+import matplotlib.pyplot as plt
 
 def create_tation_bias_experiment(N: int, C: int, T: int, Bias: float, force: bool = False)->Experiment:
     name = f"time-price_N-{N}_C-{C}_T-{T}_Bias-{Bias}"
@@ -28,64 +29,23 @@ def create_tation_bias_experiment(N: int, C: int, T: int, Bias: float, force: bo
         region = "us-east-2"
     )
 
-def one_big_sample_experiment()->Experiment:
-    N = 1
-    name = f"one_big_sample_experiment"
+def make_trail_exp()->Experiment:
+    N = 10
     return Experiment.create(
-        experiment_name=name,
+        experiment_name="trail",
         control_parameter_lists = {
-            "component_count":  [100]*N,
-            "time_per_region":  [3600.0*5/20]*N,
+            "component_count":  [9]*N,
+            "time_per_region":  [10]*N,
             "significance":     [1]*N
         },
-        algorithm_parameter_lists = {
+        search_algorithm_parameter_lists = {
+            "develop_mode":                             [DevelopMode.ALL]*N,
+            "proportion_amount_node_sons_to_develop":   [1]*N,
+            "get_next_mode":                            [GetNextMode.STOCHASTIC_ANNEALING]*N,
+            "get_starting_node_mode":                   [GetStartNodeMode.RESET_SELECTOR]*N
+        },
+        reset_algorithm_parameter_lists = {
             "candidate_list_size":              [64]*N,   
-            "exploitation_score_price_bias":    [0.5]*N,
-            "exploration_score_depth_bias":     [1.0]*N,
-            "exploitation_bias":                [0.8]*N
-        },
-        component_resource_distirubtions = {
-            "cpu": NormDistInt(3, 3, 1, 32),
-            "ram": NormDistInt(4, 4 ,1, 128),
-            "net": NormDistInt(1, 1, 1, 4)
-        },
-        unique_sample_inputs = True
-    )
-
-def create_time_price_experiment(N: int, C: int, T: int)->Experiment:
-    name = f"time-price_N-{N}_C-{C}_T-{T}"
-    return Experiment.create(
-        experiment_name=name,
-        control_parameter_lists = {
-            "component_count":  [C]*N,
-            "time_per_region":  [float(T)]*N,
-            "significance":     [1]*N
-        },
-        algorithm_parameter_lists = {
-            "candidate_list_size":              [64]*N,   
-            "exploitation_score_price_bias":    [0.5]*N,
-            "exploration_score_depth_bias":     [1.0]*N,
-            "exploitation_bias":                [0.8]*N
-        },
-        component_resource_distirubtions = {
-            "cpu": NormDistInt(3, 3, 1, 32),
-            "ram": NormDistInt(4, 4 ,1, 128),
-            "net": NormDistInt(1, 1, 1, 4)
-        },
-        unique_sample_inputs = True
-    )
-
-def create_candidate_size_experiement(N: int, C: int, T: int, Size: int)->Experiment:
-    name = f"candidate-size_N-{N}_C-{C}_T-{T}_Size-{Size}"
-    return Experiment.create(
-        experiment_name=name,
-        control_parameter_lists = {
-            "component_count":  [C]*N,
-            "time_per_region":  [float(T)]*N,
-            "significance":     [1]*N
-        },
-        algorithm_parameter_lists = {
-            "candidate_list_size":              [Size]*N,   
             "exploitation_score_price_bias":    [0.5]*N,
             "exploration_score_depth_bias":     [1.0]*N,
             "exploitation_bias":                [0.8]*N
@@ -97,34 +57,6 @@ def create_candidate_size_experiement(N: int, C: int, T: int, Size: int)->Experi
         },
         region = "us-east-1"
     )
-
-def create_trail_experiment()->Experiment:
-    name = "trail"
-    N=2
-    return Experiment.create(
-        experiment_name=name,
-        control_parameter_lists = {
-            "component_count":  [8]*N,
-            "time_per_region":  [float(3)]*N,
-            "significance":     [1]*N
-        },
-        algorithm_parameter_lists = {
-            "candidate_list_size":              [64]*N,   
-            "exploitation_score_price_bias":    [0.5]*N,
-            "exploration_score_depth_bias":     [1.0]*N,
-            "exploitation_bias":                [0.8]*N
-        },
-        component_resource_distirubtions = {
-            "cpu": NormDistInt(3, 3, 1, 32),
-            "ram": NormDistInt(4, 4 ,1, 128),
-            "net": NormDistInt(1, 1, 1, 4)
-        },
-        region="us-east-1"
-    )
-
-import numpy as np
-import matplotlib.pyplot as plt
-
 
 def plot_multiple_curves(curves: list, z_axis: list, x_axis_name: str = "", y_axis_name: str = "", z_axis_name: str = ""):
     ax = plt.axes(projection='3d')
@@ -141,11 +73,6 @@ def plot_hyperparam_experiments(experiment_names: list, hyperparam_values: list,
         curves.append(e.get_plot_curves("INSERT_TIME", "BEST_PRICE", normalize=False)[0])
         best_prices.append(curves[-1][1][-1])
     plot_multiple_curves(curves, hyperparam_values, z_axis_name)
-    
-    # plt.plot(hyperparam_values, best_prices)
-    # plt.xlabel(x_axis_name)
-    # plt.ylabel(y_axis_name)
-    # plt.show()
 
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"

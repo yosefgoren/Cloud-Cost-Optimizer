@@ -9,6 +9,7 @@ import sqlite3
 from multiprocessing import Process
 from interp import average_curve
 
+
 # ============================= File System Utilities =========================================
 
 def to_json(collection, file_path: str)->None:
@@ -39,7 +40,13 @@ control_parameter_names = {
     "time_per_region",
     "significance"
 }
-algorithm_parameter_names = {
+search_algorithm_parameter_names = {
+    "develop_mode",
+    "proportion_amount_node_sons_to_develop",
+    "get_next_mode",
+    "get_starting_node_mode"
+}
+reset_algorithm_parameter_names = {
     "candidate_list_size",
     "exploitation_score_price_bias",
     "exploration_score_depth_bias",
@@ -150,11 +157,13 @@ class Sample:
             sample_idx: int, 
             components: list, 
             control_parameters: dict,
-            algorithm_parameters: dict,
+            search_algorithm_parameters: dict,
+            reset_algorithm_parameters: dict,
             region: str
     ):
         verify_dict_keys(control_parameters, control_parameter_names)
-        verify_dict_keys(algorithm_parameters, algorithm_parameter_names)
+        verify_dict_keys(search_algorithm_parameters, search_algorithm_parameter_names)
+        verify_dict_keys(reset_algorithm_parameters, reset_algorithm_parameter_names)
 
         #create the algorithm input file:
         comp_dicts = [{
@@ -270,52 +279,8 @@ def partition_tuples_list_by_field(entries: list, unique_field_idx: int):
     field_values = {entry[unique_field_idx] for entry in entries}
     return {value:[entry for entry in entries if entry[unique_field_idx] == value] for value in field_values}
 
-class Stats:
-    """stat fields are: 0:INSERT_TIME, 1:NODES_COUNT, 2:BEST_PRICE, 3:DEPTH_BEST, 4:ITERATION, 5:REGION_SOLUTION"""
-    def __init__(self, content: list):
-        self.content = content
-        self.repetitions_aggregated = False
+# stat fields are: 0:INSERT_TIME, 1:NODES_COUNT, 2:BEST_PRICE, 3:DEPTH_BEST, 4:ITERATION, 5:REGION_SOLUTION
 
-    def map_entries(self, mapping_func):
-        if not self.repetitions_aggregated:
-            self.content = [[[mapping_func(entry)
-                        for entry in repetition_stats
-                    ]
-                    for repetition_stats in sample_stats
-                ]
-                for sample_stats in self.content
-            ]
-        else:
-            self.content = [[mapping_func(entry)
-                        for entry in sample_stats
-                    ]
-                for sample_stats in self.content
-            ]
-            
-    def aggregate_field_partition(self, aggregation_func, unique_field_idx: int):
-        """given an index of a field within the query tuple, aggregate together all sets of entries with the same value for that field."""
-        if not self.repetitions_aggregated:
-            self.content = [[[aggregation_func(stats)
-                        for stats in partition_tuples_list_by_field(repetition_stats, unique_field_idx).values()
-                    ]
-                    for repetition_stats in sample_stats
-                ]
-                for sample_stats in self.content
-            ]
-        else:
-            self.content = [[aggregation_func(stats)
-                        for stats in partition_tuples_list_by_field(sample_stats, unique_field_idx).values()
-                    ]
-                for sample_stats in self.content
-            ]
-
-
-    def flatten_repetitions(self, aggregation_func = flatten_list_of_lists):
-        self.content = [aggregation_func(sample_stats)
-            for sample_stats in self.content
-        ]
-        self.repetitions_aggregated = True
-        
 class Experiment:
     default_experiments_root_dir = "./experiments"
 
@@ -398,7 +363,8 @@ class Experiment:
     def create(
             experiment_name: str,
             control_parameter_lists: dict,
-            algorithm_parameter_lists: dict,
+            search_algorithm_parameter_lists: dict,
+            reset_algorithm_parameter_lists: dict,
             component_resource_distirubtions: dict,
             experiments_root_dir: str = default_experiments_root_dir,
             force: bool = False,
@@ -407,10 +373,16 @@ class Experiment:
     ):
         #verify input correctness:
         verify_dict_keys(control_parameter_lists, control_parameter_names)
-        verify_dict_keys(algorithm_parameter_lists, algorithm_parameter_names)
+        verify_dict_keys(search_algorithm_parameter_lists, search_algorithm_parameter_names)
+        verify_dict_keys(reset_algorithm_parameter_lists, reset_algorithm_parameter_names)
+
         verify_dict_keys(component_resource_distirubtions, component_resource_type_names)
 
-        lengths = [len(ls) for ls in (list(control_parameter_lists.values())+list(algorithm_parameter_lists.values()))]
+        lengths = [len(ls) for ls in (
+                list(control_parameter_lists.values())+
+                list(search_algorithm_parameter_lists.values())+
+                list(reset_algorithm_parameter_lists.values())
+        )]
         if any([n != lengths[0] for n in lengths]):
             raise ValueError("expected all parameter lists to have same lengths.")
         num_samples = lengths[0]
@@ -424,7 +396,8 @@ class Experiment:
         make_experiment_dir(exp_dir_path)
 
         control_parameter_dicts = dict_of_lists_to_list_of_dicts(control_parameter_lists)
-        algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(algorithm_parameter_lists)
+        search_algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(search_algorithm_parameter_lists)
+        reset_algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(reset_algorithm_parameter_lists)
         samples = []
 
         component_set_generator = lambda : [Component(**(sample_hw_requirments())) for _ in range(max(control_parameter_lists["component_count"]))]
@@ -440,7 +413,8 @@ class Experiment:
                     sample_idx, 
                     sample_components, 
                     control_parameter_dicts[sample_idx],
-                    algorithm_parameter_dicts[sample_idx],
+                    search_algorithm_parameter_dicts[sample_idx],
+                    reset_algorithm_parameter_dicts[sample_idx],
                     region=region
             ))
 
