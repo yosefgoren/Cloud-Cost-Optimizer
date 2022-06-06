@@ -1,0 +1,74 @@
+[
+    {
+        "price": 1.8984,
+        "EC2 Type": "onDemand",
+        "region": "us-east-1",
+        "instances": [
+            {
+                "onDemandPrice": 1.8984,
+                "region": "us-east-1",
+                "cpu": "32",
+                "ebsOnly": false,
+                "family": "General purpose",
+                "memory": "128",
+                "network": "12500 Megabit",
+                "os": "Linux",
+                "typeMajor": "m6id",
+                "typeMinor": "8xlarge",
+                "storage": "1 x 1900 SSD",
+                "typeName": "m6id.8xlarge",
+                "physicalProcessor": "Intel Xeon 8375C (Ice Lake)",
+                "processorArchitecture": "64-bit",
+                "Architecture": "x86_64",
+                "discount": 70,
+                "interruption_frequency": "<5%",
+                "interruption_frequency_filter": 0.0,
+                "spot_price": 0.5713,
+                "Price_per_CPU": 0.017853125,
+                "Price_per_memory": 0.00446328125,
+                "components": [
+                    {
+                        "appName": "App",
+                        "componentName": "component_8"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_1"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_2"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_3"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_7"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_4"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_0"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_5"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_6"
+                    },
+                    {
+                        "appName": "App",
+                        "componentName": "component_9"
+                    }
+                ]
+            }
+        ]
+    }
+]
