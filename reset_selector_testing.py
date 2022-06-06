@@ -31,7 +31,7 @@ def RSE_Generic(N: int, C: int, T: int, GSNM: GetStartNodeMode, tation_bias: flo
             "ram": NormDistInt(6, 4 ,1, 128),
             "net": NormDistInt(2, 1, 1, 5)
         },
-        force=True,
+        force=False,
         region = "us-east-1"
     )
 
@@ -88,5 +88,11 @@ def run_RSEs():
 
 if __name__ == "__main__":
     #run:
-    run_RSEs()
+    # run_RSEs()
     #plot:
+    for name in RSE_names:
+        e = Experiment.load(name)
+        times, prices = e.get_plot_curves(normalize=False)[0]
+        plt.plot(times, prices, label=name)
+    plt.legend()
+    plt.show()
