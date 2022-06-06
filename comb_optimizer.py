@@ -466,7 +466,25 @@ class ResetSelector:
         distances = ResetSelector.combinationDistancesFormula(nodes_list)
         return ResetSelector.normalizeArray(distances)
 
-    @staticmethod
+    def getCompResources(component)->list:
+        """given a component, return a list of resources
+            that this component requires."""
+        pass
+
+    def getModuleResourceVector(module: list)->list:
+        """give a module (a list of components) return a list of total resource
+            requirements of all components in the module.
+            Each entry in the result list represents the sum of a requirement for a resource for all modules."""
+        resources_each = [getCompResources(comp) for comp in module]
+        num_resources = len(resources_each[0])
+        return [sum([comp_resources[i] for comp_resources in resources_each]) for i in range(num_resources)]
+
+    def getNodeDistribution(node: Node)->list:
+        """given a node that represents a combination, return a list of vectors (lists), where each vector represents
+            a list of resources required by one of the modules within the node/component."""
+        # something like: return [getModuleResourceVector(module) for module in node]
+        pass
+
     def combinationDistancesFormula(node_list: list)->ndarray:
         """Implementation of formula for calculating 'distance' for all nodes to all other nodes.
             The input is a list of combinations, and the output is an array of floats where the i'th float
