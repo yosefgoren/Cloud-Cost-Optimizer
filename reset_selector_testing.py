@@ -90,7 +90,7 @@ def run_RSEs():
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
     #run:
-    # run_RSEs()
+    run_RSEs()
     #plot:
     for name in RSE_names:
         e = Experiment.load(name)
