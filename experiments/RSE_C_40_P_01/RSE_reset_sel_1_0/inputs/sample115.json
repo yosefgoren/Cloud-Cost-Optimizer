@@ -1,0 +1,262 @@
+{
+  "selectedOs": "linux",
+  "region": "us-east-1",
+  "spot/onDemand": "onDemand",
+  "AvailabilityZone": "all",
+  "Architecture": "all",
+  "filterInstances": [
+    "a1",
+    "t4g",
+    "i3",
+    "t3a",
+    "c5a.xlarge"
+  ],
+  "apps": [
+    {
+      "app": "App",
+      "share": true,
+      "components": [
+        {
+          "name": "component_0",
+          "vCPUs": 5,
+          "memory": 3,
+          "network": 3
+        },
+        {
+          "name": "component_1",
+          "vCPUs": 4,
+          "memory": 8,
+          "network": 2
+        },
+        {
+          "name": "component_2",
+          "vCPUs": 2,
+          "memory": 4,
+          "network": 2
+        },
+        {
+          "name": "component_3",
+          "vCPUs": 5,
+          "memory": 7,
+          "network": 3
+        },
+        {
+          "name": "component_4",
+          "vCPUs": 2,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_5",
+          "vCPUs": 7,
+          "memory": 9,
+          "network": 2
+        },
+        {
+          "name": "component_6",
+          "vCPUs": 6,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_7",
+          "vCPUs": 5,
+          "memory": 3,
+          "network": 2
+        },
+        {
+          "name": "component_8",
+          "vCPUs": 2,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_9",
+          "vCPUs": 3,
+          "memory": 3,
+          "network": 2
+        },
+        {
+          "name": "component_10",
+          "vCPUs": 6,
+          "memory": 8,
+          "network": 2
+        },
+        {
+          "name": "component_11",
+          "vCPUs": 2,
+          "memory": 8,
+          "network": 4
+        },
+        {
+          "name": "component_12",
+          "vCPUs": 5,
+          "memory": 4,
+          "network": 3
+        },
+        {
+          "name": "component_13",
+          "vCPUs": 6,
+          "memory": 12,
+          "network": 3
+        },
+        {
+          "name": "component_14",
+          "vCPUs": 5,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_15",
+          "vCPUs": 3,
+          "memory": 10,
+          "network": 2
+        },
+        {
+          "name": "component_16",
+          "vCPUs": 4,
+          "memory": 6,
+          "network": 2
+        },
+        {
+          "name": "component_17",
+          "vCPUs": 4,
+          "memory": 3,
+          "network": 3
+        },
+        {
+          "name": "component_18",
+          "vCPUs": 7,
+          "memory": 8,
+          "network": 4
+        },
+        {
+          "name": "component_19",
+          "vCPUs": 7,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_20",
+          "vCPUs": 3,
+          "memory": 8,
+          "network": 2
+        },
+        {
+          "name": "component_21",
+          "vCPUs": 5,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_22",
+          "vCPUs": 2,
+          "memory": 4,
+          "network": 2
+        },
+        {
+          "name": "component_23",
+          "vCPUs": 6,
+          "memory": 9,
+          "network": 4
+        },
+        {
+          "name": "component_24",
+          "vCPUs": 4,
+          "memory": 10,
+          "network": 3
+        },
+        {
+          "name": "component_25",
+          "vCPUs": 2,
+          "memory": 2,
+          "network": 3
+        },
+        {
+          "name": "component_26",
+          "vCPUs": 6,
+          "memory": 14,
+          "network": 3
+        },
+        {
+          "name": "component_27",
+          "vCPUs": 2,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_28",
+          "vCPUs": 3,
+          "memory": 6,
+          "network": 2
+        },
+        {
+          "name": "component_29",
+          "vCPUs": 3,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_30",
+          "vCPUs": 7,
+          "memory": 12,
+          "network": 4
+        },
+        {
+          "name": "component_31",
+          "vCPUs": 3,
+          "memory": 15,
+          "network": 2
+        },
+        {
+          "name": "component_32",
+          "vCPUs": 3,
+          "memory": 7,
+          "network": 2
+        },
+        {
+          "name": "component_33",
+          "vCPUs": 3,
+          "memory": 16,
+          "network": 3
+        },
+        {
+          "name": "component_34",
+          "vCPUs": 9,
+          "memory": 7,
+          "network": 2
+        },
+        {
+          "name": "component_35",
+          "vCPUs": 11,
+          "memory": 2,
+          "network": 2
+        },
+        {
+          "name": "component_36",
+          "vCPUs": 2,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_37",
+          "vCPUs": 4,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_38",
+          "vCPUs": 2,
+          "memory": 5,
+          "network": 2
+        },
+        {
+          "name": "component_39",
+          "vCPUs": 7,
+          "memory": 8,
+          "network": 3
+        }
+      ]
+    }
+  ]
+}

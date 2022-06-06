@@ -15,8 +15,8 @@ def RSE_Generic(N: int, C: int, T: int, GSNM: GetStartNodeMode, tation_bias: flo
             "significance":     [1]*N
         },
         search_algorithm_parameter_lists = {
-            "develop_mode":                             [DevelopMode.ALL]*N,
-            "proportion_amount_node_sons_to_develop":   [1]*N,
+            "develop_mode":                             [DevelopMode.PROPORTIONAL]*N,
+            "proportion_amount_node_sons_to_develop":   [0.1]*N,
             "get_next_mode":                            [GetNextMode.STOCHASTIC_ANNEALING]*N,
             "get_starting_node_mode":                   [GSNM]*N
         },
@@ -65,34 +65,36 @@ RSE_names = [
 
 def run_RSEs():
     N = 200
-    C = 10
-    T = 10
+    C = 40
+    T = 30
+    mp=6
 
     e = RSE_root(N, C, T)
-    e.run(multiprocess=2, retry=2)
+    e.run(multiprocess=mp, retry=2)
 
     e = RSE_random(N, C, T)
-    e.run(multiprocess=2, retry=2)
+    e.run(multiprocess=mp, retry=2)
 
     e = RSE_selector1_0(N, C, T)
-    e.run(multiprocess=2, retry=2)
+    e.run(multiprocess=mp, retry=2)
 
     e = RSE_selector0_3(N, C, T)
-    e.run(multiprocess=2, retry=2)
+    e.run(multiprocess=mp, retry=2)
 
     e = RSE_selector0_7(N, C, T)
-    e.run(multiprocess=2, retry=2)
+    e.run(multiprocess=mp, retry=2)
 
     e = RSE_selector0_0(N, C, T)
-    e.run(multiprocess=2, retry=2)
+    e.run(multiprocess=mp, retry=2)
 
+# variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
     #run:
     # run_RSEs()
     #plot:
     for name in RSE_names:
         e = Experiment.load(name)
-        times, prices = e.get_plot_curves(normalize=False)[0]
+        times, prices = e.get_plot_curves(normalize=False, x_variable="INSERT_TIME", y_variable="BEST_PRICE")[0]
         plt.plot(times, prices, label=name)
     plt.legend()
     plt.show()
