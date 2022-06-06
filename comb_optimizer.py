@@ -1,12 +1,14 @@
 # from msilib.schema import Component
 # from importlib_metadata import Pair
+from functools import total_ordering
+from msilib.schema import Component
 import sqlite3
 
 import numpy as np
-from numpy import ndarray, ones_like
+from numpy import average, ndarray, ones_like
 # from urllib3 import Retry
 import time
-from fleet_classes import Offer
+from fleet_classes import Offer, Component
 from math import inf
 import copy
 from BBAlgorithm import separate_partitions
@@ -24,7 +26,6 @@ class GetStartNodeMode(IntEnum):
     RESET_SELECTOR = 1
     ROOT = 2
     RANDOM = 3
-
 
 class KeyMannager:
     def __init__(self, unique_identifier_func):
@@ -466,24 +467,35 @@ class ResetSelector:
         distances = ResetSelector.combinationDistancesFormula(nodes_list)
         return ResetSelector.normalizeArray(distances)
 
-    def getCompResources(component)->list:
+    def getCompResources(component: Component)->ndarray:
         """given a component, return a list of resources
             that this component requires."""
-        pass
+        return np.array([component.vCPUs, component.memory, component.network])
 
-    def getModuleResourceVector(module: list)->list:
-        """give a module (a list of components) return a list of total resource
+    def getModuleResourceVector(module: list)->ndarray:
+        """give a module (a list of components) return an array of total resource
             requirements of all components in the module.
-            Each entry in the result list represents the sum of a requirement for a resource for all modules."""
-        resources_each = [getCompResources(comp) for comp in module]
-        num_resources = len(resources_each[0])
-        return [sum([comp_resources[i] for comp_resources in resources_each]) for i in range(num_resources)]
+            If an empty module is given, the method returns None"""
+        if len(module) == 0:
+            return None
+        total_resources = ResetSelector.getCompResources(module[0])
+        for idx in range(1, len(module)):
+            total_resources += ResetSelector.getCompResources(module[idx])
+        return total_resources
 
-    def getNodeDistribution(node: Node)->list:
-        """given a node that represents a combination, return a list of vectors (lists), where each vector represents
-            a list of resources required by one of the modules within the node/component."""
-        # something like: return [getModuleResourceVector(module) for module in node]
-        pass
+    def getResourceDistribution(node: Node)->ndarray:
+        """given a node that represents a combination, return a 2d array,
+            The first dimention relates to each module, 
+            the second dimention to each resource."""
+        first_comb = node.partitions[0]#need to subscript again here?
+        return np.stack([ResetSelector.getModuleResourceVector(ls[0]) for ls in first_comb])
+
+    def calcVectorDistributionDistatnce(distr1: ndarray, distr2: ndarray)->float:
+        """given two distributions of vectors, calculate a distance between these two distributions.
+            this is currently just the difference between the average resource requirments, and not KL-Div as planned."""
+        avg1 = average(distr1, axis=0)
+        avg2 = average(distr2, axis=0)
+        return np.linalg.norm(avg1-avg2)
 
     def combinationDistancesFormula(node_list: list)->ndarray:
         """Implementation of formula for calculating 'distance' for all nodes to all other nodes.
@@ -491,9 +503,18 @@ class ResetSelector:
             represents the average 'distance' of i'th node from the rest of the nodes in the input list.
             
             Input is in the form of list<Node>."""
-        #TODO
-        return np.ones(len(node_list, ), dtype=float)
-
+        all_distributions = [ResetSelector.getResourceDistribution(node) for node in node_list]
+        all_distances = np.stack([
+            np.array([
+                ResetSelector.calcVectorDistributionDistatnce(distr1, distr2) 
+                for distr2 in all_distributions
+            ]) 
+            for distr1 in all_distributions
+        ])
+        #the i,j cell in 'all_distances' should contain the distance between the distributions of the i'th node and the j'th node.
+        #the average distance from the i'th node will be the average value of the i'th row.
+        return np.average(all_distances, axis=0)
+        
     def calcTationScores(self)->ndarray:
         """calculates the explotation scores of all candidates in 'self.top_candidates' and returns scores
             in an array of floats with a corresponding order."""

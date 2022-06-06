@@ -150,11 +150,11 @@ if __name__ == "__main__":
         'exploration_score_depth_bias' : 1.0,
         'exploitation_bias' : 0.2,
         'sql_path' : "Run_Statistic.sqlite3",
-        'verbose' : False,
+        'verbose' : True,
         'develop_mode' : DevelopMode.ALL,
         'proportion_amount_node_sons_to_develop' : 0.5,
         'get_next_mode' : GetNextMode.STOCHASTIC_ANNEALING,
-        'get_starting_node_mode' : GetStartNodeMode.ROOT
+        'get_starting_node_mode' : GetStartNodeMode.RESET_SELECTOR
     }
 
 

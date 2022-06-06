@@ -191,7 +191,8 @@ class Sample:
         #create Sample object
         metadata = {
             "control_parameters" : control_parameters,
-            "algorithm_parameters" : algorithm_parameters
+            "search_algorithm_parameters" : search_algorithm_parameters,
+            "reset_algorithm_parameters" : reset_algorithm_parameters
         }
         return Sample(metadata, sample_idx, exp_dir_path)
     
@@ -212,17 +213,19 @@ class Sample:
         self.segnificance = self.metadata["control_parameters"]["significance"]
 
     def run(self, retry: int, verbosealg: bool, bruteforce: bool):
-        algorithm_parameters = self.metadata["algorithm_parameters"]
+        search_algorithm_parameters = self.metadata["search_algorithm_parameters"]
+        reset_algorithm_parameters = self.metadata["reset_algorithm_parameters"]
         control_parameters = self.metadata["control_parameters"]
         for repetition in range(control_parameters["significance"]):
             sample_attempts_left = retry
             def run_alg():
                 Fleet_Optimizer.run_optimizer(
-                    **algorithm_parameters,
+                    **search_algorithm_parameters,
+                    **reset_algorithm_parameters,
                     time_per_region = control_parameters["time_per_region"],
                     input_file_name = input_path_format(self.exp_dir_path, self.sample_idx),
                     output_file_name = output_path_format(self.exp_dir_path, self.sample_idx, repetition),
-                    stats_file_name = stats_path_format(self.exp_dir_path, self.sample_idx, repetition),
+                    sql_path = stats_path_format(self.exp_dir_path, self.sample_idx, repetition),
                     verbose = verbosealg,
                     bruteforce = bruteforce #TODO: enable different algorithms...
                 )
@@ -473,3 +476,4 @@ class Experiment:
                 p.start()
             for p in ps:
                 p.join()
+        print(yellow(f"finished running experiment: \"{self.experiment_name}\""))
