@@ -65,8 +65,8 @@ RSE_names = [
 
 def run_RSEs():
     N = 200
-    C = 10
-    T = 10
+    C = 20
+    T = 30
 
     e = RSE_root(N, C, T)
     e.run(multiprocess=2, retry=2)
@@ -88,7 +88,7 @@ def run_RSEs():
 
 if __name__ == "__main__":
     #run:
-    # run_RSEs()
+    run_RSEs()
     #plot:
     for name in RSE_names:
         e = Experiment.load(name)
