@@ -133,7 +133,8 @@ def run_optimizer(
     if not res:
         print("Couldnt find any match")
     else:
-        print("Optimizer has found you the optimal configuration. check it out")
+        pass
+        # print("Optimizer has found you the optimal configuration. check it out")
     with open(output_file_name, "w", encoding="utf-8") as f:
         json.dump(res, f, ensure_ascii=False, indent=4)
 

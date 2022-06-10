@@ -135,7 +135,7 @@ class SpotCalculator:
             ec2_data = self.get_ec2_from_cache(region, user_os)
         else:
             print("Data Extraction parameter in configuration file is not defined well")
-        print("calculating best configuration")
+        # print("calculating best configuration")
         if filter_instances != "NA":
             for k, v in ec2_data.items():
                 list_of_relevant_instances = []

@@ -32,7 +32,7 @@ def NNE_Generic(N: int, C: int, T: int, root_dir: str, NNM: GetNextMode, name: s
             "net": NormDistInt(2, 1, 1, 5)
         },
         force=False,
-        region = "us-east-1",
+        region = "all",
         experiments_root_dir=root_dir
     )
 
@@ -58,7 +58,7 @@ def run_NNEs(N: int, root_dir: str):
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
-    series_name = "NNE-N600-C20-T40"
+    series_name = "NNE-N200-C20-T30-all_regions"
     root_dir = "./experiments/"+series_name
     N = 4
     #run:
