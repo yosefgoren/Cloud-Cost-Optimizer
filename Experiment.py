@@ -1,4 +1,5 @@
 from matplotlib import pyplot as plt
+from matplotlib.cbook import flatten
 import Fleet_Optimizer
 import math
 import json
@@ -92,7 +93,11 @@ def fetal_error(msg: str):
 
 class Flags:
     ALL = None
-
+    LIST_ALL = 1
+    NON_INCREASING = 2
+    #'NON_INCREASING' flag means that given a set of 2d curves, take points from all functions together, 
+    #sort by increasing x value and remove any points that increase the y value.
+    
 class Component:
     def __init__(self, cpu: int, ram: int, net: int):
         self.cpu = cpu
@@ -313,9 +318,10 @@ class Experiment:
             sample_indices = Flags.ALL,
             normalize: bool = True,
             repetition: int = Flags.ALL,
-            granularity: int = 50
+            granularity: int = 50,
+            regions_aggregate = Flags.NON_INCREASING
     ):
-        curves = self.get_plot_curves(x_variable, y_variable, regions, sample_indices, normalize, repetition, granularity)
+        curves = self.get_plot_curves(x_variable, y_variable, regions, sample_indices, normalize, repetition, granularity, regions_aggregate)
         for xs, ys in curves:
             plt.plot(xs, ys)
 
@@ -337,22 +343,40 @@ class Experiment:
             sample_indices = Flags.ALL,
             normalize: bool = True,
             repetition: int = Flags.ALL,
-            granularity: int = 50
+            granularity: int = 50,
+            regions_aggregate = Flags.NON_INCREASING
     )->list:
         regions = listify(regions, lambda:self.get_regions_list())
         sample_indices = listify(sample_indices, lambda:list(range(self.get_num_samples())))
 
-        all_curves = []
+        all_times, all_prices = [], []
         for region in regions:
             region_curves = []
             for sample in [self.samples[idx] for idx in sample_indices]:
                 sample_times, sample_prices = sample.get_plot_axis(region, x_variable, y_variable, normalize, repetition)
-                sample_curve = np.array([[time, price] for time, price in zip(sample_times, sample_prices)])
-                region_curves.append(sample_curve)
-            
-            times, prices = average_curve(granularity, *region_curves)
+                #check and extrapolate (as straight line) if there is only one point:
+                if len(sample_times)==1:
+                    sample_times.append(sample_times[0]+1)#TODO: maybe add something other than '1' here?
+                    sample_prices.append(sample_prices[0])
 
-            all_curves += [(times, prices)]
+                sample_curve = np.array([[time, price] for time, price in zip(sample_times, sample_prices)])
+                region_curves.append(sample_curve)    
+            times, prices = average_curve(granularity, *region_curves)
+            all_times.append(times)
+            all_prices.append(prices)
+        
+        #aggregate different regions (as needed):
+        if regions_aggregate == Flags.NON_INCREASING and len(all_times) > 1:
+            all_times = flatten_list_of_lists(all_times)
+            all_prices = flatten_list_of_lists(all_prices)
+            flat_all_curves = sorted(list(zip(all_times, all_prices)), key = lambda t: t[0])
+            min_price = math.inf
+            for idx in range(len(flat_all_curves)):
+                min_price = min(min_price, flat_all_curves[idx][1])
+                flat_all_curves[idx] = (flat_all_curves[idx][0], min_price)
+            all_curves = [([time for time,_ in flat_all_curves], [price for _,price in flat_all_curves])]
+        else:
+            all_curves = list(zip(all_times, all_prices))
         return all_curves
         
 
@@ -372,7 +396,7 @@ class Experiment:
             experiments_root_dir: str = default_experiments_root_dir,
             force: bool = False,
             unique_sample_inputs: bool = True,
-            region: str = "all"
+            region = "all"
     ):
         #verify input correctness:
         verify_dict_keys(control_parameter_lists, control_parameter_names)
@@ -429,7 +453,7 @@ class Experiment:
         if region == "all":
             num_regions = 21
         else:
-            num_regions = len(region.split(' '))
+            num_regions = len(region)
         return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
 
     def print_expected_runtime(self, multiprocess: int = 1):

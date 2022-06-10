@@ -92,7 +92,7 @@ def get_cross_section_plots(N: int, chunk: int, series_name: str):
 if __name__ == "__main__":
     series_name = "RSE-N200-C10"
     root_dir = "./experiments/"+series_name
-    N = 200
+    N = 800
     #run:
     # run_RSEs(N, root_dir)
     #plot:

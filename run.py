@@ -37,11 +37,11 @@ def create_tation_bias_experiment(N: int, C: int, T: int, bias: float, force: bo
 
 
 def make_trail_exp()->Experiment:
-    N = 10
+    N = 1
     return Experiment.create(
         experiment_name="trail",
         control_parameter_lists = {
-            "component_count":  [10]*N,
+            "component_count":  [5]*N,
             "time_per_region":  [5]*N,
             "significance":     [1]*N
         },
@@ -62,7 +62,7 @@ def make_trail_exp()->Experiment:
             "ram": NormDistInt(4, 4 ,1, 128),
             "net": NormDistInt(1, 1, 1, 4)
         },
-        region = "us-east-1",
+        region = ["us-east-1", "us-west-1"],
         force=True
     )
 
@@ -113,4 +113,8 @@ def reset_exp_series():
  
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
-    reset_exp_series()
+    # reset_exp_series()
+    # e = make_trail_exp()
+    # e.run(multiprocess=1)
+    e = Experiment.load("time-price_N-300_C-18_T-20")
+    e.plot(regions_aggregate=Flags.NON_INCREASING, normalize=False)
