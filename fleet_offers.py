@@ -200,9 +200,19 @@ def get_fleet_offers(
 	calculator = FleetCalculator(ec2)
 	if region == "all":
 		regions = constants.regions.copy()
+	
+	if bruteforce:
+		sql_conn = sqlite3.connect(kw["sql_path"])
+		sql_conn.execute('''
+			CREATE TABLE IF NOT EXISTS STATS
+			(INSERT_TIME    REAL     NOT NULL,
+			NODES_COUNT   INT     NOT NULL,
+			BEST_PRICE  REAL    NOT NULL,
+			DEPTH_BEST  INT NOT NULL,
+			ITERATION  INT NOT NULL,
+			REGION_SOLUTION TEXT    NOT NULL);
+		''')
 	for region_to_check in regions:
-		# res_region = []
-		# print('region: ', region)
 		updated_params = params.copy()
 		for pl in updated_params:
 			for p in pl:
@@ -216,7 +226,7 @@ def get_fleet_offers(
 					)
 				p.storage_offer = storage_offer
 
-		if bruteforce:# Brute-Force Algorithm- optimal results / more complex
+		if bruteforce:# Brute-Force Algorithm-optimal results / more complex
 			start_time = time.time()
 			groups = create_groups(
 				updated_params, app_size, region_to_check
@@ -229,13 +239,20 @@ def get_fleet_offers(
 				res += calculator.get_offers(
 					combination, region_to_check, pricing, architecture, type_major
 				)
-			print(time.time() - start_time)
+			best_result = min(res, key=lambda g: g.total_price)
+			runtime = time.time() - start_time
+			query = f"INSERT INTO STATS (INSERT_TIME, NODES_COUNT, BEST_PRICE, DEPTH_BEST, ITERATION, REGION_SOLUTION)\
+				VALUES ({runtime}, {len(res)}, {best_result.total_price}, {0}, {0}, '{region_to_check}')"
+			# print(f"{query=}")
+			sql_conn.execute(query)
 		else:#our code
 			if 'verbose' in kw and kw['verbose']:
 				print("running optimizer of region: ", region_to_check)
 			price_calc = lambda comb: calculator.get_best_price(comb, region_to_check, pricing, architecture, type_major)
 			res += CombOptim(price_calc=price_calc , initial_seperated=updated_params ,  region=region_to_check , **kw ).run()
-
+	if bruteforce:
+		sql_conn.commit()
+		sql_conn.close()
 
 		# First Step- match an instance for every component
 		# firstBranch = simplest_comb(updated_params, app_size)
@@ -266,9 +283,6 @@ def get_fleet_offers(
 		# secondBranch = branchStep(firstBranch)
 		# for combination in secondBranch:
 		#     res += calculator.get_offers(combination, region_to_check, pricing, architecture, type_major)
-
-		## Full B&B Algorithm
-		# Coming Soon
-
+	
 	res = list(filter(lambda g: g is not None, res))
 	return sort_fleet_offers(res)

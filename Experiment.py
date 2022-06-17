@@ -1,3 +1,4 @@
+from concurrent.futures import BrokenExecutor
 from matplotlib import pyplot as plt
 from matplotlib.cbook import flatten
 import Fleet_Optimizer
@@ -9,6 +10,7 @@ import shutil
 import sqlite3
 from multiprocessing import Process
 from interp import average_curve
+import datetime
 
 
 # ============================= File System Utilities =========================================
@@ -70,6 +72,9 @@ def red(msg: str)->str:
 def green(msg: str)->str:
     return '\033[92m'+msg+'\033[0m'
 
+def blue(msg: str)->str:
+    return '\033[94m'+msg+'\033[0m'
+
 def bool_prompt(msg: str):
     print(green(msg+" [Y/n]"))
     i = input()
@@ -81,7 +86,11 @@ def get_time_description(time_in_hours: float)->str:
         return pre_dec_dot + '.' + post_dec_dot[:4]
 
     if time_in_hours < 1:
-        return trucated_str(time_in_hours*60) + " minutes"
+        time_in_minutes = time_in_hours*60
+        if time_in_minutes < 1:
+            return trucated_str(time_in_minutes*60) + " seconds" 
+        else:
+            return trucated_str(time_in_minutes) + " minutes"
     if time_in_hours > 24:
         return trucated_str(time_in_hours/24.0) + " days"
     else:
@@ -132,8 +141,11 @@ def invert_list(ls: list)->list:
     """turn list of lists inside out, function assumes all inner lists have same length.
         [[1,2,3], [4,5,6]] ---> [[1,4], [2,5], [3,6]]
         also, inner lists can also be tuples or sets insetead:
-        [(1,2,3), (4,5,6)] ---> [[1,4], [2,5], [3,6]]"""
-    return [[inner_list[idx] for inner_list in ls] for idx in range(len(ls[0]))]
+        [(1,2,3), (4,5,6)] ---> [[1,4], [2,5], [3,6]]
+        
+    When a list is longer than others, ignores all items at indices that are larger than the minimal list length."""
+    min_len = min([len(l) for l in ls])
+    return [[inner_list[idx] for inner_list in ls] for idx in range(min_len)]
 
 def flatten_list_of_lists(ls: list)->list:
     res = []
@@ -142,18 +154,30 @@ def flatten_list_of_lists(ls: list)->list:
     return res
 
 def listify(item, all_list_generator)->list:
-    """second parameter should be a function without arguments."""
+    """if item is a list, return it.
+        if 'item' is 'Flags.ALL' return the list created by second param
+        otherwise - returns 'item' inside a list by itself.
+        second parameter should be a function without arguments."""
     if type(item) == list:
         return item
     if item == Flags.ALL:
         return all_list_generator()
     return [item]
 
-def run_samples(sample_list: list, retry: int, verbosealg: bool, bruteforce: bool, pid: int):
+def run_samples(sample_list: list, retry: int, verbosealg: bool, bruteforce: bool, pid: int, num_regions: int):
     print(green(f"process {pid}, starting. got {len(sample_list)} samples."))
+    
+    msg_head = f"process {blue(str(pid))}, "
     for sample in sample_list:
+        start_time = datetime.datetime.now()
         sample.run(retry, verbosealg, bruteforce)
-        print(green(f"process {pid}, finished running sample {sample.sample_idx}."))
+        time_in_hours = (datetime.datetime.now() - start_time).seconds/float(3600)
+        if bruteforce:
+            exp_time = "no time estimate (bruteforce)"
+        else:
+            exp_time = f"expected runtime: {blue(get_time_description(sample.expected_runtime(num_regions)))}"
+        actual_time = f"actual runtime: {blue(get_time_description(time_in_hours))}"
+        print(f"{msg_head}finished sample {blue(str(sample.sample_idx))}. {exp_time}, {actual_time}")
 
 class Sample:
     @staticmethod
@@ -260,7 +284,14 @@ class Sample:
         return list(res)
 
     def query_stats(self, query: str)->list:
-        return [self.query_repetition(repetition, query) for repetition in range(self.segnificance)]
+        #old: return [self.query_repetition(repetition, query) for repetition in range(self.segnificance)]
+        res = []
+        for repetition in range(self.segnificance):
+            try:
+                res.append(self.query_repetition(repetition, query))
+            except:
+                print(yellow(f"Warning: could not query stats sample number {self.sample_idx} from experiment '{self.exp_dir_path}'."))
+        return res
 
     def get_plot_axis(self, 
             region: str,
@@ -281,6 +312,8 @@ class Sample:
         if normalize:
             min_y = min([y for x, y in entries])
             entries = [(x, y/min_y) for (x, y) in entries]
+        if len(entries) == 0:#this happends when errors occur when loading the samples or the samples are empty. 'inver_list' cannot handle this case.
+            return [[], []]
         return invert_list(entries)
 
 def partition_tuples_list_by_field(entries: list, unique_field_idx: int):
@@ -448,13 +481,14 @@ class Experiment:
         to_json([sample.metadata for sample in samples], metadata_path_format(exp_dir_path))
         return Experiment(experiment_name, experiments_root_dir, samples)
 
-    def calc_expected_time(self, num_cores: int):
+    def get_num_regions(self)->int:
         region = self.get_static_region()
         if region == "all":
-            num_regions = 21
-        else:
-            num_regions = len(region)
-        return sum([sample.expected_runtime(num_regions) for sample in self.samples])/float(num_cores)
+            return 21 #assuming there are 21 regions here
+        return len(region)
+
+    def calc_expected_time(self, num_cores: int):
+        return sum([sample.expected_runtime(self.get_num_regions()) for sample in self.samples])/float(num_cores)
 
     def print_expected_runtime(self, multiprocess: int = 1):
         print(yellow(f" Expected runtime is {get_time_description(self.calc_expected_time(multiprocess)*1.1)}."))
@@ -483,16 +517,18 @@ class Experiment:
                 return
         
         print(yellow(f"Running '{self.experiment_name}'."))
-        self.print_expected_runtime(multiprocess)
-
+        if not bruteforce:
+            self.print_expected_runtime(multiprocess)
+        num_regions = self.get_num_regions()
         if multiprocess == 1:
-            for sample in self.samples:
-                sample.run(retry, verbosealg, bruteforce)
-                print(green(f"finished running sample {sample.sample_idx}."))
+            run_samples(self.samples, retry, verbosealg, bruteforce, None, num_regions)
+            # for sample in self.samples:
+            #     sample.run(retry, verbosealg, bruteforce)
+            #     print(green(f"finished running sample {sample.sample_idx}."))
         else:
             samples_each_process = [self.samples[pid:self.get_num_samples():multiprocess] for pid in range(multiprocess)]
             ps = [Process(
-                    target=run_samples, args=(samples_each_process[pid], retry, verbosealg, bruteforce, pid)
+                    target=run_samples, args=(samples_each_process[pid], retry, verbosealg, bruteforce, pid, num_regions)
                 )
                 for pid in range(multiprocess)
             ]
