@@ -3,8 +3,8 @@ from Experiment import *
 from Distributions import NormDistInt
 from comb_optimizer import DevelopMode, GetNextMode, GetStartNodeMode
 import matplotlib.pyplot as plt
-import warnings
 
+SEED = 42
 regions = "all"
 # regions = ["us-west-1"]
 
@@ -92,24 +92,53 @@ def DP_Generic(N: int, C: int, T: int, root_dir: str, proportion: float, name: s
         experiments_root_dir=root_dir
     )
 
-def DP_005(*args)->Experiment:
-    return DP_Generic(*args, .05, "DP_005")
-def DP_015(*args)->Experiment:
-    return DP_Generic(*args, .15, "DP_015")
-def DP_025(*args)->Experiment:
-    return DP_Generic(*args, .25, "DP_025")
-def DP_035(*args)->Experiment:
-    return DP_Generic(*args, .35, "DP_035")
+def DP_0001(*args)->Experiment:
+    return DP_Generic(*args, .0001, "DP_0001")
+def DP_0005(*args)->Experiment:
+    return DP_Generic(*args, .0005, "DP_0005")
+def DP_0010(*args)->Experiment:
+    return DP_Generic(*args, .0010, "DP_0010")
+def DP_0015(*args)->Experiment:
+    return DP_Generic(*args, .0015, "DP_0015")
+def DP_0030(*args)->Experiment:
+    return DP_Generic(*args, .0030, "DP_0030")
+def DP_0040(*args)->Experiment:
+    return DP_Generic(*args, .0040, "DP_0040")
+def DP_0060(*args)->Experiment:
+    return DP_Generic(*args, .0060, "DP_0060")
+def DP_0070(*args)->Experiment:
+    return DP_Generic(*args, .0070, "DP_0070")
+def DP_0130(*args)->Experiment:
+    return DP_Generic(*args, .0130, "DP_0130")
+def DP_0200(*args)->Experiment:
+    return DP_Generic(*args, .0200, "DP_0200")
+def DP_0350(*args)->Experiment:
+    return DP_Generic(*args, .0350, "DP_0350")
+def DP_0500(*args)->Experiment:
+    return DP_Generic(*args, .0500, "DP_0500")
+def DP_0700(*args)->Experiment:
+    return DP_Generic(*args, .0700, "DP_0700")
+
 def get_DP(run_not_load: bool, mp: int, *NCT):
     DPs = {
-        "DP_005":DP_005,
-        "DP_015":DP_015,  
-        "DP_025":DP_025,  
-        "DP_035":DP_035  
+        "DP_0001":DP_0001,
+        "DP_0005":DP_0005,
+        "DP_0010":DP_0010,
+        "DP_0015":DP_0015,
+        "DP_0030":DP_0030,
+        "DP_0040":DP_0040,
+        "DP_0060":DP_0060,
+        "DP_0070":DP_0070,
+        "DP_0130":DP_0130,
+        "DP_0200":DP_0200,
+        "DP_0350":DP_0350,
+        "DP_0500":DP_0500,
+        "DP_0700":DP_0700,
     }
     experiments = []
     for name, gen in DPs.items():
         if run_not_load:
+            np.random.seed(SEED)
             e = gen(*NCT, "./experiments/DP")
             e.run(multiprocess=mp, retry=3)
         else:
@@ -179,6 +208,8 @@ def get_IB_A(run_not_load: bool, mp: int, *NCT):
 
 def IB_T05_P00_D10(*args)->Experiment:
     return IB_Generic(*args, .5, 0.0, 1.0, "IB_T05_P00_D10")
+def IB_T05_P05_D05(*args)->Experiment:
+    return IB_Generic(*args, .5, 0.5, 0.5, "IB_T05_P05_D05")
 def IB_T05_P00_D05(*args)->Experiment:
     return IB_Generic(*args, .5, 0.0, 0.5, "IB_T05_P00_D05")
 def IB_T05_P05_D10(*args)->Experiment:
@@ -216,33 +247,15 @@ ALLSTARS = {
     "RS_Random":RS_Random,
     "RS_Greedy":RS_Greedy,
     "RS_Root":RS_Root,
-    "DP_025":DP_025,
-    "IB_max_dist":IB_max_dist,
-    "IB_max_panelty":IB_max_panelty,
-    "IB_T05_P10_D05":IB_T05_P10_D05,
-    "IB_T05_P10_D00":IB_T05_P10_D00,
+    "IB_T05_P05_D05":IB_T05_P05_D05,
 }
-def get_AS_Big(run_not_load: bool, mp: int):
-    NCT = [25, 20, 30]
-    # NCT = [5, 5, 2]
-    experiments = []
-    root_dir = "./experiments/AS_Big"
-    for name, gen in ALLSTARS.items():
-        if run_not_load:
-            e = gen(*NCT, root_dir)
-            e.run(multiprocess=mp, retry=3)
-        else:
-            e = Experiment.load(name, experiments_root_dir=root_dir)
-        experiments.append(e)
-    return experiments
-
 def bruteforce(N: int, C: int, T: int, root_dir: str, name: str)->Experiment:
     print(f"created experiment named:\n{name}\n")
     return Experiment.create(
         experiment_name=name,
         control_parameter_lists = {
             "component_count":  [C]*N,
-            "time_per_region":  [None]*N,
+            "time_per_region":  [T]*N,
             "significance":     [1]*N
         },search_algorithm_parameter_lists = {
             "develop_mode":                             [None]*N,
@@ -266,14 +279,13 @@ def bruteforce(N: int, C: int, T: int, root_dir: str, name: str)->Experiment:
         experiments_root_dir=root_dir
     )
 
-def get_AS_Small(run_not_load: bool, mp: int):
-    NCT = [25, 8, 5]
-    # NCT = [5, 5, 2]
+def get_AS(run_not_load: bool, mp: int, *NCT):
     experiments = []
-    root_dir = "./experiments/AS_Small"
+    root_dir = "./experiments/AS"
     # regular experiments:
     for name, gen in ALLSTARS.items():
         if run_not_load:
+            np.random.seed(SEED)
             e = gen(*NCT, root_dir)
             e.run(multiprocess=mp, retry=3)
         else:
@@ -281,22 +293,24 @@ def get_AS_Small(run_not_load: bool, mp: int):
         experiments.append(e)
     
     #bruteforce:
-    if run_not_load:
-        e = bruteforce(*NCT, root_dir, "bruteforce")
-        e.run(bruteforce=True)
-    else:
-        e = Experiment.load("bruteforce", experiments_root_dir=root_dir)
-    experiments.append(e)
+    # if run_not_load:
+    #     np.random.seed(SEED)
+    #     e = bruteforce(*NCT, root_dir, "bruteforce")
+    #     e.run(bruteforce=True)
+    # else:
+    #     e = Experiment.load("bruteforce", experiments_root_dir=root_dir)
+    # experiments.append(e)
+
     return experiments
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
-    args = [False, 5] #[run/load, mp]
+    args = [False, 6] #[run/load, mp]
+    NCT = [40, 20, 9]
     #run/load: 
-    # exps = get_AS_Small(*args)
-    # exps = get_AS_Big(*args)
-    exps = get_RS(*args)
-    exps.append(Experiment.load("IB_max_price", "./experiments/IB_A"))
+    exps = get_DP(*args, *NCT)
+    # exps += get_AS(*args, *NCT)
+    # exps.append(Experiment.load("RS_Random", "./experiments/AS"))
 
     #plot:
     for e in exps:

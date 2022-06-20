@@ -11,7 +11,7 @@ import sqlite3
 from multiprocessing import Process
 from interp import average_curve
 import datetime
-
+import time
 
 # ============================= File System Utilities =========================================
 
@@ -169,9 +169,9 @@ def run_samples(sample_list: list, retry: int, verbosealg: bool, bruteforce: boo
     
     msg_head = f"process {blue(str(pid))}, "
     for sample in sample_list:
-        start_time = datetime.datetime.now()
+        start_time = time.time()
         sample.run(retry, verbosealg, bruteforce)
-        time_in_hours = (datetime.datetime.now() - start_time).seconds/float(3600)
+        time_in_hours = (time.time() - start_time)/(float(3600))
         if bruteforce:
             exp_time = "no time estimate (bruteforce)"
         else:

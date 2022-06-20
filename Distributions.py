@@ -10,6 +10,8 @@ class NormDistInt:
         self.cutoff_start = cutoff_start
         self.cutoff_end = cutoff_end
         
+
+
     def __call__(self)->int:
         while True:
             res = int(np.random.normal(self.mean, self.div, size=(1,))[0])

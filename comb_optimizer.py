@@ -91,7 +91,12 @@ class CombOptim:
             self.reset_sel = ResetSelector(candidate_list_size,self.get_num_components(),self.root,exploitation_score_price_bias,  exploration_score_depth_bias,exploitation_bias,self.verbose)
 
         self.get_starting_node_mode=get_starting_node_mode
-        self.search_algo = SearchAlgorithm(develop_mode=develop_mode,get_next_mode=get_next_mode,proportion_amount_node_sons_to_develop=proportion_amount_node_sons_to_develop)
+        self.search_algo = SearchAlgorithm(
+                develop_mode=develop_mode,
+                get_next_mode=get_next_mode,
+                num_components=self.get_num_components(),
+                proportion_amount_node_sons_to_develop=proportion_amount_node_sons_to_develop
+        )
         self.start_time = time.time()
         self.time_per_region = time_per_region
         self.region = region
@@ -147,8 +152,6 @@ class CombOptim:
     def price_calc(offer):
         return CombOptim.price_calc_func(offer)
 
-
-
     def get_start_node(self):
         start_node = None
         if self.get_starting_node_mode == GetStartNodeMode.RESET_SELECTOR:
@@ -157,6 +160,8 @@ class CombOptim:
             start_node = self.root
         elif self.get_starting_node_mode == GetStartNodeMode.RANDOM:
             start_node = Node.random_node_from(self.root)
+            if start_node.getPrice() == np.inf:
+                start_node = self.root
 
         return start_node
 
@@ -528,15 +533,23 @@ class ResetSelector:
         return exploitation_scores
 
 class SearchAlgorithm:
-    def __init__(self, develop_mode : DevelopMode ,get_next_mode : GetNextMode,  proportion_amount_node_sons_to_develop = 0.1):
+    def __init__(self, 
+                develop_mode : DevelopMode ,
+                get_next_mode : GetNextMode, 
+                num_components : int,
+                proportion_amount_node_sons_to_develop = 0.1
+    ):
         self.temperature = 0
         self.temperature_increment_pace = 1
         self.proportion_amount_node_sons_to_develop = proportion_amount_node_sons_to_develop
         self.develop_mode = develop_mode
         self.get_next_mode = get_next_mode
+        self.num_components = num_components
+        self.base = (0.9/self.proportion_amount_node_sons_to_develop)**(float(2)/self.num_components)
 
     def run(self, start_node: Node) -> list:
         """returns the list of nodes visited in the run"""
+        self.update_temperature()
         path = []
         next_node = start_node
 
@@ -545,7 +558,6 @@ class SearchAlgorithm:
                 return path
             path.append(next_node)
             next_node = self.get_next(next_node)
-            self.update_temperature()
             if next_node is None:
                 return path
 
@@ -560,6 +572,8 @@ class SearchAlgorithm:
     def __get_next_alg(self, node: Node , sons):
         flag = self.is_choosing_downgrades()
         improves, downgrades = SearchAlgorithm.split_sons_to_improves_and_downgrades(sons, node.getPrice())
+        # if any(map(lambda x: x.getPrice()!=np.inf, downgrades)):
+        #     print(f"FOUND WORST SON")
         #temp fix, if got exception, return None:
         try:
             if (downgrades.shape[0] != 0) and flag:
@@ -577,7 +591,12 @@ class SearchAlgorithm:
             node.calcAllSons()
             sons = node.sons
         elif self.develop_mode == DevelopMode.PROPORTIONAL:
-            sons = node.calcProportionSons(self.proportion_amount_node_sons_to_develop)
+            cur_proportion = min(
+                    self.proportion_amount_node_sons_to_develop*(self.base**(node.getDepth())),
+                    1
+            )
+            # print(f"{cur_proportion=}, {node.getDepth()=}")
+            sons = node.calcProportionSons(cur_proportion)
         return sons
 
 
@@ -618,7 +637,7 @@ class SearchAlgorithm:
 
     def is_choosing_downgrades(self):
         """return if we will choose a downgrade son"""
-        prob_for_downgrade = 0.1 - 1.0 / (10 * np.exp(1.0 / (np.power(self.temperature, 0.9))))
+        prob_for_downgrade = 0.1 - 1.0 / (12 * np.exp(1.0 / (np.power(self.temperature, 0.9))))#12 is our lucky number...
         return (np.random.choice([0, 1], p=[1 - prob_for_downgrade, prob_for_downgrade])) == 1
 
     def update_temperature(self):

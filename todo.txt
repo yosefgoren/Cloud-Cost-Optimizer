@@ -1,2 +1,3 @@
-in fleet_offers.py:
-	implement get_best_price
+intermidiate results for bruteforce CHECK!
+graph prive vs proportions developed 
+can son be worst? CHECK!
