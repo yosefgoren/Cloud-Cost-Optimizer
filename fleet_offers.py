@@ -235,30 +235,35 @@ def get_fleet_offers(
 			best_result = np.inf
 			LOG_EVERY = 5
 			iteration = 0
+			region_res = []
 			for (
 				combination
 			) in (
 				groups
 			):  ## for each combination (group) find N (=3) best offers ##Algorithm for optimal results
+
 				cur_results = calculator.get_offers(
 					combination, region_to_check, pricing, architecture, type_major
 				)
-				res += cur_results
+				region_res += cur_results
 				best_result = min(list(map(lambda g: g.total_price, cur_results))+[best_result])
 				runtime = time.time() - start_time
 				
 				if iteration%LOG_EVERY == 0:	
 					query = f"INSERT INTO STATS (INSERT_TIME, NODES_COUNT, BEST_PRICE, DEPTH_BEST, ITERATION, REGION_SOLUTION)\
-						VALUES ({runtime}, {len(res)}, {best_result}, {0}, {0}, '{region_to_check}')"
-					sql_conn.execute(query)
+						VALUES ({runtime}, {len(region_res)}, {best_result}, {0}, {0}, '{region_to_check}')"
+					if best_result != np.inf:
+						sql_conn.execute(query)
 				iteration += 1
 
 				if runtime > kw["time_per_region"]:
 					break
 
 			query = f"INSERT INTO STATS (INSERT_TIME, NODES_COUNT, BEST_PRICE, DEPTH_BEST, ITERATION, REGION_SOLUTION)\
-				VALUES ({runtime}, {len(res)}, {best_result}, {0}, {0}, '{region_to_check}')"
-			sql_conn.execute(query)
+				VALUES ({runtime}, {len(region_res)}, {best_result}, {0}, {0}, '{region_to_check}')"
+			if best_result != np.inf:
+				sql_conn.execute(query)
+			res += region_res
 			
 		else:#our code
 			if 'verbose' in kw and kw['verbose']:
