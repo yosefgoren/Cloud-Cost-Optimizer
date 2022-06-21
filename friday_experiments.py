@@ -5,8 +5,8 @@ from comb_optimizer import DevelopMode, GetNextMode, GetStartNodeMode
 import matplotlib.pyplot as plt
 
 SEED = 42
-regions = "all"
-# regions = ["us-west-1"]
+# regions = "all"
+regions = ["us-west-1"]
 
 def RS_Generic(N: int, C: int, T: int, root_dir: str, getnext: GetNextMode, getstart: GetStartNodeMode, name: str)->Experiment:
     print(f"created experiment named:\n{name}\n")
@@ -54,10 +54,10 @@ def get_RS(run_not_load: bool, mp: int, *NCT):
     experiments = []
     for name, gen in RSs.items():
         if run_not_load:
-            e = gen(*NCT, "./experiments/RS")
+            e = gen(*NCT, "../experiments/RS")
             e.run(multiprocess=mp, retry=3)
         else:
-            e = Experiment.load(name, experiments_root_dir="./experiments/RS")
+            e = Experiment.load(name, experiments_root_dir="../experiments/RS")
         experiments.append(e)
     return experiments
 
@@ -139,10 +139,10 @@ def get_DP(run_not_load: bool, mp: int, *NCT):
     for name, gen in DPs.items():
         if run_not_load:
             np.random.seed(SEED)
-            e = gen(*NCT, "./experiments/DP")
+            e = gen(*NCT, "../experiments/DP")
             e.run(multiprocess=mp, retry=3)
         else:
-            e = Experiment.load(name, "./experiments/DP")
+            e = Experiment.load(name, "../experiments/DP")
         experiments.append(e)
     return experiments
 
@@ -196,7 +196,7 @@ def get_IB_A(run_not_load: bool, mp: int, *NCT):
         "IB_T05_P00_D00":IB_T05_P00_D00
     }
     experiments = []
-    root_dir = "./experiments/IB_A"
+    root_dir = "../experiments/IB_A"
     for name, gen in IB_As.items():
         if run_not_load:
             e = gen(*NCT, root_dir)
@@ -233,7 +233,7 @@ def get_IB_B(run_not_load: bool, mp: int, *NCT):
         "IB_T05_P10_D00":IB_T05_P10_D00
     }
     experiments = []
-    root_dir = "./experiments/IB_B"
+    root_dir = "../experiments/IB_B"
     for name, gen in IB_Bs.items():
         if run_not_load:
             e = gen(*NCT, root_dir)
@@ -281,7 +281,7 @@ def bruteforce(N: int, C: int, T: int, root_dir: str, name: str)->Experiment:
 
 def get_AS(run_not_load: bool, mp: int, *NCT):
     experiments = []
-    root_dir = "./experiments/AS"
+    root_dir = "../experiments/AS"
     # regular experiments:
     for name, gen in ALLSTARS.items():
         if run_not_load:
@@ -293,24 +293,23 @@ def get_AS(run_not_load: bool, mp: int, *NCT):
         experiments.append(e)
     
     #bruteforce:
-    # if run_not_load:
-    #     np.random.seed(SEED)
-    #     e = bruteforce(*NCT, root_dir, "bruteforce")
-    #     e.run(bruteforce=True)
-    # else:
-    #     e = Experiment.load("bruteforce", experiments_root_dir=root_dir)
-    # experiments.append(e)
+    if run_not_load:
+        np.random.seed(SEED)
+        e = bruteforce(*NCT, root_dir, "bruteforce")
+        e.run(bruteforce=True)
+    else:
+        e = Experiment.load("bruteforce", experiments_root_dir=root_dir)
+    experiments.append(e)
 
     return experiments
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
-    args = [False, 6] #[run/load, mp]
-    NCT = [40, 20, 9]
+    args = [False, 4] #[run/load, mp]
+    NCT = [4, 5, 3]#[40, 20, 9]
     #run/load: 
     exps = get_DP(*args, *NCT)
-    # exps += get_AS(*args, *NCT)
-    # exps.append(Experiment.load("RS_Random", "./experiments/AS"))
+    exps += get_AS(*args, *NCT)
 
     #plot:
     for e in exps:

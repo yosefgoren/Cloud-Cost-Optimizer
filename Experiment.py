@@ -12,6 +12,10 @@ from multiprocessing import Process
 from interp import average_curve
 import datetime
 import time
+from Distributions import NormDistInt
+
+
+from abc import ABC, abstractmethod
 
 # ============================= File System Utilities =========================================
 
@@ -323,7 +327,7 @@ def partition_tuples_list_by_field(entries: list, unique_field_idx: int):
 # stat fields are: 0:INSERT_TIME, 1:NODES_COUNT, 2:BEST_PRICE, 3:DEPTH_BEST, 4:ITERATION, 5:REGION_SOLUTION
 
 class Experiment:
-    default_experiments_root_dir = "./experiments"
+    default_experiments_root_dir = "../experiments"
 
     def get_num_samples(self)->int:
         return len(self.samples)
@@ -394,6 +398,7 @@ class Experiment:
 
                 sample_curve = np.array([[time, price] for time, price in zip(sample_times, sample_prices)])
                 region_curves.append(sample_curve)    
+            # return region_curves#fix!!!
             times, prices = average_curve(granularity, *region_curves)
             all_times.append(times)
             all_prices.append(prices)
@@ -537,3 +542,48 @@ class Experiment:
             for p in ps:
                 p.join()
         print(yellow(f"finished running experiment: \"{self.experiment_name}\""))
+
+# class Series:
+#     """instances of this class represent a series of experiments (instances of Experiments),
+#         and enable aggerated actions over those experiments."""
+#     component_resource_distirubtions = {
+#         "cpu": NormDistInt(4, 3, 1, 32),
+#         "ram": NormDistInt(6, 4 ,1, 128),
+#         "net": NormDistInt(2, 1, 1, 5)
+#     }
+    
+#     def __init__(self, experiments_root_dir):
+#         self.experiments_root_dir = experiments_root_dir
+
+#     def create(
+#             num_samples, 
+#             num_components, 
+#             series_name, 
+#             search_algorithm_parameter_lists, 
+#             reset_algorithm_parameter_lists,
+#             experiments_root_dir: str = Experiment.default_experiments_root_dir
+#     ):
+
+#         s = Series(experiments_root_dir)
+
+#     def get_IB_A(run_not_load: bool, mp: int, *NCT):
+#     IB_As = {
+#         "IB_max_dist":IB_max_dist,
+#         "IB_max_depth":IB_max_depth,
+#         "IB_max_price":IB_max_price,
+#         "IB_max_panelty":IB_max_panelty,
+#         "IB_T05_P00_D00":IB_T05_P00_D00
+#     }
+#     experiments = []
+#     root_dir = "./experiments/IB_A"
+#     for name, gen in IB_As.items():
+#         if run_not_load:
+#             e = gen(*NCT, root_dir)
+#             e.run(multiprocess=mp, retry=3)
+#         else:
+#             e = Experiment.load(name, experiments_root_dir=root_dir)
+#         experiments.append(e)
+#     return experiments
+
+#     def get():
+
