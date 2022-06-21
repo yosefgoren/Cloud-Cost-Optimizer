@@ -13,7 +13,7 @@ from interp import average_curve
 import datetime
 import time
 from Distributions import NormDistInt
-
+import shutil
 
 from abc import ABC, abstractmethod
 
@@ -185,6 +185,18 @@ def run_samples(sample_list: list, retry: int, verbosealg: bool, bruteforce: boo
 
 class Sample:
     @staticmethod
+    def metadata_dict_format(
+            control_parameters,
+            search_algorithm_parameters,
+            reset_algorithm_parameters
+    ):
+        return {
+            "control_parameters" : control_parameters,
+            "search_algorithm_parameters" : search_algorithm_parameters,
+            "reset_algorithm_parameters" : reset_algorithm_parameters
+        }
+
+    @staticmethod
     def create(
             exp_dir_path: str, 
             sample_idx: int, 
@@ -222,11 +234,7 @@ class Sample:
         to_json(algorithm_input_json_dict, input_path_format(exp_dir_path, sample_idx))
 
         #create Sample object
-        metadata = {
-            "control_parameters" : control_parameters,
-            "search_algorithm_parameters" : search_algorithm_parameters,
-            "reset_algorithm_parameters" : reset_algorithm_parameters
-        }
+        metadata = Sample.metadata_dict_format(control_parameters, search_algorithm_parameters, reset_algorithm_parameters)
         return Sample(metadata, sample_idx, exp_dir_path)
     
     @staticmethod
@@ -431,6 +439,7 @@ class Experiment:
             search_algorithm_parameter_lists: dict,
             reset_algorithm_parameter_lists: dict,
             component_resource_distirubtions: dict,
+            use_existing_inputs = False,
             experiments_root_dir: str = default_experiments_root_dir,
             force: bool = False,
             unique_sample_inputs: bool = True,
@@ -443,6 +452,12 @@ class Experiment:
 
         verify_dict_keys(component_resource_distirubtions, component_resource_type_names)
 
+        control_parameter_dicts = dict_of_lists_to_list_of_dicts(control_parameter_lists)
+        search_algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(search_algorithm_parameter_lists)
+        reset_algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(reset_algorithm_parameter_lists)
+        
+        exp_dir_path = experiments_root_dir+"/"+experiment_name
+        
         lengths = [len(ls) for ls in (
                 list(control_parameter_lists.values())+
                 list(search_algorithm_parameter_lists.values())+
@@ -454,37 +469,49 @@ class Experiment:
 
         #create experiment files and objects
         sample_hw_requirments = lambda : {resource_name:component_resource_distirubtions[resource_name]() for resource_name in component_resource_type_names}
-        exp_dir_path = experiments_root_dir+"/"+experiment_name
         if os.path.exists(exp_dir_path) and not force:
-            if not bool_prompt(f"an experiment by the name '{experiment_name}'. override old experiment?"):
+            if not bool_prompt(f"an experiment by the name '{experiment_name}' exists. override old experiment?"):
                 exit(0)
         make_experiment_dir(exp_dir_path)
 
-        control_parameter_dicts = dict_of_lists_to_list_of_dicts(control_parameter_lists)
-        search_algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(search_algorithm_parameter_lists)
-        reset_algorithm_parameter_dicts = dict_of_lists_to_list_of_dicts(reset_algorithm_parameter_lists)
-        samples = []
+        if not use_existing_inputs:
 
-        component_set_generator = lambda : [Component(**(sample_hw_requirments())) for _ in range(max(control_parameter_lists["component_count"]))]
-        if not unique_sample_inputs:
-            static_component_set = component_set_generator()
-            component_set_generator = lambda : static_component_set
+            samples = []
 
-        for sample_idx in range(num_samples):
-            num_sample_components = control_parameter_lists["component_count"][sample_idx]
-            sample_components = component_set_generator()[:num_sample_components]
-            samples.append(Sample.create(
-                    exp_dir_path, 
-                    sample_idx, 
-                    sample_components, 
-                    control_parameter_dicts[sample_idx],
-                    search_algorithm_parameter_dicts[sample_idx],
-                    reset_algorithm_parameter_dicts[sample_idx],
-                    region=region
-            ))
+            component_set_generator = lambda : [Component(**(sample_hw_requirments())) for _ in range(max(control_parameter_lists["component_count"]))]
+            if not unique_sample_inputs:
+                static_component_set = component_set_generator()
+                component_set_generator = lambda : static_component_set
 
-        to_json([sample.metadata for sample in samples], metadata_path_format(exp_dir_path))
-        return Experiment(experiment_name, experiments_root_dir, samples)
+            for sample_idx in range(num_samples):
+                num_sample_components = control_parameter_lists["component_count"][sample_idx]
+                sample_components = component_set_generator()[:num_sample_components]
+                samples.append(Sample.create(
+                        exp_dir_path, 
+                        sample_idx, 
+                        sample_components, 
+                        control_parameter_dicts[sample_idx],
+                        search_algorithm_parameter_dicts[sample_idx],
+                        reset_algorithm_parameter_dicts[sample_idx],
+                        region=region
+                ))
+            to_json([sample.metadata for sample in samples], metadata_path_format(exp_dir_path))
+            return Experiment(experiment_name, experiments_root_dir, samples)
+        else: #if using existing inputs, 'use_existing_inputs' is the name of the experiment to copy inputs from.
+            original_experiment = Experiment.load(use_existing_inputs)
+            #create input files:
+            metadata = []
+            for sample_idx in range(len(original_experiment.samples)):
+                shutil.copyfile(input_path_format(use_existing_inputs, sample_idx), input_path_format(exp_dir_path, sample_idx))
+                #create metadata file:
+                metadata.append(Sample.metadata_dict_format(
+                        control_parameter_dicts[sample_idx],
+                        search_algorithm_parameter_dicts[sample_idx],
+                        reset_algorithm_parameter_dicts[sample_idx]
+                ))
+            to_json(metadata, metadata_path_format(exp_dir_path))
+            return Experiment.load(experiment_name, experiments_root_dir)
+            
 
     def get_num_regions(self)->int:
         region = self.get_static_region()
@@ -497,6 +524,7 @@ class Experiment:
 
     def print_expected_runtime(self, multiprocess: int = 1):
         print(yellow(f" Expected runtime is {get_time_description(self.calc_expected_time(multiprocess)*1.1)}."))
+
 
     @staticmethod
     def load(

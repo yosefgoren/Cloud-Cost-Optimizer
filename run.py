@@ -6,12 +6,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def make_trail_exp(name: str = "trail")->Experiment:
-    N = 6
+    N = 1
     return Experiment.create(
         experiment_name=name,
         control_parameter_lists = {
-            "component_count":  [20]*N,
-            "time_per_region":  [20]*N,
+            "component_count":  [8]*N,
+            "time_per_region":  [3]*N,
             "significance":     [1]*N
         },
         search_algorithm_parameter_lists = {
@@ -32,15 +32,16 @@ def make_trail_exp(name: str = "trail")->Experiment:
             "net": NormDistInt(1, 1, 1, 4)
         },
         region = ["us-east-1"],
-        force=True
+        force=True,
+        use_existing_inputs="../experiments/trail"
     )
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
 if __name__ == "__main__":
     np.random.seed(42)
-    # e = make_trail_exp()
-    # e.run(bruteforce=True, multiprocess=3)
-    e = Experiment.load("trail")
+    e = make_trail_exp("t2")
+    # e = Experiment.load("t2")
+    e.run(bruteforce=True, multiprocess=1)
 
     #plot each sample by itself:
     # e = Experiment.load("trail")
