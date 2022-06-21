@@ -110,6 +110,8 @@ class Flags:
     NON_INCREASING = 2
     #'NON_INCREASING' flag means that given a set of 2d curves, take points from all functions together, 
     #sort by increasing x value and remove any points that increase the y value.
+    CREATE = 3
+    LOAD = 4
     
 class Component:
     def __init__(self, cpu: int, ram: int, net: int):
@@ -168,18 +170,15 @@ def listify(item, all_list_generator)->list:
         return all_list_generator()
     return [item]
 
-def run_samples(sample_list: list, retry: int, verbosealg: bool, bruteforce: bool, pid: int, num_regions: int):
+def run_samples(sample_list: list, retry: int, verbosealg: bool, pid: int, num_regions: int):
     print(green(f"process {pid}, starting. got {len(sample_list)} samples."))
     
     msg_head = f"process {blue(str(pid))}, "
     for sample in sample_list:
         start_time = time.time()
-        sample.run(retry, verbosealg, bruteforce)
+        sample.run(retry, verbosealg)
         time_in_hours = (time.time() - start_time)/(float(3600))
-        if bruteforce:
-            exp_time = "no time estimate (bruteforce)"
-        else:
-            exp_time = f"expected runtime: {blue(get_time_description(sample.expected_runtime(num_regions)))}"
+        exp_time = f"expected runtime: {blue(get_time_description(sample.expected_runtime(num_regions)))}"
         actual_time = f"actual runtime: {blue(get_time_description(time_in_hours))}"
         print(f"{msg_head}finished sample {blue(str(sample.sample_idx))}. {exp_time}, {actual_time}")
 
@@ -188,12 +187,14 @@ class Sample:
     def metadata_dict_format(
             control_parameters,
             search_algorithm_parameters,
-            reset_algorithm_parameters
+            reset_algorithm_parameters,
+            bruteforce
     ):
         return {
             "control_parameters" : control_parameters,
             "search_algorithm_parameters" : search_algorithm_parameters,
-            "reset_algorithm_parameters" : reset_algorithm_parameters
+            "reset_algorithm_parameters" : reset_algorithm_parameters,
+            "bruteforce" : bruteforce
         }
 
     @staticmethod
@@ -204,7 +205,8 @@ class Sample:
             control_parameters: dict,
             search_algorithm_parameters: dict,
             reset_algorithm_parameters: dict,
-            region: str
+            region: str,
+            bruteforce: bool = False
     ):
         verify_dict_keys(control_parameters, control_parameter_names)
         verify_dict_keys(search_algorithm_parameters, search_algorithm_parameter_names)
@@ -234,7 +236,12 @@ class Sample:
         to_json(algorithm_input_json_dict, input_path_format(exp_dir_path, sample_idx))
 
         #create Sample object
-        metadata = Sample.metadata_dict_format(control_parameters, search_algorithm_parameters, reset_algorithm_parameters)
+        metadata = Sample.metadata_dict_format(
+                control_parameters, 
+                search_algorithm_parameters, 
+                reset_algorithm_parameters, 
+                bruteforce
+        )
         return Sample(metadata, sample_idx, exp_dir_path)
     
     @staticmethod
@@ -253,7 +260,7 @@ class Sample:
         self.time_per_region = self.metadata["control_parameters"]["time_per_region"]
         self.segnificance = self.metadata["control_parameters"]["significance"]
 
-    def run(self, retry: int, verbosealg: bool, bruteforce: bool):
+    def run(self, retry: int, verbosealg: bool):
         search_algorithm_parameters = self.metadata["search_algorithm_parameters"]
         reset_algorithm_parameters = self.metadata["reset_algorithm_parameters"]
         control_parameters = self.metadata["control_parameters"]
@@ -268,7 +275,7 @@ class Sample:
                     output_file_name = output_path_format(self.exp_dir_path, self.sample_idx, repetition),
                     sql_path = stats_path_format(self.exp_dir_path, self.sample_idx, repetition),
                     verbose = verbosealg,
-                    bruteforce = bruteforce #TODO: enable different algorithms...
+                    bruteforce = self.metadata["bruteforce"]
                 )
             if retry > 0:
                 while True: # This loop will end when no exceptions happen, or retried too many times.
@@ -439,6 +446,7 @@ class Experiment:
             search_algorithm_parameter_lists: dict,
             reset_algorithm_parameter_lists: dict,
             component_resource_distirubtions: dict,
+            bruteforce: bool = False,
             use_existing_inputs = False,
             experiments_root_dir: str = default_experiments_root_dir,
             force: bool = False,
@@ -507,7 +515,8 @@ class Experiment:
                 metadata.append(Sample.metadata_dict_format(
                         control_parameter_dicts[sample_idx],
                         search_algorithm_parameter_dicts[sample_idx],
-                        reset_algorithm_parameter_dicts[sample_idx]
+                        reset_algorithm_parameter_dicts[sample_idx],
+                        bruteforce
                 ))
             to_json(metadata, metadata_path_format(exp_dir_path))
             return Experiment.load(experiment_name, experiments_root_dir)
@@ -525,7 +534,6 @@ class Experiment:
     def print_expected_runtime(self, multiprocess: int = 1):
         print(yellow(f" Expected runtime is {get_time_description(self.calc_expected_time(multiprocess)*1.1)}."))
 
-
     @staticmethod
     def load(
             experiment_name: str, 
@@ -539,7 +547,6 @@ class Experiment:
     def run(self, 
             verbosealg: bool = False, 
             retry: int = 0, 
-            bruteforce: bool = False, 
             force: bool = False,
             multiprocess: int = 1
     ):
@@ -550,18 +557,14 @@ class Experiment:
                 return
         
         print(yellow(f"Running '{self.experiment_name}'."))
-        if not bruteforce:
-            self.print_expected_runtime(multiprocess)
+        self.print_expected_runtime(multiprocess)
         num_regions = self.get_num_regions()
         if multiprocess == 1:
-            run_samples(self.samples, retry, verbosealg, bruteforce, None, num_regions)
-            # for sample in self.samples:
-            #     sample.run(retry, verbosealg, bruteforce)
-            #     print(green(f"finished running sample {sample.sample_idx}."))
+            run_samples(self.samples, retry, verbosealg, None, num_regions)
         else:
             samples_each_process = [self.samples[pid:self.get_num_samples():multiprocess] for pid in range(multiprocess)]
             ps = [Process(
-                    target=run_samples, args=(samples_each_process[pid], retry, verbosealg, bruteforce, pid, num_regions)
+                    target=run_samples, args=(samples_each_process[pid], retry, verbosealg, pid, num_regions)
                 )
                 for pid in range(multiprocess)
             ]
@@ -571,47 +574,32 @@ class Experiment:
                 p.join()
         print(yellow(f"finished running experiment: \"{self.experiment_name}\""))
 
-# class Series:
-#     """instances of this class represent a series of experiments (instances of Experiments),
-#         and enable aggerated actions over those experiments."""
-#     component_resource_distirubtions = {
-#         "cpu": NormDistInt(4, 3, 1, 32),
-#         "ram": NormDistInt(6, 4 ,1, 128),
-#         "net": NormDistInt(2, 1, 1, 5)
-#     }
+class Series:
+    """instances of this class represent a series of experiments (instances of Experiments),
+        and enable aggerated actions over those experiments."""
+    component_resource_distirubtions = {
+        "cpu": NormDistInt(4, 3, 1, 32),
+        "ram": NormDistInt(6, 4 ,1, 128),
+        "net": NormDistInt(2, 1, 1, 5)
+    }
+
+    def __init__(self, experiments):
+        self.experiments = experiments
     
-#     def __init__(self, experiments_root_dir):
-#         self.experiments_root_dir = experiments_root_dir
+    def create(experiment_creators: list, series_name: str, *creator_args):
+        """'experiment_creators' is a list of functions that create experiments when loaded.
+            they are each expected to be able to take the list of arguments given in 'creator_args'."""
+        return Sample([creator(creator_args) for creator in experiment_creators])
+        
+    def load(experiment_names: list, series_name: str):
+        return Sample([Experiment.load(name) for name in experiment_names])
 
-#     def create(
-#             num_samples, 
-#             num_components, 
-#             series_name, 
-#             search_algorithm_parameter_lists, 
-#             reset_algorithm_parameter_lists,
-#             experiments_root_dir: str = Experiment.default_experiments_root_dir
-#     ):
+    def run(self, **kw_every_exp):
+        for e in self.experiments:
+            e.run(**kw_every_exp)
 
-#         s = Series(experiments_root_dir)
-
-#     def get_IB_A(run_not_load: bool, mp: int, *NCT):
-#     IB_As = {
-#         "IB_max_dist":IB_max_dist,
-#         "IB_max_depth":IB_max_depth,
-#         "IB_max_price":IB_max_price,
-#         "IB_max_panelty":IB_max_panelty,
-#         "IB_T05_P00_D00":IB_T05_P00_D00
-#     }
-#     experiments = []
-#     root_dir = "./experiments/IB_A"
-#     for name, gen in IB_As.items():
-#         if run_not_load:
-#             e = gen(*NCT, root_dir)
-#             e.run(multiprocess=mp, retry=3)
-#         else:
-#             e = Experiment.load(name, experiments_root_dir=root_dir)
-#         experiments.append(e)
-#     return experiments
-
-#     def get():
-
+    def plot(self, **kw_every_exp):
+        for e in self.experiments:
+            times, prices = e.get_plot_curves(**kw_every_exp)[0]
+            plt.plot(times, prices, label=e.experiment_name)
+        plt.show()

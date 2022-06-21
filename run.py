@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def make_trail_exp(name: str = "trail")->Experiment:
-    N = 1
+    N = 2
     return Experiment.create(
         experiment_name=name,
         control_parameter_lists = {
@@ -33,7 +33,8 @@ def make_trail_exp(name: str = "trail")->Experiment:
         },
         region = ["us-east-1"],
         force=True,
-        use_existing_inputs="../experiments/trail"
+        use_existing_inputs="../experiments/trail",
+        bruteforce=True
     )
 
 # variablses are: "INSERT_TIME", "NODES_COUNT", "ITERATION", "DEPTH_BEST", "BEST_PRICE"
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     np.random.seed(42)
     e = make_trail_exp("t2")
     # e = Experiment.load("t2")
-    e.run(bruteforce=True, multiprocess=1)
+    e.run(multiprocess=2)
 
     #plot each sample by itself:
     # e = Experiment.load("trail")
