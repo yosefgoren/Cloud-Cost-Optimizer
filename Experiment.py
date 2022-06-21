@@ -575,24 +575,25 @@ class Experiment:
         print(yellow(f"finished running experiment: \"{self.experiment_name}\""))
 
 class Series:
-    """instances of this class represent a series of experiments (instances of Experiments),
-        and enable aggerated actions over those experiments."""
-    component_resource_distirubtions = {
-        "cpu": NormDistInt(4, 3, 1, 32),
-        "ram": NormDistInt(6, 4 ,1, 128),
-        "net": NormDistInt(2, 1, 1, 5)
-    }
 
     def __init__(self, experiments):
+        """instances of this class represent a series of experiments (instances of Experiments),
+            and enable aggerated actions over those experiments.
+            
+        In practice a 'Series' is essentially a list of experiments with instance methods."""
         self.experiments = experiments
     
     def create(experiment_creators: list, series_name: str, *creator_args):
         """'experiment_creators' is a list of functions that create experiments when loaded.
-            they are each expected to be able to take the list of arguments given in 'creator_args'."""
-        return Sample([creator(creator_args) for creator in experiment_creators])
+            they are each expected to be able to take the experiments/series root dir as first argument,
+            followed by the list of arguments given in 'creator_args'."""
+        series_root_dir = "../experiments/"+series_name
+        if not os.path.isdir(series_root_dir):
+            os.mkdir(series_root_dir)
+        return Series([creator(series_root_dir, *creator_args) for creator in experiment_creators])
         
     def load(experiment_names: list, series_name: str):
-        return Sample([Experiment.load(name) for name in experiment_names])
+        return Series([Experiment.load(name) for name in experiment_names])
 
     def run(self, **kw_every_exp):
         for e in self.experiments:
