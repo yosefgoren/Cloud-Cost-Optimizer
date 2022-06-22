@@ -453,6 +453,8 @@ class Experiment:
             unique_sample_inputs: bool = True,
             region = "all"
     ):
+        """use existing inputs is either false - meaning a neew set of intputs is created; otherwise it's
+            the name of the experiment (name only) from which to take the input samples."""
         #verify input correctness:
         verify_dict_keys(control_parameter_lists, control_parameter_names)
         verify_dict_keys(search_algorithm_parameter_lists, search_algorithm_parameter_names)
@@ -506,17 +508,20 @@ class Experiment:
             to_json([sample.metadata for sample in samples], metadata_path_format(exp_dir_path))
             return Experiment(experiment_name, experiments_root_dir, samples)
         else: #if using existing inputs, 'use_existing_inputs' is the name of the experiment to copy inputs from.
-            original_experiment = Experiment.load(use_existing_inputs)
+            original_experiment = Experiment.load(experiments_root_dir+"/"+use_existing_inputs)
             #create input files:
             metadata = []
             for sample_idx in range(len(original_experiment.samples)):
-                shutil.copyfile(input_path_format(use_existing_inputs, sample_idx), input_path_format(exp_dir_path, sample_idx))
+                shutil.copyfile(
+                        input_path_format(experiments_root_dir+"/"+use_existing_inputs, sample_idx),
+                        input_path_format(exp_dir_path, sample_idx)
+                )
                 #create metadata file:
                 metadata.append(Sample.metadata_dict_format(
-                        control_parameter_dicts[sample_idx],
-                        search_algorithm_parameter_dicts[sample_idx],
-                        reset_algorithm_parameter_dicts[sample_idx],
-                        bruteforce
+                    control_parameter_dicts[sample_idx],
+                    search_algorithm_parameter_dicts[sample_idx],
+                    reset_algorithm_parameter_dicts[sample_idx],
+                    bruteforce
                 ))
             to_json(metadata, metadata_path_format(exp_dir_path))
             return Experiment.load(experiment_name, experiments_root_dir)
